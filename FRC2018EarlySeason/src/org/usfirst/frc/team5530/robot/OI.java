@@ -46,7 +46,6 @@ public class OI {
 				button6_2 = new JoystickButton(stick2, 6),
 				button7_2 = new JoystickButton(stick2, 7),
 				button8_2 = new JoystickButton(stick2, 8);
-		button1_1.whileActive(new LiftTest());
 		
 //		Button[][] stickbutton = new Button[2][12];
 //		

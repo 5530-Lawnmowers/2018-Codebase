@@ -26,14 +26,18 @@ public class LiftTest extends Command{
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
-		Lift.Lift0.set(ControlMode.PercentOutput, (double)1);
+		if(OI.XBController.getAButton()) {
+			Lift.Lift0.set(ControlMode.PercentOutput, (double)0.5);
+		}else {
+			Lift.Lift0.set(ControlMode.PercentOutput, (double)0);
+		}
+		
 	}
 	protected boolean isFinished() {
 		
-		return false; // maybe true?
+		return true; // maybe true?
 	}
 	protected void end() {
-		
 	}
 	protected void interrupted() {
 		

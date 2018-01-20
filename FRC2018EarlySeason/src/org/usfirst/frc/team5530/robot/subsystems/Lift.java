@@ -18,19 +18,20 @@ public class Lift extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static WPI_TalonSRX Lift0  = new WPI_TalonSRX(RobotMap.L0);
-	public static WPI_TalonSRX Lift1  = new WPI_TalonSRX(RobotMap.L1);
-	public static WPI_TalonSRX Arm  = new WPI_TalonSRX(RobotMap.L2);
+	public static WPI_TalonSRX Arm  = new WPI_TalonSRX(RobotMap.L0);
+	public static WPI_TalonSRX Lift0  = new WPI_TalonSRX(RobotMap.L1);
+	public static WPI_TalonSRX Lift1  = new WPI_TalonSRX(RobotMap.L2);
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
-		Lift1.set(ControlMode.Follower, (double)RobotMap.L0);
+		Lift1.set(ControlMode.Follower, (double)RobotMap.L1);
 			
 	}
 	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new LiftTest());
 		//By defualt the Drivetrain system will call command xboxdrive by scheduler
 	
 	}
