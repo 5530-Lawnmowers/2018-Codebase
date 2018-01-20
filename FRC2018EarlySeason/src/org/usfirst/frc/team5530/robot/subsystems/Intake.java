@@ -1,0 +1,36 @@
+package org.usfirst.frc.team5530.robot.subsystems;
+
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.*;
+
+import org.usfirst.frc.team5530.robot.RobotMap;
+import org.usfirst.frc.team5530.robot.commands.*;
+
+import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.*;
+
+
+/**
+ *
+ */
+public class Intake extends Subsystem {
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
+	
+	public static WPI_TalonSRX Intake0  = new WPI_TalonSRX(RobotMap.I0);
+	public static WPI_TalonSRX Intake1  = new WPI_TalonSRX(RobotMap.I1);
+		//this method is called if no other command is called by the scheduler to use this subsystem
+	public static void setFollowing() {
+		Intake1.set(ControlMode.Follower, (double)RobotMap.I0);
+			
+	}
+	
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+		//By defualt the Drivetrain system will call command xboxdrive by scheduler
+	
+	}
+	
+}
