@@ -22,30 +22,25 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 	Joystick stick1 = new Joystick(0);
-	Joystick stick2 = new Joystick(1);
-	public static XboxController XBController = new XboxController(2);
+	public static XboxController XBController = new XboxController(1);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 	public OI(){
 		Joystick stick1 = new Joystick(0);
-		Joystick stick2 = new Joystick(1);
 		Button button1_1 = new JoystickButton(stick1, 1),
 				button2_1 = new JoystickButton(stick1, 2),
 				button3_1 = new JoystickButton(stick1, 3),
-				button4_1 = new JoystickButton(stick1, 4),
+				button4_1 = new JoystickButton(stick1, 4),//Climb
 				button5_1 = new JoystickButton(stick1, 5),
-				button6_1 = new JoystickButton(stick1, 6),
-				button7_1 = new JoystickButton(stick1, 7),
-				button8_1 = new JoystickButton(stick1, 8);
-		Button button1_2 = new JoystickButton(stick2, 1),
-				button2_2 = new JoystickButton(stick2, 2),
-				button3_2 = new JoystickButton(stick2, 3),
-				button4_2 = new JoystickButton(stick2, 4),
-				button5_2 = new JoystickButton(stick2, 5),
-				button6_2 = new JoystickButton(stick2, 6),
-				button7_2 = new JoystickButton(stick2, 7),
-				button8_2 = new JoystickButton(stick2, 8);
+				button6_1 = new JoystickButton(stick1, 6),//Deploy Climber
+				button7_1 = new JoystickButton(stick1, 7),//Pickup/Exchange
+				button8_1 = new JoystickButton(stick1, 8),//Switch
+				button9_1 = new JoystickButton(stick1, 9),
+				button10_1 = new JoystickButton(stick1, 10),//Portal
+				button11_1 = new JoystickButton(stick1, 11),//Scale
+				button12_1 = new JoystickButton(stick1, 12);
+		
 		
 //		Button[][] stickbutton = new Button[2][12];
 //		
