@@ -31,6 +31,7 @@ public class Intake extends Subsystem {
 		// setDefaultCommand(new MySpecialCommand());
 		//By defualt the Drivetrain system will call command xboxdrive by scheduler
 	
+		setDefaultCommand(new IntakeTest());
 	}
 	
 }

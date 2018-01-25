@@ -21,13 +21,12 @@ public class OI {
 	//// joystick.
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
-	Joystick stick1 = new Joystick(0);
+	public static Joystick stick1 = new Joystick(0);
 	public static XboxController XBController = new XboxController(1);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 	public OI(){
-		Joystick stick1 = new Joystick(0);
 		Button button1_1 = new JoystickButton(stick1, 1),
 				button2_1 = new JoystickButton(stick1, 2),
 				button3_1 = new JoystickButton(stick1, 3),
@@ -41,7 +40,8 @@ public class OI {
 				button11_1 = new JoystickButton(stick1, 11),//Scale
 				button12_1 = new JoystickButton(stick1, 12);
 		
-		
+		button1_1.whileHeld(new ManualArm());
+		button1_1.whenReleased(new ManualArm());
 //		Button[][] stickbutton = new Button[2][12]
 //		
 //		for(int stick=0; stick<=1; stick++){
