@@ -92,9 +92,8 @@ public class XboxDrive extends Command{
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		setSpeeds(getStickHorizontal('l'), getTriggerValue('r'), getTriggerValue('l'));
-		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.frontRight.getSelectedSensorVelocity(0));
-
+		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.FREncoder.getDistance());
+		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.FREncoder.getRate());
 	}
 	protected boolean isFinished() {
 		

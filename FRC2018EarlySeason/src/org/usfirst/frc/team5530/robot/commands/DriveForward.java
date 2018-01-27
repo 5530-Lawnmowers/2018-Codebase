@@ -18,15 +18,12 @@ import org.usfirst.frc.team5530.robot.*;
 import com.ctre.phoenix.motorcontrol.*;
 
 public class DriveForward extends Command implements PIDOutput{
-	double distance;
 	
-
 	PIDController controller;
 	double rightDriveMotorPercentOut;
-	double leftDriveMotorPercentOut;
 	
 	public double error = 4;
-	static double projectedDistance = 20; //inch
+	static double projectedDistance = 5; //inch
 	static final double kP = 0.03;
 	static final double kI = 0.00;
 	static final double kD = 0.00;
@@ -34,44 +31,32 @@ public class DriveForward extends Command implements PIDOutput{
 	public DriveForward() {
 		super("DriveForward");
 		requires(Robot.drivetrain);
-		Drivetrain.FREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
+		//Drivetrain.FREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
 		Drivetrain.FREncoder.reset();
 		controller = new PIDController(kP, kI, kD, kF, Drivetrain.FREncoder, this);
 		controller.setOutputRange(-1.0, 1.0);
 		controller.setAbsoluteTolerance(error);
-		controller.setContinuous(true);
 	}
 	
 	//A method to limit an input double to the range -1.0 to 1.0
-	public double limit(double prelimNumber){
-		if(prelimNumber >= 1.0){
-			return 1.0;
-					
-		}else if(prelimNumber <= -1.0){
-			
-			return -1.0;
-		}else if(prelimNumber < 1.0 && prelimNumber >-1.0){
-			
-			return prelimNumber;
-		}else{
-			
-			return 0;
-		}
-		
-		
-	}
 	
 	protected void initialize() {
 		Drivetrain.setFollowing();
-		controller.setSetpoint(Drivetrain.FREncoder.getDistance() + projectedDistance);
+		controller.setSetpoint(projectedDistance);
+		SmartDashboard.putNumber("Test", projectedDistance);
+		controller.enable();
 	}
+	
 	protected void execute() {
 		Drivetrain.frontRight.set(ControlMode.PercentOutput, rightDriveMotorPercentOut);
-		Drivetrain.frontLeft.set(ControlMode.PercentOutput, leftDriveMotorPercentOut);
-		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.FREncoder.getDistance());
-		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.FREncoder.getRate());
+		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Sensor Velocity", (Drivetrain.frontRight.getSelectedSensorVelocity(0) * 600) / 4096);
+		SmartDashboard.putNumber("Percent Out", rightDriveMotorPercentOut);
+		SmartDashboard.putNumber("projected distance", Drivetrain.FREncoder.getDistancePerPulse()*4096*projectedDistance);
+		System.out.println(Drivetrain.FREncoder.);
 
 	}
+	
 	protected boolean isFinished() {
 		if (Math.abs(Drivetrain.FREncoder.getDistance() - projectedDistance)<error){
 			return true;
@@ -79,17 +64,17 @@ public class DriveForward extends Command implements PIDOutput{
 		//System.out.println(Drivetrain.right.getPosition());
 		return false;
 	}
+	
 	protected void end() {
 		
 	}
+	
 	protected void interrupted() {
 		
 	}
 	
 	@Override
 	public void pidWrite(double output) {
-		// TODO Auto-generated method stub
 		rightDriveMotorPercentOut = output;
-		leftDriveMotorPercentOut = output;
 	}
 }

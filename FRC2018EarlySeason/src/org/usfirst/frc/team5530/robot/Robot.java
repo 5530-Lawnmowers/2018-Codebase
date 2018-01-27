@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
-		autonomousCommand = new DriveForward();
+		autonomousCommand = new DriveForwardTalonBased();
 		
 	}
 
