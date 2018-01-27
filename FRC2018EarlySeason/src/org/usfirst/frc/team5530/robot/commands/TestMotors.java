@@ -8,29 +8,32 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-import org.usfirst.frc.team5530.robot.subsystems.Lift;
+import org.usfirst.frc.team5530.robot.subsystems.*;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
-public class ManualArm extends Command{
+public class TestMotors extends Command{
 	
-	public ManualArm() {
-		super("ManualArm");
+	public TestMotors() {
+		super("TestMotors");
 		requires(Robot.lift);
+		requires(Robot.intake);
+		requires(Robot.drivetrain);
+		requires(Robot.climb);
 	}
 	
 	
 	protected void initialize() {
 		Lift.setFollowing();
+		Intake.setFollowing();
+		Drivetrain.setFollowing();
+		Climb.setFollowing();
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
-		double value = OI.stick1.getY();
-		Lift.Arm.set(ControlMode.PercentOutput, value*0.5);
-		if(!OI.stick1.getTrigger())
-			Lift.Arm.stopMotor();
-			
+		
+				
 	}
 	protected boolean isFinished() {
 		
@@ -47,4 +50,3 @@ public class ManualArm extends Command{
 	
 	
 }
-

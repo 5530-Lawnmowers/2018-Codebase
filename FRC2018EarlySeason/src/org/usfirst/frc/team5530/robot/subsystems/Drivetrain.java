@@ -26,8 +26,13 @@ public class Drivetrain extends Subsystem {
 	//a method to set the second motor of the same side to follow (do the same thing as) the first motor of that side
 	public static void setFollowing() {
 		backRight.set(ControlMode.Follower, (double)RobotMap.FR);
-		
 		backLeft.set(ControlMode.Follower, (double)RobotMap.FR);
+
+		Drivetrain.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		Drivetrain.frontRight.setSensorPhase(false);
+		Drivetrain.frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		Drivetrain.frontLeft.setSensorPhase(false);
+		
 			
 	}
 		//this method is called if no other command is called by the scheduler to use this subsystem	

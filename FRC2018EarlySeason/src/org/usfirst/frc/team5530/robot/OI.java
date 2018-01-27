@@ -22,6 +22,7 @@ public class OI {
 	// You create one by telling it which joystick it's on and which button
 	// number it is.
 	public static Joystick stick1 = new Joystick(0);
+	public static Joystick stick2 = new Joystick(2);
 	public static XboxController XBController = new XboxController(1);
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
@@ -39,7 +40,18 @@ public class OI {
 				button10_1 = new JoystickButton(stick1, 10),//Portal
 				button11_1 = new JoystickButton(stick1, 11),//Scale
 				button12_1 = new JoystickButton(stick1, 12);
-		
+		Button button1_2 = new JoystickButton(stick2, 1),
+				button2_2 = new JoystickButton(stick2, 2),
+				button3_2 = new JoystickButton(stick2, 3),
+				button4_2 = new JoystickButton(stick2, 4),//Climb
+				button5_2 = new JoystickButton(stick2, 5),
+				button6_2 = new JoystickButton(stick2, 6),//Deploy Climber
+				button7_2 = new JoystickButton(stick2, 7),//Pickup/Exchange
+				button8_2 = new JoystickButton(stick2, 8),//Switch
+				button9_2 = new JoystickButton(stick2, 9),
+				button10_2 = new JoystickButton(stick2, 10),//Portal
+				button11_2 = new JoystickButton(stick2, 11),//Scale
+				button12_2 = new JoystickButton(stick2, 12);
 		button1_1.whileHeld(new ManualArm());
 		button1_1.whenReleased(new ManualArm());
 //		Button[][] stickbutton = new Button[2][12]
