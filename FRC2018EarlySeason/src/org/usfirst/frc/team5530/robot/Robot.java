@@ -104,9 +104,7 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 		
-		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.frontRight.getSelectedSensorVelocity(0));
-	}
+			}
 
 	/**
 	 * This function is called periodically during test mode

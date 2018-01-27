@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -92,6 +92,8 @@ public class XboxDrive extends Command{
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		setSpeeds(getStickHorizontal('l'), getTriggerValue('r'), getTriggerValue('l'));
+		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.frontRight.getSelectedSensorVelocity(0));
 
 	}
 	protected boolean isFinished() {

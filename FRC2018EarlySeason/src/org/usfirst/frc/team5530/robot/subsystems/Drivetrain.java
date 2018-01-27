@@ -3,7 +3,7 @@ package org.usfirst.frc.team5530.robot.subsystems;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.*;
-
+import edu.wpi.first.wpilibj.Encoder;
 import org.usfirst.frc.team5530.robot.RobotMap;
 import org.usfirst.frc.team5530.robot.commands.*;
 
@@ -22,11 +22,15 @@ public class Drivetrain extends Subsystem {
 	public static WPI_TalonSRX frontLeft  = new WPI_TalonSRX(RobotMap.FL);
 	public static WPI_TalonSRX backRight  = new WPI_TalonSRX(RobotMap.BR);
 	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(RobotMap.BL);
+	public static Encoder FREncoder = new Encoder(0, 1);
+	public static Encoder FLEncoder = new Encoder(0, 1);
 	
 	//a method to set the second motor of the same side to follow (do the same thing as) the first motor of that side
 	public static void setFollowing() {
 		backRight.set(ControlMode.Follower, (double)RobotMap.FR);
 		backLeft.set(ControlMode.Follower, (double)RobotMap.FR);
+		FREncoder.setDistancePerPulse(0.0046);
+		
 
 		Drivetrain.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		Drivetrain.frontRight.setSensorPhase(true);
