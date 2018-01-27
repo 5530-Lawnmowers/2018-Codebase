@@ -96,7 +96,7 @@ public class XboxDrive extends Command{
 	}
 	protected boolean isFinished() {
 		
-		return false; // maybe true?
+		return true; // maybe true?
 	}
 	protected void end() {
 		

@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.*;
 
 //import all subsystems, no need to import anything else
 import org.usfirst.frc.team5530.robot.subsystems.*;
+import org.usfirst.frc.team5530.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,7 +29,7 @@ public class Robot extends TimedRobot {
 	public static Intake intake;
 	public static Climb climb;
 	public static OI oi;	
-	public SendableBase chicken;
+	Command autonomousCommand;
 	
 
 	/**
@@ -43,6 +44,7 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
+		autonomousCommand = new DriveForward();
 		
 	}
 
@@ -74,7 +76,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		
+		if (autonomousCommand != null) autonomousCommand.start();
 	}
 
 	/**
@@ -111,6 +113,5 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		protected final setSubSystem("Drivetrain");
 	}
 }
