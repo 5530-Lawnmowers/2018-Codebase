@@ -27,7 +27,7 @@ public class DriveForwardTalonBased extends Command{
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
-		Drivetrain.frontRight.set(ControlMode.Position, 10);
+		Drivetrain.frontRight.set(ControlMode.Position, 4096);
 		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Sensor Velocity", Drivetrain.frontRight.getSelectedSensorVelocity(0));
 	}

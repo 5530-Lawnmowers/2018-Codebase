@@ -53,7 +53,6 @@ public class DriveForward extends Command implements PIDOutput{
 		SmartDashboard.putNumber("Right Sensor Velocity", (Drivetrain.frontRight.getSelectedSensorVelocity(0) * 600) / 4096);
 		SmartDashboard.putNumber("Percent Out", rightDriveMotorPercentOut);
 		SmartDashboard.putNumber("projected distance", Drivetrain.FREncoder.getDistancePerPulse()*4096*projectedDistance);
-		System.out.println(Drivetrain.FREncoder.);
 
 	}
 	
