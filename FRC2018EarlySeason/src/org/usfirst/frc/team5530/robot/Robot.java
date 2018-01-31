@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.networktables.*;
+import edu.wpi.first.wpilibj.DigitalInput;
+
 
 
 //import all subsystems, no need to import anything else
@@ -30,6 +32,8 @@ public class Robot extends TimedRobot {
 	public static Climb climb;
 	public static OI oi;	
 	Command autonomousCommand;
+	DigitalInput limitSwitch0;
+	DigitalInput limitSwitch1;
 	
 
 	/**
@@ -38,14 +42,15 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void robotInit() {
-		//create subystems
+		//create subystems	
 		drivetrain = new Drivetrain();
 		lift = new Lift();
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
 		autonomousCommand = new DriveForwardTalonBased();
-		
+		limitSwitch0 = new DigitalInput(0);
+		limitSwitch1 = new DigitalInput(1);
 	}
 
 	/**
@@ -104,12 +109,26 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 		
-			}
+	}
+	
+	
+	@Override
+	public void testInit() {
+		SmartDashboard.putBoolean("C0", false);
+		SmartDashboard.putBoolean("C1", false);
+		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
+		SmartDashboard.putBoolean("Limit Switch", limitSwitch0.get());
+		SmartDashboard.putBoolean("Limit Switch", limitSwitch1.get());
+		
+		boolean[] components = new boolean[] {false, false, false, false, false, false};	
+		SmartDashboard.putBooleanArray("Components", components);
+	}
 
 	/**
 	 * This function is called periodically during test mode
 	 */
 	@Override
 	public void testPeriodic() {
+		
 	}
 }

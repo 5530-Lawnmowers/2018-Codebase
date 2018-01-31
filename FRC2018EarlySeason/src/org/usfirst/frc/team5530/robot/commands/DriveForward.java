@@ -32,8 +32,8 @@ public class DriveForward extends Command implements PIDOutput{
 		super("DriveForward");
 		requires(Robot.drivetrain);
 		//Drivetrain.FREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
-		Drivetrain.FREncoder.reset();
-		controller = new PIDController(kP, kI, kD, kF, Drivetrain.FREncoder, this);
+		//Drivetrain.FREncoder.reset();
+		//controller = new PIDController(kP, kI, kD, kF, Drivetrain.FREncoder, this);
 		controller.setOutputRange(-1.0, 1.0);
 		controller.setAbsoluteTolerance(error);
 	}
@@ -52,14 +52,14 @@ public class DriveForward extends Command implements PIDOutput{
 		SmartDashboard.putNumber("Right Sensor Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Right Sensor Velocity", (Drivetrain.frontRight.getSelectedSensorVelocity(0) * 600) / 4096);
 		SmartDashboard.putNumber("Percent Out", rightDriveMotorPercentOut);
-		SmartDashboard.putNumber("projected distance", Drivetrain.FREncoder.getDistancePerPulse()*4096*projectedDistance);
+		//SmartDashboard.putNumber("projected distance", Drivetrain.FREncoder.getDistancePerPulse()*4096*projectedDistance);
 
 	}
 	
 	protected boolean isFinished() {
-		if (Math.abs(Drivetrain.FREncoder.getDistance() - projectedDistance)<error){
-			return true;
-		}
+		//if (Math.abs(Drivetrain.FREncoder.getDistance() - projectedDistance)<error){
+		//	return true;
+		//}
 		//System.out.println(Drivetrain.right.getPosition());
 		return false;
 	}

@@ -22,13 +22,11 @@ public class Drivetrain extends Subsystem {
 	public static WPI_TalonSRX frontLeft  = new WPI_TalonSRX(RobotMap.FL);
 	public static WPI_TalonSRX backRight  = new WPI_TalonSRX(RobotMap.BR);
 	public static WPI_TalonSRX backLeft = new WPI_TalonSRX(RobotMap.BL);
-	public static Encoder FREncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
 	
 	//a method to set the second motor of the same side to follow (do the same thing as) the first motor of that side
 	public static void setFollowing() {
 		backRight.set(ControlMode.Follower, (double)RobotMap.FR);
 		backLeft.set(ControlMode.Follower, (double)RobotMap.FL);
-		FREncoder.setDistancePerPulse(.0046);
 
 		Drivetrain.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		Drivetrain.frontRight.setSensorPhase(true);
