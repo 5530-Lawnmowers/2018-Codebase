@@ -8,8 +8,11 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SendableBase;
+import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.networktables.*;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 
 
@@ -34,6 +37,11 @@ public class Robot extends TimedRobot {
 	Command autonomousCommand;
 	DigitalInput limitSwitch0;
 	DigitalInput limitSwitch1;
+	//AnalogInput Servo0; I don't know why, but this is much harder to use, just use the more specific class Servo from wpilib
+	//AnalogInput Servo1;
+	Servo Servo0;
+	Servo Servo1;
+		
 	
 
 	/**
@@ -51,6 +59,10 @@ public class Robot extends TimedRobot {
 		autonomousCommand = new DriveForwardTalonBased();
 		limitSwitch0 = new DigitalInput(0);
 		limitSwitch1 = new DigitalInput(1);
+		//Servo0 = new AnalogInput(0);
+		//Servo1 = new AnalogInput(1);
+		Servo0 = new Servo(0);
+		Servo1 = new Servo(1);
 	}
 
 	/**
@@ -114,14 +126,23 @@ public class Robot extends TimedRobot {
 	
 	@Override
 	public void testInit() {
+		//Motors
 		SmartDashboard.putBoolean("C0", false);
 		SmartDashboard.putBoolean("C1", false);
+		boolean[] components = new boolean[] {false, false, false, false, false, false};	
+		SmartDashboard.putBooleanArray("Components", components);
+		
+		//Encoder
 		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
+		
+		//Limit Switches
 		SmartDashboard.putBoolean("Limit Switch", limitSwitch0.get());
 		SmartDashboard.putBoolean("Limit Switch", limitSwitch1.get());
 		
-		boolean[] components = new boolean[] {false, false, false, false, false, false};	
-		SmartDashboard.putBooleanArray("Components", components);
+		//Servos
+		SmartDashboard.putNumber("Servo 0 Value", Servo0.get());
+		SmartDashboard.putNumber("Servo 1 Value", Servo1.get());
+		
 	}
 
 	/**
