@@ -12,26 +12,18 @@ import org.usfirst.frc.team5530.robot.subsystems.Intake;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
-//Disclaimer - do not read both comments, unless you are confused
-//In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
-//This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
+//This command runs the motors in the intake system to possess the cube, and then continues to run the motors (to secure the cube) until the deliver command is used
 
-public class IntakeCube extends Command{
-	public IntakeCube() {
-		super("IntakeCube");
-		requires(Robot.intake);
-		
+public class IntakeCMD extends Command{
+	public IntakeCMD() {
+		super("IntakeCMD");
+		requires(Robot.intake);	
 	}
-	
-	
 	protected void initialize() {
-		Intake.setFollowing();
-		
+		Intake.setFollowing();	
 	}
-
 	protected void execute() {
 		Intake.Intake0.set(ControlMode.PercentOutput, -1);//This sets both of them 
-	
 	}
 	protected boolean isFinished() {
 		if (!Intake.intakeSwitch0.get() || !Intake.intakeSwitch1.get()) return true;
@@ -42,7 +34,6 @@ public class IntakeCube extends Command{
 	}
 	protected void interrupted() {
 		Intake.Intake0.set(0);
-		
 	}
 	
 	

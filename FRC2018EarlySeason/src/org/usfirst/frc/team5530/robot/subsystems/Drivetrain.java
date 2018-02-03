@@ -40,7 +40,7 @@ public class Drivetrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new XboxDrive());
+		setDefaultCommand(new XboxDriveCMD());
 		//By defualt the Drivetrain system will call command xboxdrive by scheduler
 	
 	}

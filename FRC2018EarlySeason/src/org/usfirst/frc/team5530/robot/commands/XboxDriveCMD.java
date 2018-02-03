@@ -16,10 +16,13 @@ import com.ctre.phoenix.motorcontrol.*;
 //This command uses input from the xbox controller to control the drive train. 
 
 
-public class XboxDrive extends Command{
+public class XboxDriveCMD extends Command{
 	
-	public XboxDrive() {
-		super("XboxDrive");
+	public static double OutputOldR;
+	public static double OutputOldL;
+	
+	public XboxDriveCMD() {
+		super("XboxDriveCMD");
 		requires(Robot.drivetrain);
 	}
 	
@@ -39,8 +42,18 @@ public class XboxDrive extends Command{
 			return 0;
 		}
 		
-		
 	}
+	double GetPositionFilteredL(double RawValueReadFromHw){
+		  double FilteredPosition = 0.09516*RawValueReadFromHw+0.9048*OutputOldL;
+		  OutputOldL = FilteredPosition;
+		  return FilteredPosition;
+	} 
+	double GetPositionFilteredR(double RawValueReadFromHw){
+		  double FilteredPosition = 0.09516*RawValueReadFromHw+0.9048*OutputOldR;
+		  OutputOldR = FilteredPosition;
+		  return FilteredPosition;
+	} 
+	
 	//get xAxis value of Xbox joystick; argument is stick side
 	public double getStickHorizontal(char side){
 		if(side == 'r'){
@@ -83,10 +96,20 @@ public class XboxDrive extends Command{
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
 			
-			Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
-			Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) >= .3) 
+				Drivetrain.backRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
+			else
+				Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+			if (Math.abs(OutputOldL - XBControllerL(lStick, rTrigger, lTrigger)) > .2) {
+				Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFilteredL((double)XBControllerL(lStick, rTrigger, lTrigger)));
+			}
+			else {
+				Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
+			}		
 			
 			
+			//Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+			//Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
 		}
 	
 	protected void initialize() {

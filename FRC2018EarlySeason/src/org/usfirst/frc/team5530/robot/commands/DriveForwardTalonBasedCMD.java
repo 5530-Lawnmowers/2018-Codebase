@@ -13,10 +13,10 @@ import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
-public class DriveForwardTalonBased extends Command{
+public class DriveForwardTalonBasedCMD extends Command{
 	
-	public DriveForwardTalonBased() {
-		super("DriveForwardTalonBased");
+	public DriveForwardTalonBasedCMD() {
+		super("DriveForwardTalonBasedCMD");
 		requires(Robot.drivetrain);
 	}
 	

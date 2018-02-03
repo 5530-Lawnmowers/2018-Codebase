@@ -16,10 +16,10 @@ import com.ctre.phoenix.motorcontrol.*;
 //In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
 //This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
 
-public class ManualArm extends Command{
+public class ManualArmCMD extends Command{
 	
-	public ManualArm() {
-		super("ManualArm");
+	public ManualArmCMD() {
+		super("ManualArmCMD");
 		requires(Robot.lift);
 	}
 	

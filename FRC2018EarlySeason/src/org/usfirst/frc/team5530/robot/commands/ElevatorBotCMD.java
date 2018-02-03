@@ -7,42 +7,40 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Timer;
 
-import org.usfirst.frc.team5530.robot.subsystems.Intake;
+import org.usfirst.frc.team5530.robot.subsystems.Lift;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
+//This command turns the motors to move the arm to the top of the elevator
 
-//This command runs the motors in the intake system to dispense the cube from the robot
-
-public class DeliverCMD extends Command{
-	public DeliverCMD() {
+public class ElevatorBotCMD extends Command{
+	public ElevatorBotCMD() {
 		requires(Robot.lift);
+		
 	}
 	
-	
 	protected void initialize() {
-		Intake.setFollowing();
-		
+		Lift.setFollowing();
+		Lift.Lift1.set(ControlMode.PercentOutput, 0);
+		Timer.delay(0.5);
 	}
 
 	protected void execute() {
-		Intake.Intake0.set(ControlMode.PercentOutput, 1);//This sets both of them 
-	
+		Lift.Lift1.set(ControlMode.PercentOutput, -1);
+		
 	}
 	protected boolean isFinished() {
-		if (OI.XBController.getBumper(Hand.kLeft)) {
-			System.out.println("false");
-			return false;
-		}
-		return true; 
+		if (!Lift.liftSwitch1.get()) return true;
+		return false; 
+
 	}
 	protected void end() {
-		Intake.Intake0.set(0);
+		Lift.Lift1.set(0);
 	}
 	protected void interrupted() {
-		Intake.Intake0.set(0);
-		
+		Lift.Lift1.set(0);
 	}
 	
 	

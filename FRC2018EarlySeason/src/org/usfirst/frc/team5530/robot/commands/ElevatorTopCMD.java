@@ -7,40 +7,38 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team5530.robot.subsystems.Lift;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
-//Disclaimer - do not read both comments, unless you are confused
-//In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
-//This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
+//This command turns the motors to move the arm to the top of the elevator
 
-public class ScaleCMD extends Command{
-	public ScaleCMD() {
+public class ElevatorTopCMD extends Command{
+	public ElevatorTopCMD() {
 		requires(Robot.lift);
 	}
 	
-	
 	protected void initialize() {
 		Lift.setFollowing();
-		
+		Lift.Lift1.set(ControlMode.PercentOutput, 0);
+		Timer.delay(0.5);
 	}
 
 	protected void execute() {
-		Lift.Lift0.set(ControlMode.PercentOutput, 1);//This sets both of them 
-	
+		Lift.Lift1.set(ControlMode.PercentOutput, 0.05);
+		
 	}
 	protected boolean isFinished() {
-		if (Lift.liftSwitch0.get()) return false;
-		return true; 
+		if (!Lift.liftSwitch0.get()) return true;
+		return false; 
 	}
 	protected void end() {
-		Lift.Lift0.set(0);
+		Lift.Lift1.set(0);
 	}
 	protected void interrupted() {
-		Lift.Lift0.set(0);
-		
+		Lift.Lift1.set(0);
 	}
 	
 	

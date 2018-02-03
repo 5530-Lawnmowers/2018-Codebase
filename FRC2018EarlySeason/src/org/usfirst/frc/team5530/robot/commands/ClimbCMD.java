@@ -12,9 +12,7 @@ import org.usfirst.frc.team5530.robot.subsystems.Climb;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
-//Disclaimer - do not read both comments, unless you are confused
-//In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
-//This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
+//This command turns the motors to lift the robot
 
 public class ClimbCMD extends Command{
 	public ClimbCMD() {

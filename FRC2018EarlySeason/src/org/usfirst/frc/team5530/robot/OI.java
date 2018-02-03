@@ -25,6 +25,7 @@ public class OI {
 	public static Joystick stick2 = new Joystick(2);
 	public static XboxController XBController = new XboxController(1);
 	public static Button[] buttons = new Button[12];
+	public static Button testButton;
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
@@ -41,11 +42,13 @@ public class OI {
 				xboxButtonLB = new JoystickButton(XBController, 5),
 				xboxButtonRB = new JoystickButton(XBController, 6);
 
-		buttons[0].whileHeld(new ManualArm()); 
+		buttons[0].whileHeld(new ManualArmCMD()); 
 		buttons[3].whileHeld(new ClimbCMD());
-		buttons[10].whenPressed(new ScaleCMD());
+		buttons[6].toggleWhenPressed(new ElevatorBotCMD());
+		buttons[7].toggleWhenPressed(new ElevatorTopCMD());
+		
 		xboxButtonLB.whileHeld(new DeliverCMD());
-		xboxButtonRB.whenPressed(new IntakeCube());
+		xboxButtonRB.whenPressed(new IntakeCMD());
 		
 		
 //		Button[][] stickbutton = new Button[2][12]
@@ -63,6 +66,7 @@ public class OI {
 	public static boolean getButtonValue(int i) {
 		return buttons[i].get();
 	}
+	
 	
 	
 	/*Button[][] stickbutton = new Button[2][12];

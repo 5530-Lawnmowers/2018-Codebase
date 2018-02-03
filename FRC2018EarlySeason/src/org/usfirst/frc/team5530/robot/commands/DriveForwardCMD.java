@@ -17,7 +17,7 @@ import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
-public class DriveForward extends Command implements PIDOutput{
+public class DriveForwardCMD extends Command implements PIDOutput{
 	
 	PIDController controller;
 	double rightDriveMotorPercentOut;
@@ -28,8 +28,8 @@ public class DriveForward extends Command implements PIDOutput{
 	static final double kI = 0.00;
 	static final double kD = 0.00;
 	static final double kF = 0.00;
-	public DriveForward() {
-		super("DriveForward");
+	public DriveForwardCMD() {
+		super("DriveForwardCMD");
 		requires(Robot.drivetrain);
 		//Drivetrain.FREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
 		//Drivetrain.FREncoder.reset();

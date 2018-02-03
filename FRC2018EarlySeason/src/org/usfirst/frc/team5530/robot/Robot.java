@@ -33,6 +33,7 @@ public class Robot extends TimedRobot {
 	public static Climb climb;
 	public static OI oi;	
 	Command autonomousCommand;
+	Command initializeMotors;
 	Servo Servo0;
 	Servo Servo1;
 	
@@ -51,10 +52,8 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
-		autonomousCommand = new DriveForwardTalonBased();
-
-		//Servo0 = new AnalogInput(0);
-		//Servo1 = new AnalogInput(1);
+		autonomousCommand = new DriveForwardTalonBasedCMD();
+		initializeMotors = new InitializeMotorsCMD();
 		Servo0 = new Servo(0);
 		Servo1 = new Servo(1);
 	}
@@ -87,7 +86,10 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		if (autonomousCommand != null) autonomousCommand.start();
+		if (autonomousCommand != null) {
+			autonomousCommand.start();
+			initializeMotors.start();
+		}
 	}
 
 	/**
@@ -105,6 +107,7 @@ public class Robot extends TimedRobot {
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
+		
 	}
 
 	/**
@@ -129,8 +132,11 @@ public class Robot extends TimedRobot {
 		//Encoder
 		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
 		
-		//Limit Switches
-
+		//Limit Switches - ALL OF THESE LIMIT SWITCHES HAVE A DEFAULT VALUE OF TRUE
+		SmartDashboard.putBoolean("Intake 0 Limit Switch", Intake.intakeSwitch0.get()); 
+		SmartDashboard.putBoolean("Intake 1 Limit Switch", Intake.intakeSwitch1.get());
+		SmartDashboard.putBoolean("Scale 0 Limit Switch", Lift.liftSwitch0.get());
+		SmartDashboard.putBoolean("Scale 1 Limit Switch", Lift.liftSwitch1.get());
 		
 		//Servos
 		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
