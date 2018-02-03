@@ -13,6 +13,9 @@ import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
+//This command uses input from the xbox controller to control the drive train. 
+
+
 public class XboxDrive extends Command{
 	
 	public XboxDrive() {

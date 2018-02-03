@@ -11,8 +11,6 @@ import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.networktables.*;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.AnalogInput;
 
 
 
@@ -35,12 +33,9 @@ public class Robot extends TimedRobot {
 	public static Climb climb;
 	public static OI oi;	
 	Command autonomousCommand;
-	DigitalInput limitSwitch0;
-	DigitalInput limitSwitch1;
-	//AnalogInput Servo0; I don't know why, but this is much harder to use, just use the more specific class Servo from wpilib
-	//AnalogInput Servo1;
 	Servo Servo0;
 	Servo Servo1;
+	
 		
 	
 
@@ -57,8 +52,7 @@ public class Robot extends TimedRobot {
 		climb = new Climb();
 		oi = new OI();
 		autonomousCommand = new DriveForwardTalonBased();
-		limitSwitch0 = new DigitalInput(0);
-		limitSwitch1 = new DigitalInput(1);
+
 		//Servo0 = new AnalogInput(0);
 		//Servo1 = new AnalogInput(1);
 		Servo0 = new Servo(0);
@@ -136,12 +130,11 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
 		
 		//Limit Switches
-		SmartDashboard.putBoolean("Limit Switch", limitSwitch0.get());
-		SmartDashboard.putBoolean("Limit Switch", limitSwitch1.get());
+
 		
 		//Servos
-		SmartDashboard.putNumber("Servo 0 Value", Servo0.get());
-		SmartDashboard.putNumber("Servo 1 Value", Servo1.get());
+		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
+		SmartDashboard.putNumber("Servo 1 Value", Servo1.getPosition());
 		
 	}
 

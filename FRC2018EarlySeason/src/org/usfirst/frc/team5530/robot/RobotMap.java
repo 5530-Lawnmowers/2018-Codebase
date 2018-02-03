@@ -17,13 +17,13 @@ public class RobotMap {
 	public static int FL = 2; //2
 	public static int BR = 3;
 	public static int BL = 4; 
-	public static int L0 = 31; //10
+	public static int L0 = 10; //10
 	public static int L1 = 11; //11 
 	public static int L2 = 12; //12
 	public static int I0 = 20;
 	public static int I1 = 21;
 	public static int C0 = 30; //30
-	public static int C1 = 10; //31
+	public static int C1 = 31; //31
 	
 	
 	

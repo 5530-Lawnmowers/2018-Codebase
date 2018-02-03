@@ -21,6 +21,10 @@ public class Lift extends Subsystem {
 	public static WPI_TalonSRX Arm  = new WPI_TalonSRX(RobotMap.L0);
 	public static WPI_TalonSRX Lift0  = new WPI_TalonSRX(RobotMap.L1);
 	public static WPI_TalonSRX Lift1  = new WPI_TalonSRX(RobotMap.L2);
+	
+	public static DigitalInput liftSwitch0 = new DigitalInput(2);
+	public static DigitalInput liftSwitch1 = new DigitalInput(3);
+	
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
@@ -31,7 +35,6 @@ public class Lift extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new LiftTest());
 		//By defualt the Drivetrain system will call command xboxdrive by scheduler
 	
 	}

@@ -16,35 +16,30 @@ import com.ctre.phoenix.motorcontrol.*;
 //In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
 //This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
 
-public class ManualArm extends Command{
-	
-	public ManualArm() {
-		super("ManualArm");
+public class ScaleCMD extends Command{
+	public ScaleCMD() {
 		requires(Robot.lift);
 	}
 	
 	
 	protected void initialize() {
 		Lift.setFollowing();
-	}
-	//Whenever this command is called, setspeeds is called
-	protected void execute() {
-		double value = OI.stick1.getY();
-		Lift.Arm.set(ControlMode.PercentOutput, -value*0.5);
-		if(!OI.stick1.getTrigger())
-			Lift.Arm.stopMotor();
-			
-	}
-	protected boolean isFinished() {
-		if (OI.getButtonValue(0)) return false;
-		return true;
-	}
-	protected void end() {
-		Lift.Arm.set(ControlMode.PercentOutput, 0);
 		
 	}
+
+	protected void execute() {
+		Lift.Lift0.set(ControlMode.PercentOutput, 1);//This sets both of them 
+	
+	}
+	protected boolean isFinished() {
+		if (Lift.liftSwitch0.get()) return false;
+		return true; 
+	}
+	protected void end() {
+		Lift.Lift0.set(0);
+	}
 	protected void interrupted() {
-		Lift.Arm.set(ControlMode.PercentOutput, 0);
+		Lift.Lift0.set(0);
 		
 	}
 	

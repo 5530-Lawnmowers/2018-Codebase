@@ -24,36 +24,30 @@ public class OI {
 	public static Joystick stick1 = new Joystick(0);
 	public static Joystick stick2 = new Joystick(2);
 	public static XboxController XBController = new XboxController(1);
+	public static Button[] buttons = new Button[12];
 	// There are a few additional built in buttons you can use. Additionally,
 	// by subclassing Button you can create custom triggers and bind those to
 	// commands the same as any other Button.
 	public OI(){
-		Button button1_1 = new JoystickButton(stick1, 1),
-				button2_1 = new JoystickButton(stick1, 2),
-				button3_1 = new JoystickButton(stick1, 3),
-				button4_1 = new JoystickButton(stick1, 4),//Climb
-				button5_1 = new JoystickButton(stick1, 5),
-				button6_1 = new JoystickButton(stick1, 6),//Deploy Climber
-				button7_1 = new JoystickButton(stick1, 7),//Pickup/Exchange
-				button8_1 = new JoystickButton(stick1, 8),//Switch
-				button9_1 = new JoystickButton(stick1, 9),
-				button10_1 = new JoystickButton(stick1, 10),//Portal
-				button11_1 = new JoystickButton(stick1, 11),//Scale
-				button12_1 = new JoystickButton(stick1, 12);
-		Button button1_2 = new JoystickButton(stick2, 1),
-				button2_2 = new JoystickButton(stick2, 2),
-				button3_2 = new JoystickButton(stick2, 3),
-				button4_2 = new JoystickButton(stick2, 4),//Climb
-				button5_2 = new JoystickButton(stick2, 5),
-				button6_2 = new JoystickButton(stick2, 6),//Deploy Climber
-				button7_2 = new JoystickButton(stick2, 7),//Pickup/Exchange
-				button8_2 = new JoystickButton(stick2, 8),//Switch
-				button9_2 = new JoystickButton(stick2, 9),
-				button10_2 = new JoystickButton(stick2, 10),//Portal
-				button11_2 = new JoystickButton(stick2, 11),//Scale
-				button12_2 = new JoystickButton(stick2, 12);
-		button1_1.whileHeld(new ManualArm());
-		button1_1.whenReleased(new ManualArm());
+		//Creates an array of button[x] is button x+1 on the joystick
+
+		for(int i=1; i <= 12; i++) {
+			buttons[i-1] = new JoystickButton(stick1, i);
+		}
+		Button xboxButtonA = new JoystickButton(XBController, 1),
+				xboxButtonB = new JoystickButton(XBController, 2),
+				xboxButtonX = new JoystickButton(XBController, 3),
+				xboxButtonY = new JoystickButton(XBController, 4),
+				xboxButtonLB = new JoystickButton(XBController, 5),
+				xboxButtonRB = new JoystickButton(XBController, 6);
+
+		buttons[0].whileHeld(new ManualArm()); 
+		buttons[3].whileHeld(new ClimbCMD());
+		buttons[10].whenPressed(new ScaleCMD());
+		xboxButtonLB.whileHeld(new DeliverCMD());
+		xboxButtonRB.whenPressed(new IntakeCube());
+		
+		
 //		Button[][] stickbutton = new Button[2][12]
 //		
 //		for(int stick=0; stick<=1; stick++){
@@ -65,7 +59,10 @@ public class OI {
 //		stickbutton[0][0].whenPressed(new DriveDistance());
 //		
 	}
-
+	
+	public static boolean getButtonValue(int i) {
+		return buttons[i].get();
+	}
 	
 	
 	/*Button[][] stickbutton = new Button[2][12];
