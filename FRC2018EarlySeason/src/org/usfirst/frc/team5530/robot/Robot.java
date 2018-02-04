@@ -9,10 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Servo;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.networktables.*;
-
-
 
 //import all subsystems, no need to import anything else
 import org.usfirst.frc.team5530.robot.subsystems.*;
@@ -36,7 +35,10 @@ public class Robot extends TimedRobot {
 	Command initializeMotors;
 	Servo Servo0;
 	Servo Servo1;
-	
+	SendableChooser autonChooser;
+	int pValue;
+	int iValue;
+	int dValue;
 		
 	
 
@@ -52,10 +54,18 @@ public class Robot extends TimedRobot {
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
-		autonomousCommand = new DriveForwardTalonBasedCMD();
 		initializeMotors = new InitializeMotorsCMD();
 		Servo0 = new Servo(0);
 		Servo1 = new Servo(1);
+		autonChooser = new SendableChooser();
+		autonChooser.addDefault("Center", new CenterAutonCMD());
+		//autonChooser.addObject("Left", new LeftAuton());
+		//autonChooser.addObject("Right", new RightAuton());
+		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
+		SmartDashboard.putNumber("P Value: ", 0.02);
+		SmartDashboard.putNumber("I Value: ", 0.000000875);
+		SmartDashboard.putNumber("D Value: ", 3.0);
+		SmartDashboard.putNumber("Distance: ", 40960);
 	}
 
 	/**
@@ -86,10 +96,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		if (autonomousCommand != null) {
-			autonomousCommand.start();
-			initializeMotors.start();
-		}
+		initializeMotors.start();
+		autonomousCommand = (Command) autonChooser.getSelected();
+		autonomousCommand.start();
 	}
 
 	/**
