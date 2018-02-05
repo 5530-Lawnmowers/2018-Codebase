@@ -83,20 +83,20 @@ public class XboxDriveCMD extends Command{
 		public double XBControllerR(double lStick, double rTrigger, double lTrigger) {
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down - lateral input from left Joystick
-			return rTrigger - lTrigger - lStick;
+			return rTrigger - lTrigger + lStick;
 		}
 		
 		//Calculates left speed based on Controller output
 		public double XBControllerL(double lStick, double rTrigger, double lTrigger){
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down + lateral input from left Joystick
-			return -rTrigger + lTrigger + lStick;
-			
+			return rTrigger - lTrigger - lStick;
+		
 		}
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
 			
-			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) >= .3) 
+			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) > .2) 
 				Drivetrain.backRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
 			else
 				Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
@@ -107,9 +107,9 @@ public class XboxDriveCMD extends Command{
 				Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
 			}		
 			
-			
-			//Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
-			//Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
+//			
+//			Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+//			Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
 		}
 	
 	protected void initialize() {

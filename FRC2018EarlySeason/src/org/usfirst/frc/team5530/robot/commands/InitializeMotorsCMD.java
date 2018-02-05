@@ -43,6 +43,8 @@ public class InitializeMotorsCMD extends Command{
 		Lift.Lift1.set(ControlMode.PercentOutput, 0);
 		Drivetrain.frontRight.set(ControlMode.PercentOutput, 0);
 		Drivetrain.frontLeft.set(ControlMode.PercentOutput, 0);
+		Drivetrain.frontRight.setSelectedSensorPosition(0, 0, 0);
+		Drivetrain.frontLeft.setSelectedSensorPosition(0, 0, 0);
 	}
 	protected void interrupted() {
 		
