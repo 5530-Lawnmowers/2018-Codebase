@@ -22,10 +22,13 @@ public class Lift extends Subsystem {
 	public static WPI_TalonSRX Lift1  = new WPI_TalonSRX(RobotMap.L1);
 	public static WPI_TalonSRX Lift2  = new WPI_TalonSRX(RobotMap.L2);
 	
-	public static DigitalInput liftSwitch0 = new DigitalInput(2);
-	public static DigitalInput liftSwitch1 = new DigitalInput(3);
+	public static AnalogInput potentiometer0 = new AnalogInput(RobotMap.P0);
 	
-		//this method is called if no other command is called by the scheduler to use this subsystem
+	//Default Value of Limit Switch is true (open is true)
+	public static DigitalInput liftSwitch0 = new DigitalInput(RobotMap.LS2);
+	public static DigitalInput liftSwitch1 = new DigitalInput(RobotMap.LS3);
+	
+	//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
 		Lift2.set(ControlMode.Follower, (double)RobotMap.L1);

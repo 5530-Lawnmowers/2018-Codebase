@@ -23,9 +23,9 @@ public class Intake extends Subsystem {
 	public static WPI_TalonSRX Intake0 = new WPI_TalonSRX(RobotMap.I0);
 	public static WPI_TalonSRX Intake1 = new WPI_TalonSRX(RobotMap.I1);
 	
-	
-	public static DigitalInput intakeSwitch0 = new DigitalInput(0);
-	public static DigitalInput intakeSwitch1 = new DigitalInput(1);
+	//Default Value of Limit Switch is true (open is true)
+	public static DigitalInput intakeSwitch0 = new DigitalInput(RobotMap.LS0);
+	public static DigitalInput intakeSwitch1 = new DigitalInput(RobotMap.LS1);
 	
 	
 		//this method is called if no other command is called by the scheduler to use this subsystem
