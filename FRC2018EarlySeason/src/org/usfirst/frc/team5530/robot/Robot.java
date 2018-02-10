@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.networktables.*;
 
 //import all subsystems, no need to import anything else
@@ -19,7 +20,7 @@ import org.usfirst.frc.team5530.robot.commands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
- * functions corresponding to each mode, as described in the IterativeRobot
+ * functions corresponding to each mode, as described in the IterativeR
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
@@ -39,7 +40,21 @@ public class Robot extends TimedRobot {
 	int pValue;
 	int iValue;
 	int dValue;
-		
+	
+	//Test Stuff
+	double time;
+	Command FRDriveTrainMotor;
+	Command FLDriveTrainMotor;
+	Command BRDriveTrainMotor;
+	Command BLDriveTrainMotor;
+	Command intakeMotor0;
+	Command intakeMotor1;
+	Command climbMotor0;
+	Command climbMotor1;
+	Command liftMotor1;
+	Command liftMotor2;	
+	Command servo0;
+	Command servo1;
 	
 
 	/**
@@ -56,7 +71,7 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		initializeMotors = new InitializeMotorsCMD();
 		Servo0 = new Servo(0);
-		Servo1 = new Servo(1);
+		Servo1 = new Servo(1); 
 		autonChooser = new SendableChooser();
 		autonChooser.addDefault("Center", new CenterAutonCMD());
 		//autonChooser.addObject("Left", new LeftAuton());
@@ -66,6 +81,23 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("I Value: ", 0.000000875);
 		SmartDashboard.putNumber("D Value: ", 3.0);
 		SmartDashboard.putNumber("Distance: ", 40960);
+		CameraServer.getInstance().startAutomaticCapture();
+		
+		//Test Stuff
+		time = 1;
+		FRDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.frontRight, time);
+		FLDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.frontLeft, time);
+		BRDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.backRight, time);
+		BLDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.backLeft, time);
+		intakeMotor0 = new NonLimitedTestCMD(Intake.Intake0, time);
+		intakeMotor1 = new NonLimitedTestCMD(Intake.Intake1, time);
+		climbMotor0 = new NonLimitedTestCMD(Climb.Climb0, time);
+		climbMotor1 = new NonLimitedTestCMD(Climb.Climb1, time);
+		liftMotor1 = new ElevatorTestCMD(lift.Lift1, time, lift.liftSwitch0, lift.liftSwitch1);
+		liftMotor2 = new ElevatorTestCMD(lift.Lift2, time, lift.liftSwitch0, lift.liftSwitch1);
+		servo0 = new ServoActuationTestCMD(Servo0, time);
+		servo1 = new ServoActuationTestCMD(Servo1, time);
+		
 	}
 
 	/**
@@ -151,6 +183,7 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
 		SmartDashboard.putNumber("Servo 1 Value", Servo1.getPosition());
 		
+		
 	}
 
 	/**
@@ -158,6 +191,17 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		
+		FRDriveTrainMotor.start();
+		FLDriveTrainMotor.start();
+		BRDriveTrainMotor.start();
+		BLDriveTrainMotor.start();
+		intakeMotor0.start();
+		intakeMotor1.start();
+		climbMotor0.start();
+		climbMotor1.start();
+		liftMotor1.start();
+		liftMotor2.start();
+		servo0.start();
+		servo1.start();
 	}
 }

@@ -30,10 +30,10 @@ public class ManualArmCMD extends Command{
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		double value = OI.stick1.getY();
-		Lift.Arm.set(ControlMode.PercentOutput, -value*0.5);
+		Lift.Arm.set(ControlMode.PercentOutput, -value);
 		if(!OI.stick1.getTrigger())
 			Lift.Arm.stopMotor();
-			
+		
 	}
 	protected boolean isFinished() {
 		if (OI.getButtonValue(0)) return false;
