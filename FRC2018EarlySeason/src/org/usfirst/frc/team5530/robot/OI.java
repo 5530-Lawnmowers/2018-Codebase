@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import org.usfirst.frc.team5530.robot.commands.*;
+import org.usfirst.frc.team5530.robot.subsystems.Drivetrain;
 
 
 /**
@@ -51,7 +52,7 @@ public class OI {
 		xboxButtonLB.whileHeld(new DeliverCMD());
 		xboxButtonRB.whenPressed(new IntakeCMD()); 
 		
-		if (DriverStation.getInstance().isTest()) buttons[5].whenPressed(Robot.FRDriveTrainMotor); //Button 6
+		buttons[5].whenPressed(new NonLimitedTestCMD(Drivetrain.frontRight, 1)); //Button 6
 		
 //		Button[][] stickbutton = new Button[2][12]
 //		

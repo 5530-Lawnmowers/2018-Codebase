@@ -19,11 +19,11 @@ public class RobotMap {
 	public static int BL = 4; 
 	
 	//Arm
-	public static int L0 = 10; //10
+	public static int A0 = 10; //10
 	
 	//Elevator
-	public static int L1 = 11; //11 
-	public static int L2 = 12; //12
+	public static int E0 = 11; //11 
+	public static int E1 = 12; //12
 	
 	//Intake
 	public static int I0 = 20;

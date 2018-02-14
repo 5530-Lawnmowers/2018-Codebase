@@ -18,8 +18,8 @@ public class Elevator extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static WPI_TalonSRX Elevator0  = new WPI_TalonSRX(RobotMap.L1);
-	public static WPI_TalonSRX Elevator1  = new WPI_TalonSRX(RobotMap.L2);
+	public static WPI_TalonSRX Elevator0  = new WPI_TalonSRX(RobotMap.E0);
+	public static WPI_TalonSRX Elevator1  = new WPI_TalonSRX(RobotMap.E1);
 	
 	//Default Value of Limit Switch is true (open is true)
 	public static DigitalInput elevatorSwitchTop = new DigitalInput(RobotMap.LS2);
@@ -28,7 +28,7 @@ public class Elevator extends Subsystem {
 	//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
-		Elevator1.set(ControlMode.Follower, (double)RobotMap.L1);
+		Elevator1.set(ControlMode.Follower, (double)RobotMap.E0);
 		Elevator1.setInverted(true);
 	}
 	

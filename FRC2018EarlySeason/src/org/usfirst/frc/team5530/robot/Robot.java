@@ -45,16 +45,17 @@ public class Robot extends TimedRobot {
 	
 	//Test Stuff
 	double time;
-	public static Command FRDriveTrainMotor;
-	public static Command FLDriveTrainMotor;
-	public static Command BRDriveTrainMotor;
-	public static Command BLDriveTrainMotor;
-	public static Command intakeMotor0;
-	public static Command intakeMotor1;
-	public static Command climbMotor0;
-	public static Command climbMotor1;
-	public static Command elevatorMotor0;
-	public static Command elevatorMotor1;	
+	public static Command FRDriveTrainMotorTest;
+	public static Command FLDriveTrainMotorTest;
+	public static Command BRDriveTrainMotorTest;
+	public static Command BLDriveTrainMotorTest;
+	public static Command intakeMotor0Test;
+	public static Command intakeMotor1Test;
+	public static Command climbMotor0Test;
+	public static Command climbMotor1Test;
+	public static Command elevatorMotor0Test;
+	public static Command elevatorMotor1Test;	
+	public static Command armMotor0Test;
 //	Command servo0;
 //	Command servo1;
 	
@@ -87,16 +88,17 @@ public class Robot extends TimedRobot {
 		
 		//Test Stuff
 		time = 1;
-		FRDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.frontRight, time);
-		FLDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.frontLeft, time);
-		BRDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.backRight, time);
-		BLDriveTrainMotor = new NonLimitedTestCMD(Drivetrain.backLeft, time);
-		intakeMotor0 = new NonLimitedTestCMD(Intake.Intake0, time);
-		intakeMotor1 = new NonLimitedTestCMD(Intake.Intake1, time);
-		climbMotor0 = new NonLimitedTestCMD(Climb.Climb0, time);
-		climbMotor1 = new NonLimitedTestCMD(Climb.Climb1, time);
-		elevatorMotor0 = new ElevatorTestCMD(Elevator.Elevator0, time, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
-		elevatorMotor1 = new ElevatorTestCMD(Elevator.Elevator1, time, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
+		FRDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.frontRight, time);
+		FLDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.frontLeft, time);
+		BRDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.backRight, time);
+		BLDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.backLeft, time);
+		intakeMotor0Test = new NonLimitedTestCMD(Intake.Intake0, time);
+		intakeMotor1Test = new NonLimitedTestCMD(Intake.Intake1, time);
+		climbMotor0Test = new NonLimitedTestCMD(Climb.Climb0, time);
+		climbMotor1Test = new NonLimitedTestCMD(Climb.Climb1, time);
+		elevatorMotor0Test = new ElevatorTestCMD(Elevator.Elevator0, time + 5, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
+		elevatorMotor1Test = new ElevatorTestCMD(Elevator.Elevator1, time + 5, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
+		armMotor0Test = new PotentiometerActuationTestCMD(Arm.arm, Arm.potentiometer0, time);
 //		servo0 = new ServoActuationTestCMD(Servo0, time);
 //		servo1 = new ServoActuationTestCMD(Servo1, time);
 		
@@ -141,7 +143,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		Scheduler.getInstance().run();
+		
 	}
 	
 
@@ -161,7 +163,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
-		
+		SmartDashboard.putNumber("Potentiometer Arm: ", Arm.potentiometer0.getValue());
 	}
 	
 	
@@ -185,7 +187,6 @@ public class Robot extends TimedRobot {
 //		//Servos
 //		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
 //		SmartDashboard.putNumber("Servo 1 Value", Servo1.getPosition());
-		
 	}
 
 	/**
@@ -193,6 +194,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-
+		Scheduler.getInstance().run();
 	}
 }

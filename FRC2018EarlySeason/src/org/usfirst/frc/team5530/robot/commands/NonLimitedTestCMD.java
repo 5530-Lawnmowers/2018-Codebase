@@ -34,6 +34,7 @@ public class NonLimitedTestCMD extends Command{
 	protected void initialize() {
 		Intake.setFollowing();
 		Climb.setFollowing();
+		System.out.println("Running: " + Controller.getDeviceID());
 	}
 
 	protected void execute() {
@@ -45,30 +46,22 @@ public class NonLimitedTestCMD extends Command{
 			flag = true;
 		}
 		counter++;
-		OI.buttons[5].cancelWhenPressed(this);
+		//OI.buttons[5].cancelWhenPressed(this);
 	}
 	protected boolean isFinished() {
 		return flag;
 	}
 	protected void end() {
 		Controller.set(0);
-		if (Controller.equals(Drivetrain.frontRight)) OI.buttons[5].whenPressed(Robot.FLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.frontLeft)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.BRDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backRight)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.elevatorMotor0); // intakeMotor0
-//		else if (Controller.equals(Intake.Intake0)) OI.buttons[5].whenPressed(Robot.climbMotor0);
-//		else OI.buttons[5].whenPressed(Robot.elevatorMotor0);
+		if (Controller.equals(Drivetrain.frontRight)) Robot.FLDriveTrainMotorTest.start();
+		else if (Controller.equals(Drivetrain.frontLeft)) Robot.BLDriveTrainMotorTest.start();
+		else if (Controller.equals(Drivetrain.backLeft)) Robot.BRDriveTrainMotorTest.start(); 
+		else if (Controller.equals(Drivetrain.backRight)) Robot.elevatorMotor0Test.start(); 
+		else Robot.elevatorMotor0Test.start(); 
+		System.out.println("End");
 	}
 	protected void interrupted() {
 		Controller.set(0);
-		if (Controller.equals(Drivetrain.frontRight)) OI.buttons[5].whenPressed(Robot.FLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.frontLeft)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.BRDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backRight)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
-		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.elevatorMotor0); //intakeMotor0
-//		else if (Controller.equals(Intake.Intake0)) OI.buttons[5].whenPressed(Robot.climbMotor0);
-//		else OI.buttons[5].whenPressed(Robot.elevatorMotor0);
 	}
 	
 	

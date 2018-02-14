@@ -28,7 +28,7 @@ public class ElevatorBotCMD extends Command{
 	}
 
 	protected void execute() {
-		Elevator.Elevator0.set(ControlMode.PercentOutput, -.5);
+		Elevator.Elevator0.set(ControlMode.PercentOutput, -.15);
 		
 	}
 	protected boolean isFinished() {

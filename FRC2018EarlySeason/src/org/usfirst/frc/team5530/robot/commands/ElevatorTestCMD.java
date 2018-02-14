@@ -22,7 +22,8 @@ public class ElevatorTestCMD extends Command{
 	WPI_TalonSRX Controller;
 	double time;
 	double counter = 0;
-	boolean flag = false;
+	boolean finished = false;
+	boolean limitHit = false;
 	DigitalInput maxSwitch;
 	DigitalInput minSwitch;
 	
@@ -41,32 +42,29 @@ public class ElevatorTestCMD extends Command{
 	}
 
 	protected void execute() {
-		if (Elevator.elevatorSwitchTop.get() && Elevator.elevatorSwitchBot.get()) {
-			if (counter <= time) Controller.set(.5);
-			else if (time < counter && counter <= time*1.1) Controller.set(0);
-			else if (time*1.1 < counter && counter <= time*2) Controller.set(-.5);
-			else {
-				Controller.set(0);
-				flag = true;
-			}
-			counter++;
+		if (!Elevator.elevatorSwitchTop.get()) limitHit = true;
+		if (limitHit) {
+			Controller.set(-0.08);
+			if (!Elevator.elevatorSwitchBot.get()) finished = true;
 		}
-		else
-			flag = true;
-		OI.buttons[5].cancelWhenPressed(this);
+		else if (counter <= time) Controller.set(.25);
+		else if (time < counter && counter <= time*2) {
+			Controller.set(-0.08);
+			if (!Elevator.elevatorSwitchBot.get()) finished = true;
+		}
+		else finished = true;
+		counter++;
+		//OI.buttons[5].cancelWhenPressed(this);
 	}
 	protected boolean isFinished() {
-		return flag;
+		return finished;
 	}
 	protected void end() {
 		Controller.set(0);
-		if (Controller.equals(Elevator.Elevator0)) OI.buttons[5].whenPressed(Robot.elevatorMotor1);
-		
-		
+		Robot.armMotor0Test.start();
 	}
 	protected void interrupted() {
 		Controller.set(0);
-		if (Controller.equals(Elevator.Elevator0)) OI.buttons[5].whenPressed(Robot.elevatorMotor1);
 	}
 	
 	

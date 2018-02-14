@@ -18,8 +18,8 @@ import com.ctre.phoenix.motorcontrol.*;
 
 public class XboxDriveCMD extends Command{
 	
-	public static double OutputOldR;
-	public static double OutputOldL;
+	public static double OutputOld;
+	public static double allowableRate = 1/40;
 	
 	public XboxDriveCMD() {
 		super("XboxDriveCMD");
@@ -43,16 +43,23 @@ public class XboxDriveCMD extends Command{
 		}
 		
 	}
-	double GetPositionFilteredL(double RawValueReadFromHw){
-		  double FilteredPosition = 0.39*RawValueReadFromHw+0.61*OutputOldL;
-		  OutputOldL = FilteredPosition;
-		  return FilteredPosition;
-	} 
-	double GetPositionFilteredR(double RawValueReadFromHw){
-		  double FilteredPosition = 0.39*RawValueReadFromHw+0.61*OutputOldR;
-		  OutputOldR = FilteredPosition;
-		  return FilteredPosition;
-	} 
+	double GetPositionFiltered(double RawValueReadFromHw){
+		  double FilteredPosition = (RawValueReadFromHw - OutputOld)/0.02;
+		  if (Math.abs(FilteredPosition) > 0.5) {
+			  if (RawValueReadFromHw > 0) FilteredPosition = 0.5;
+			  else FilteredPosition = -0.5;
+		  }
+		  else OutputOld = FilteredPosition;
+		  //return FilteredPosition;
+		  
+		  double newFilteredPosition = (RawValueReadFromHw - OutputOld)/20;
+		  if (Math.abs(newFilteredPosition) > allowableRate) {
+			  if (RawValueReadFromHw > 0) newFilteredPosition = newFilteredPosition/allowableRate;
+			  else newFilteredPosition = -newFilteredPosition/allowableRate;
+		  }
+		  else OutputOld = newFilteredPosition;
+		  return newFilteredPosition;
+	}
 	
 	//get xAxis value of Xbox joystick; argument is stick side
 	public double getStickHorizontal(char side){
@@ -96,16 +103,19 @@ public class XboxDriveCMD extends Command{
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
 			
-			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) > .2) 
-				Drivetrain.frontRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
-			else
-				Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
-			if (Math.abs(OutputOldL - XBControllerL(lStick, rTrigger, lTrigger)) > .2) {
-				Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFilteredL((double)XBControllerL(lStick, rTrigger, lTrigger)));
-			}
-			else {
-				Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
-			}		
+			Drivetrain.backRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger)));
+			Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger)));
+			
+//			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) > .2) 
+//				Drivetrain.frontRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
+//			else
+//				Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+//			if (Math.abs(OutputOldL - XBControllerL(lStick, rTrigger, lTrigger)) > .2) {
+//				Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFilteredL((double)XBControllerL(lStick, rTrigger, lTrigger)));
+//			}
+//			else {
+//				Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
+//			}		
 			
 //			
 //			Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
