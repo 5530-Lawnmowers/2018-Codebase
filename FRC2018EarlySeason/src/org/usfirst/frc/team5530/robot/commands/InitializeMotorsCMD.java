@@ -19,7 +19,7 @@ public class InitializeMotorsCMD extends Command{
 		super("InitializeMotorsCMD");
 		requires(Robot.intake);
 		requires(Robot.climb);
-		requires(Robot.lift);
+		requires(Robot.elevator);
 		requires(Robot.drivetrain);
 	}
 	
@@ -27,7 +27,7 @@ public class InitializeMotorsCMD extends Command{
 	protected void initialize() {
 		Intake.setFollowing();
 		Climb.setFollowing();
-		Lift.setFollowing();
+		Elevator.setFollowing();
 		Drivetrain.setFollowing();
 	}
 
@@ -40,7 +40,7 @@ public class InitializeMotorsCMD extends Command{
 	protected void end() {
 		Intake.Intake0.set(ControlMode.PercentOutput, 0); 
 		Climb.Climb0.set(ControlMode.PercentOutput, 0);
-		Lift.Lift1.set(ControlMode.PercentOutput, 0);
+		Elevator.Elevator0.set(ControlMode.PercentOutput, 0);
 		Drivetrain.frontRight.set(ControlMode.PercentOutput, 0);
 		Drivetrain.frontLeft.set(ControlMode.PercentOutput, 0);
 		Drivetrain.frontRight.setSelectedSensorPosition(0, 0, 0);

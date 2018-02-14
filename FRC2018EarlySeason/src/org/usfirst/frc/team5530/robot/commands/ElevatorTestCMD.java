@@ -32,19 +32,19 @@ public class ElevatorTestCMD extends Command{
 		this.time = time*50;
 		this.maxSwitch = maxSwitch;
 		this.minSwitch = minSwitch;
-		requires(Robot.lift);
+		requires(Robot.elevator);
 	}
-	
+	 
 	
 	protected void initialize() {
-		Lift.setFollowing();
+		Elevator.setFollowing();
 	}
 
 	protected void execute() {
-		if (Lift.liftSwitch0.get() && Lift.liftSwitch1.get()) {
-			if (counter <= time) Controller.set(1);
+		if (Elevator.elevatorSwitchTop.get() && Elevator.elevatorSwitchBot.get()) {
+			if (counter <= time) Controller.set(.5);
 			else if (time < counter && counter <= time*1.1) Controller.set(0);
-			else if (time*1.1 < counter && counter <= time*2) Controller.set(-1);
+			else if (time*1.1 < counter && counter <= time*2) Controller.set(-.5);
 			else {
 				Controller.set(0);
 				flag = true;
@@ -53,15 +53,20 @@ public class ElevatorTestCMD extends Command{
 		}
 		else
 			flag = true;
+		OI.buttons[5].cancelWhenPressed(this);
 	}
 	protected boolean isFinished() {
 		return flag;
 	}
 	protected void end() {
 		Controller.set(0);
+		if (Controller.equals(Elevator.Elevator0)) OI.buttons[5].whenPressed(Robot.elevatorMotor1);
+		
+		
 	}
 	protected void interrupted() {
 		Controller.set(0);
+		if (Controller.equals(Elevator.Elevator0)) OI.buttons[5].whenPressed(Robot.elevatorMotor1);
 	}
 	
 	

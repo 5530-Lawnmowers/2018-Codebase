@@ -1,15 +1,14 @@
 //package org.usfirst.frc.team5530.robot.commands;
 //
 //import edu.wpi.first.wpilibj.command.Command;
-//
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import edu.wpi.first.wpilibj.DriverStation;
 //import edu.wpi.first.wpilibj.PIDController;
 //import edu.wpi.first.wpilibj.PIDOutput;
 //import edu.wpi.first.wpilibj.SPI;
 //import edu.wpi.first.wpilibj.GenericHID.Hand;
 //import edu.wpi.first.wpilibj.Timer;
-//import edu.wpi.first.wpilibj.DigitalInput;
-//import edu.wpi.first.wpilibj.Servo;
+//import edu.wpi.first.wpilibj.AnalogInput;
 //
 //
 //import org.usfirst.frc.team5530.robot.subsystems.*;
@@ -18,19 +17,19 @@
 //import com.ctre.phoenix.motorcontrol.*;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 //
-//public class ServoActuationTestCMD extends Command{
+//public class PotentiometerActuationTestCMD extends Command{
 //	
 //	WPI_TalonSRX Controller;
 //	double time;
 //	double counter = 0;
 //	boolean flag = false;
-//	Servo currentServo;
+//	AnalogInput currentPotentiometer;
 //	
 //	
-//	public ServoActuationTestCMD(Servo currentServo, double time) {
-//		this.currentServo = currentServo;
+//	public PotentiometerActuationTestCMD(WPI_TalonSRX Controller, AnalogInput currentPotentiometer, double time) {
+//		this.currentPotentiometer = currentPotentiometer;
 //		this.time = time*50;
-//		requires(Robot.climb);
+//		requires(Robot.lift);
 //	}
 //	
 //	protected void initialize() {
@@ -38,10 +37,20 @@
 //	}
 //
 //	protected void execute() {
-//		if (counter <= time) currentServo.set(1);
-//		else if (time < counter && counter <= time*2) currentServo.set(0);
+//		if (counter <= time) {
+//			
+//		}
+//		else if (time < counter && counter <= time*1.1) {
+//			Controller.set(0);
+//			SmartDashboard.getBoolean("Potentiometer Accurate: ", currentPotentiometer.equals(Controller));
+//		}
+//		else if (time*1.1 < counter && counter <= time*2) {
+//			Controller.set(-1);
+//			SmartDashboard.getBoolean("Potentiometer Accurate: ", currentPotentiometer.equals(Controller));
+//		}
 //		else {
-//			currentServo.set(0);
+//			Controller.set(0);
+//			SmartDashboard.getBoolean("Potentiometer Accurate: ", currentPotentiometer.equals(Controller));
 //			flag = true;
 //		}
 //		counter++;
@@ -50,10 +59,10 @@
 //		return flag;
 //	}
 //	protected void end() {
-//		currentServo.set(0);
+//		Controller.set(0);
 //	}
 //	protected void interrupted() {
-//		currentServo.set(0);
+//		Controller.set(0);
 //	}
 //	
 //	

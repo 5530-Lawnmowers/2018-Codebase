@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.*;
 
 public class DeliverCMD extends Command{
 	public DeliverCMD() {
-		requires(Robot.lift);
+		requires(Robot.elevator);
 	}
 	
 	

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.networktables.*;
 
@@ -28,7 +29,8 @@ import org.usfirst.frc.team5530.robot.commands.*;
 public class Robot extends TimedRobot {
 	//Declareeach of the subsystems
 	public static Drivetrain drivetrain;
-	public static Lift lift;
+	public static Elevator elevator;
+	public static Arm arm;
 	public static Intake intake;
 	public static Climb climb;
 	public static OI oi;	
@@ -43,18 +45,18 @@ public class Robot extends TimedRobot {
 	
 	//Test Stuff
 	double time;
-	Command FRDriveTrainMotor;
-	Command FLDriveTrainMotor;
-	Command BRDriveTrainMotor;
-	Command BLDriveTrainMotor;
-	Command intakeMotor0;
-	Command intakeMotor1;
-	Command climbMotor0;
-	Command climbMotor1;
-	Command liftMotor1;
-	Command liftMotor2;	
-	Command servo0;
-	Command servo1;
+	public static Command FRDriveTrainMotor;
+	public static Command FLDriveTrainMotor;
+	public static Command BRDriveTrainMotor;
+	public static Command BLDriveTrainMotor;
+	public static Command intakeMotor0;
+	public static Command intakeMotor1;
+	public static Command climbMotor0;
+	public static Command climbMotor1;
+	public static Command elevatorMotor0;
+	public static Command elevatorMotor1;	
+//	Command servo0;
+//	Command servo1;
 	
 
 	/**
@@ -65,7 +67,8 @@ public class Robot extends TimedRobot {
 	public void robotInit() {
 		//create subystems	
 		drivetrain = new Drivetrain();
-		lift = new Lift();
+		elevator = new Elevator();
+		arm = new Arm();
 		intake = new Intake();
 		climb = new Climb();
 		oi = new OI();
@@ -81,7 +84,6 @@ public class Robot extends TimedRobot {
 		SmartDashboard.putNumber("I Value: ", 0.000000875);
 		SmartDashboard.putNumber("D Value: ", 3.0);
 		SmartDashboard.putNumber("Distance: ", 40960);
-		CameraServer.getInstance().startAutomaticCapture();
 		
 		//Test Stuff
 		time = 1;
@@ -93,10 +95,11 @@ public class Robot extends TimedRobot {
 		intakeMotor1 = new NonLimitedTestCMD(Intake.Intake1, time);
 		climbMotor0 = new NonLimitedTestCMD(Climb.Climb0, time);
 		climbMotor1 = new NonLimitedTestCMD(Climb.Climb1, time);
-		liftMotor1 = new ElevatorTestCMD(lift.Lift1, time, lift.liftSwitch0, lift.liftSwitch1);
-		liftMotor2 = new ElevatorTestCMD(lift.Lift2, time, lift.liftSwitch0, lift.liftSwitch1);
-		servo0 = new ServoActuationTestCMD(Servo0, time);
-		servo1 = new ServoActuationTestCMD(Servo1, time);
+		elevatorMotor0 = new ElevatorTestCMD(Elevator.Elevator0, time, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
+		elevatorMotor1 = new ElevatorTestCMD(Elevator.Elevator1, time, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
+//		servo0 = new ServoActuationTestCMD(Servo0, time);
+//		servo1 = new ServoActuationTestCMD(Servo1, time);
+		
 		
 	}
 
@@ -173,16 +176,15 @@ public class Robot extends TimedRobot {
 		//Encoder
 		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
 		
-		//Limit Switches - ALL OF THESE LIMIT SWITCHES HAVE A DEFAULT VALUE OF TRUE
-		SmartDashboard.putBoolean("Intake 0 Limit Switch", Intake.intakeSwitch0.get()); 
-		SmartDashboard.putBoolean("Intake 1 Limit Switch", Intake.intakeSwitch1.get());
-		SmartDashboard.putBoolean("Scale 0 Limit Switch", Lift.liftSwitch0.get());
-		SmartDashboard.putBoolean("Scale 1 Limit Switch", Lift.liftSwitch1.get());
-		
-		//Servos
-		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
-		SmartDashboard.putNumber("Servo 1 Value", Servo1.getPosition());
-		
+//		//Limit Switches - ALL OF THESE LIMIT SWITCHES HAVE A DEFAULT VALUE OF TRUE
+//		SmartDashboard.putBoolean("Intake 0 Limit Switch", Intake.intakeSwitch0.get()); 
+//		SmartDashboard.putBoolean("Intake 1 Limit Switch", Intake.intakeSwitch1.get());
+//		SmartDashboard.putBoolean("Scale 0 Limit Switch", Lift.liftSwitch0.get());
+//		SmartDashboard.putBoolean("Scale 1 Limit Switch", Lift.liftSwitch1.get());
+//		
+//		//Servos
+//		SmartDashboard.putNumber("Servo 0 Value", Servo0.getPosition());
+//		SmartDashboard.putNumber("Servo 1 Value", Servo1.getPosition());
 		
 	}
 
@@ -191,17 +193,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void testPeriodic() {
-		FRDriveTrainMotor.start();
-		FLDriveTrainMotor.start();
-		BRDriveTrainMotor.start();
-		BLDriveTrainMotor.start();
-		intakeMotor0.start();
-		intakeMotor1.start();
-		climbMotor0.start();
-		climbMotor1.start();
-		liftMotor1.start();
-		liftMotor2.start();
-		servo0.start();
-		servo1.start();
+
 	}
 }

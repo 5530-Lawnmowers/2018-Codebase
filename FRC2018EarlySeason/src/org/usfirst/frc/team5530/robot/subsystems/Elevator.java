@@ -14,25 +14,22 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Lift extends Subsystem {
+public class Elevator extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static WPI_TalonSRX Arm  = new WPI_TalonSRX(RobotMap.L0);
-	public static WPI_TalonSRX Lift1  = new WPI_TalonSRX(RobotMap.L1);
-	public static WPI_TalonSRX Lift2  = new WPI_TalonSRX(RobotMap.L2);
-	
-	public static AnalogInput potentiometer0 = new AnalogInput(RobotMap.P0);
+	public static WPI_TalonSRX Elevator0  = new WPI_TalonSRX(RobotMap.L1);
+	public static WPI_TalonSRX Elevator1  = new WPI_TalonSRX(RobotMap.L2);
 	
 	//Default Value of Limit Switch is true (open is true)
-	public static DigitalInput liftSwitch0 = new DigitalInput(RobotMap.LS2);
-	public static DigitalInput liftSwitch1 = new DigitalInput(RobotMap.LS3);
+	public static DigitalInput elevatorSwitchTop = new DigitalInput(RobotMap.LS2);
+	public static DigitalInput elevatorSwitchBot = new DigitalInput(RobotMap.LS3);
 	
 	//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
-		Lift2.set(ControlMode.Follower, (double)RobotMap.L1);
-		Lift2.setInverted(true);
+		Elevator1.set(ControlMode.Follower, (double)RobotMap.L1);
+		Elevator1.setInverted(true);
 	}
 	
 	public void initDefaultCommand() {

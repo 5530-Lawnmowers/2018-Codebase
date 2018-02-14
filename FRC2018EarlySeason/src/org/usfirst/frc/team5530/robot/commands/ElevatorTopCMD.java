@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Timer;
 
-import org.usfirst.frc.team5530.robot.subsystems.Lift;
+import org.usfirst.frc.team5530.robot.subsystems.Elevator;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -17,28 +17,28 @@ import com.ctre.phoenix.motorcontrol.*;
 
 public class ElevatorTopCMD extends Command{
 	public ElevatorTopCMD() {
-		requires(Robot.lift);
+		requires(Robot.elevator);
 	}
 	
 	protected void initialize() {
-		Lift.setFollowing();
-		Lift.Lift1.set(ControlMode.PercentOutput, 0);
+		Elevator.setFollowing();
+		Elevator.Elevator0.set(ControlMode.PercentOutput, 0);
 		Timer.delay(0.5);
 	}
 
 	protected void execute() {
-		Lift.Lift1.set(ControlMode.PercentOutput, 0.05);
-		
+		Elevator.Elevator0.set(ControlMode.PercentOutput, .625); //There is a small pause after button press
+		 
 	}
 	protected boolean isFinished() {
-		if (!Lift.liftSwitch0.get()) return true;
+		if (!Elevator.elevatorSwitchTop.get()) return true;
 		return false; 
 	}
 	protected void end() {
-		Lift.Lift1.set(0);
+		Elevator.Elevator0.set(0);
 	}
 	protected void interrupted() {
-		Lift.Lift1.set(0);
+		Elevator.Elevator0.set(0);
 	}
 	
 	

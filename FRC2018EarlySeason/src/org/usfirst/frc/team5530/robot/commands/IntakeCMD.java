@@ -26,7 +26,8 @@ public class IntakeCMD extends Command{
 		Intake.Intake0.set(ControlMode.PercentOutput, -1);//This sets both of them 
 	}
 	protected boolean isFinished() {
-		if (!Intake.intakeSwitch0.get() || !Intake.intakeSwitch1.get()) return true;
+		//if (!Intake.intakeSwitch0.get() || !Intake.intakeSwitch1.get()) return true;
+		//return false;
 		return false;
 	}
 	protected void end() {

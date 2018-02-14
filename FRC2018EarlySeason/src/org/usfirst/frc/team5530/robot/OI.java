@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5530.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -42,14 +43,15 @@ public class OI {
 				xboxButtonLB = new JoystickButton(XBController, 5),
 				xboxButtonRB = new JoystickButton(XBController, 6);
 
-		buttons[0].whileHeld(new ManualArmCMD()); 
-		buttons[3].whileHeld(new ClimbCMD());
-		buttons[6].toggleWhenPressed(new ElevatorBotCMD());
-		buttons[7].toggleWhenPressed(new ElevatorTopCMD());
+		buttons[0].whileHeld(new ManualArmCMD()); //Button 1
+		buttons[3].whileHeld(new ClimbCMD()); //Button 4
+		buttons[6].toggleWhenPressed(new ElevatorBotCMD()); //Button 7
+		buttons[7].toggleWhenPressed(new ElevatorTopCMD()); //Button 8
 		
 		xboxButtonLB.whileHeld(new DeliverCMD());
-		xboxButtonRB.whenPressed(new IntakeCMD());
+		xboxButtonRB.whenPressed(new IntakeCMD()); 
 		
+		if (DriverStation.getInstance().isTest()) buttons[5].whenPressed(Robot.FRDriveTrainMotor); //Button 6
 		
 //		Button[][] stickbutton = new Button[2][12]
 //		

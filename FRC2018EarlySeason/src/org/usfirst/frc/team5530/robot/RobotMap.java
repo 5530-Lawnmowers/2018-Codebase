@@ -18,8 +18,10 @@ public class RobotMap {
 	public static int BR = 3;
 	public static int BL = 4; 
 	
-	//Lift
+	//Arm
 	public static int L0 = 10; //10
+	
+	//Elevator
 	public static int L1 = 11; //11 
 	public static int L2 = 12; //12
 	

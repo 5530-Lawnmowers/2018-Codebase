@@ -37,6 +37,7 @@ public class CenterAutonCMD extends Command{
 		}
 		else {	
 			//Put right auton code here
+			
 		}
 	}
 	protected boolean isFinished() {

@@ -34,7 +34,6 @@ public class NonLimitedTestCMD extends Command{
 	protected void initialize() {
 		Intake.setFollowing();
 		Climb.setFollowing();
-		Drivetrain.setFollowing();
 	}
 
 	protected void execute() {
@@ -46,15 +45,30 @@ public class NonLimitedTestCMD extends Command{
 			flag = true;
 		}
 		counter++;
+		OI.buttons[5].cancelWhenPressed(this);
 	}
 	protected boolean isFinished() {
 		return flag;
 	}
 	protected void end() {
 		Controller.set(0);
+		if (Controller.equals(Drivetrain.frontRight)) OI.buttons[5].whenPressed(Robot.FLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.frontLeft)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.BRDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backRight)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.elevatorMotor0); // intakeMotor0
+//		else if (Controller.equals(Intake.Intake0)) OI.buttons[5].whenPressed(Robot.climbMotor0);
+//		else OI.buttons[5].whenPressed(Robot.elevatorMotor0);
 	}
 	protected void interrupted() {
 		Controller.set(0);
+		if (Controller.equals(Drivetrain.frontRight)) OI.buttons[5].whenPressed(Robot.FLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.frontLeft)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.BRDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backRight)) OI.buttons[5].whenPressed(Robot.BLDriveTrainMotor);
+		else if (Controller.equals(Drivetrain.backLeft)) OI.buttons[5].whenPressed(Robot.elevatorMotor0); //intakeMotor0
+//		else if (Controller.equals(Intake.Intake0)) OI.buttons[5].whenPressed(Robot.climbMotor0);
+//		else OI.buttons[5].whenPressed(Robot.elevatorMotor0);
 	}
 	
 	

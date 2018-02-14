@@ -44,12 +44,12 @@ public class XboxDriveCMD extends Command{
 		
 	}
 	double GetPositionFilteredL(double RawValueReadFromHw){
-		  double FilteredPosition = 0.09516*RawValueReadFromHw+0.9048*OutputOldL;
+		  double FilteredPosition = 0.39*RawValueReadFromHw+0.61*OutputOldL;
 		  OutputOldL = FilteredPosition;
 		  return FilteredPosition;
 	} 
 	double GetPositionFilteredR(double RawValueReadFromHw){
-		  double FilteredPosition = 0.09516*RawValueReadFromHw+0.9048*OutputOldR;
+		  double FilteredPosition = 0.39*RawValueReadFromHw+0.61*OutputOldR;
 		  OutputOldR = FilteredPosition;
 		  return FilteredPosition;
 	} 
@@ -83,23 +83,23 @@ public class XboxDriveCMD extends Command{
 		public double XBControllerR(double lStick, double rTrigger, double lTrigger) {
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down - lateral input from left Joystick
-			return rTrigger - lTrigger + lStick;
+			return -rTrigger + lTrigger + lStick;
 		}
 		
 		//Calculates left speed based on Controller output
 		public double XBControllerL(double lStick, double rTrigger, double lTrigger){
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down + lateral input from left Joystick
-			return rTrigger - lTrigger - lStick;
+			return rTrigger - lTrigger + lStick;
 		
 		}
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
 			
 			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) > .2) 
-				Drivetrain.backRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
+				Drivetrain.frontRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
 			else
-				Drivetrain.backRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
+				Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
 			if (Math.abs(OutputOldL - XBControllerL(lStick, rTrigger, lTrigger)) > .2) {
 				Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFilteredL((double)XBControllerL(lStick, rTrigger, lTrigger)));
 			}
