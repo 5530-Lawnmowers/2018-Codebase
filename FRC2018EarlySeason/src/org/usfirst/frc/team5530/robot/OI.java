@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import org.usfirst.frc.team5530.robot.commands.*;
-import org.usfirst.frc.team5530.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team5530.robot.subsystems.DrivetrainSS;
 
 
 /**
@@ -44,15 +44,16 @@ public class OI {
 				xboxButtonLB = new JoystickButton(XBController, 5),
 				xboxButtonRB = new JoystickButton(XBController, 6);
 
-		buttons[0].whileHeld(new ManualArmCMD()); //Button 1
-		buttons[3].whileHeld(new ClimbCMD()); //Button 4
-		buttons[6].toggleWhenPressed(new ElevatorBotCMD()); //Button 7
-		buttons[7].toggleWhenPressed(new ElevatorTopCMD()); //Button 8
+		buttons[0].whileHeld(new ManualArm()); //Button 1
+		buttons[3].whileHeld(new Climb()); //Button 4
+		buttons[6].toggleWhenPressed(new LiftBot()); //Button 7
+		buttons[7].toggleWhenPressed(new LiftTop()); //Button 8
+		buttons[9].toggleWhenPressed(new ArmTop()); //Button 10
 		
-		xboxButtonLB.whileHeld(new DeliverCMD());
-		xboxButtonRB.whenPressed(new IntakeCMD()); 
+		xboxButtonLB.whenPressed(new Deliver());
+		xboxButtonRB.toggleWhenPressed(new Intake()); 
 		
-		buttons[5].whenPressed(new NonLimitedTestCMD(Drivetrain.frontRight, 1)); //Button 6
+		//buttons[5].whenPressed(new NonLimitedTestCMD(Drivetrain.frontRight, 1)); //Button 6
 		
 //		Button[][] stickbutton = new Button[2][12]
 //		

@@ -16,7 +16,7 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Intake extends Subsystem {
+public class IntakeSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
@@ -31,7 +31,7 @@ public class Intake extends Subsystem {
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	public static void setFollowing() {
 		Intake1.set(ControlMode.Follower, (double)RobotMap.I0);
-			
+		Intake1.setInverted(true);
 	}
 	
 	public void initDefaultCommand() {

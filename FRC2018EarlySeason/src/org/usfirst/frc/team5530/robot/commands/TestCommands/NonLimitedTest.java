@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5530.robot.commands;
+package org.usfirst.frc.team5530.robot.commands.TestCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -15,25 +15,25 @@ import org.usfirst.frc.team5530.robot.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class NonLimitedTestCMD extends Command{
+public class NonLimitedTest extends Command{
 	
 	WPI_TalonSRX Controller;
 	double time;
 	double counter = 0;
 	boolean flag = false;
 	
-	public NonLimitedTestCMD(WPI_TalonSRX Controller, double time) {
+	public NonLimitedTest(WPI_TalonSRX Controller, double time) {
 		this.Controller = Controller;
 		this.time = time*50;
-		requires(Robot.intake);
-		requires(Robot.climb);
-		requires(Robot.drivetrain);
+		requires(Robot.intakeSS);
+		requires(Robot.climbSS);
+		requires(Robot.drivetrainSS);
 	}
 	
 	
 	protected void initialize() {
-		Intake.setFollowing();
-		Climb.setFollowing();
+		IntakeSS.setFollowing();
+		ClimbSS.setFollowing();
 		System.out.println("Running: " + Controller.getDeviceID());
 	}
 
@@ -53,10 +53,10 @@ public class NonLimitedTestCMD extends Command{
 	}
 	protected void end() {
 		Controller.set(0);
-		if (Controller.equals(Drivetrain.frontRight)) Robot.FLDriveTrainMotorTest.start();
-		else if (Controller.equals(Drivetrain.frontLeft)) Robot.BLDriveTrainMotorTest.start();
-		else if (Controller.equals(Drivetrain.backLeft)) Robot.BRDriveTrainMotorTest.start(); 
-		else if (Controller.equals(Drivetrain.backRight)) Robot.elevatorMotor0Test.start(); 
+		if (Controller.equals(DrivetrainSS.frontRight)) Robot.FLDriveTrainMotorTest.start();
+		else if (Controller.equals(DrivetrainSS.frontLeft)) Robot.BLDriveTrainMotorTest.start();
+		else if (Controller.equals(DrivetrainSS.backLeft)) Robot.BRDriveTrainMotorTest.start(); 
+		else if (Controller.equals(DrivetrainSS.backRight)) Robot.elevatorMotor0Test.start(); 
 		else Robot.elevatorMotor0Test.start(); 
 		System.out.println("End");
 	}

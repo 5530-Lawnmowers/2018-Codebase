@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5530.robot.commands;
+package org.usfirst.frc.team5530.robot.commands.TestCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -17,42 +17,35 @@ import org.usfirst.frc.team5530.robot.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class ElevatorTestCMD extends Command{
+public class ElevatorTest extends Command{
 	
-	WPI_TalonSRX Controller;
 	double time;
 	double counter = 0;
 	boolean finished = false;
 	boolean limitHit = false;
-	DigitalInput maxSwitch;
-	DigitalInput minSwitch;
 	
 	
-	public ElevatorTestCMD(WPI_TalonSRX Controller, double time, DigitalInput maxSwitch, DigitalInput minSwitch) {
-		this.Controller = Controller;
+	public ElevatorTest(double time) {
 		this.time = time*50;
-		this.maxSwitch = maxSwitch;
-		this.minSwitch = minSwitch;
-		requires(Robot.elevator);
+		requires(Robot.elevatorSS);
 	}
 	 
 	
 	protected void initialize() {
-		Elevator.setFollowing();
+		ElevatorSS.setFollowing();
 	}
 
 	protected void execute() {
-		if (!Elevator.elevatorSwitchTop.get()) limitHit = true;
+		if (!ElevatorSS.elevatorSwitchTop.get()) limitHit = true;
 		if (limitHit) {
-			Controller.set(-0.08);
-			if (!Elevator.elevatorSwitchBot.get()) finished = true;
-		}
-		else if (counter <= time) Controller.set(.25);
-		else if (time < counter && counter <= time*2) {
-			Controller.set(-0.08);
-			if (!Elevator.elevatorSwitchBot.get()) finished = true;
-		}
-		else finished = true;
+			ElevatorSS.Elevator0.set(-0.08);
+			if (!ElevatorSS.elevatorSwitchBot.get()) finished = true;
+		} else if (counter <= time) {
+			ElevatorSS.Elevator0.set(.25);
+		} else if (time < counter && counter <= time*2) {
+			ElevatorSS.Elevator0.set(-0.08);
+			if (!ElevatorSS.elevatorSwitchBot.get()) finished = true;
+		} else finished = true;
 		counter++;
 		//OI.buttons[5].cancelWhenPressed(this);
 	}
@@ -60,11 +53,10 @@ public class ElevatorTestCMD extends Command{
 		return finished;
 	}
 	protected void end() {
-		Controller.set(0);
-		Robot.armMotor0Test.start();
+		ElevatorSS.Elevator0.set(0);
 	}
 	protected void interrupted() {
-		Controller.set(0);
+		ElevatorSS.Elevator0.set(0);
 	}
 	
 	

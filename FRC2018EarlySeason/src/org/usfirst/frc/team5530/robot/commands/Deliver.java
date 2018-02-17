@@ -8,41 +8,38 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-import org.usfirst.frc.team5530.robot.subsystems.Intake;
+import org.usfirst.frc.team5530.robot.subsystems.IntakeSS;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
 //This command runs the motors in the intake system to dispense the cube from the robot
 
-public class DeliverCMD extends Command{
-	public DeliverCMD() {
-		requires(Robot.elevator);
+public class Deliver extends Command{
+	int counter;
+	public Deliver() {
+		requires(Robot.intakeSS);
 	}
 	
 	
 	protected void initialize() {
-		Intake.setFollowing();
-		
+		counter = 0;
+		IntakeSS.setFollowing();
 	}
 
 	protected void execute() {
-		Intake.Intake0.set(ControlMode.PercentOutput, 1);//This sets both of them 
-	
+		IntakeSS.Intake0.set(ControlMode.PercentOutput, -0.75);
+		counter++;
 	}
 	protected boolean isFinished() {
-		if (OI.XBController.getBumper(Hand.kLeft)) {
-			System.out.println("false");
-			return false;
-		}
+		if (counter <= 50) return false;
 		return true; 
 	}
 	protected void end() {
-		Intake.Intake0.set(0);
+		IntakeSS.Intake0.set(0);
 	}
 	protected void interrupted() {
-		Intake.Intake0.set(0);
-		
+		IntakeSS.Intake0.set(0);
 	}
 	
 	

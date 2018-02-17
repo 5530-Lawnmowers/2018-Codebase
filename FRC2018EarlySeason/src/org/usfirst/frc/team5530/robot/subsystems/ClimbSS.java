@@ -15,7 +15,7 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Climb extends Subsystem {
+public class ClimbSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	

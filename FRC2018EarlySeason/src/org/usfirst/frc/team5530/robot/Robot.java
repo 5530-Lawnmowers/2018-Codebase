@@ -18,6 +18,7 @@ import edu.wpi.first.networktables.*;
 //import all subsystems, no need to import anything else
 import org.usfirst.frc.team5530.robot.subsystems.*;
 import org.usfirst.frc.team5530.robot.commands.*;
+import org.usfirst.frc.team5530.robot.commands.TestCommands.*;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -28,20 +29,19 @@ import org.usfirst.frc.team5530.robot.commands.*;
  */
 public class Robot extends TimedRobot {
 	//Declareeach of the subsystems
-	public static Drivetrain drivetrain;
-	public static Elevator elevator;
-	public static Arm arm;
-	public static Intake intake;
-	public static Climb climb;
-	public static OI oi;	
+	public static DrivetrainSS drivetrainSS;
+	public static ElevatorSS elevatorSS;
+	public static ArmSS armSS;
+	public static IntakeSS intakeSS;
+	public static ClimbSS climbSS;
+	public static OI oi;
+//	Servo Servo0;
+//	Servo Servo1;
+
+	SendableChooser<Command> autonChooser;
+	
 	Command autonomousCommand;
 	Command initializeMotors;
-	Servo Servo0;
-	Servo Servo1;
-	SendableChooser autonChooser;
-	int pValue;
-	int iValue;
-	int dValue;
 	
 	//Test Stuff
 	double time;
@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
 	public static Command intakeMotor1Test;
 	public static Command climbMotor0Test;
 	public static Command climbMotor1Test;
+	public static Command elevatorTest;
 	public static Command elevatorMotor0Test;
 	public static Command elevatorMotor1Test;	
 	public static Command armMotor0Test;
@@ -67,38 +68,43 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		//create subystems	
-		drivetrain = new Drivetrain();
-		elevator = new Elevator();
-		arm = new Arm();
-		intake = new Intake();
-		climb = new Climb();
+		drivetrainSS = new DrivetrainSS();
+		elevatorSS = new ElevatorSS();
+		armSS = new ArmSS();
+		intakeSS = new IntakeSS();
+		climbSS = new ClimbSS();
+		
 		oi = new OI();
-		initializeMotors = new InitializeMotorsCMD();
-		Servo0 = new Servo(0);
-		Servo1 = new Servo(1); 
-		autonChooser = new SendableChooser();
-		autonChooser.addDefault("Center", new CenterAutonCMD());
+		initializeMotors = new InitializeMotors();
+//		Servo0 = new Servo(0);
+//		Servo1 = new Servo(1); 
+		autonChooser = new SendableChooser<Command>();
+		autonChooser.addDefault("Drive Forward and Deliver", new DriveForwardAndDeliver());
+		autonChooser.addObject("Turn", new DriveForwardAndTurn());
 		//autonChooser.addObject("Left", new LeftAuton());
 		//autonChooser.addObject("Right", new RightAuton());
 		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
-		SmartDashboard.putNumber("P Value: ", 0.02);
-		SmartDashboard.putNumber("I Value: ", 0.000000875);
-		SmartDashboard.putNumber("D Value: ", 3.0);
-		SmartDashboard.putNumber("Distance: ", 40960);
+		SmartDashboard.putNumber("P Value", 0.1);
+		SmartDashboard.putNumber("I Value", 0.000001);
+		SmartDashboard.putNumber("D Value", 15);
+		SmartDashboard.putNumber("Distance", 100);
+		SmartDashboard.putNumber("Turn Angle", 0);
 		
 		//Test Stuff
 		time = 1;
-		FRDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.frontRight, time);
-		FLDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.frontLeft, time);
-		BRDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.backRight, time);
-		BLDriveTrainMotorTest = new NonLimitedTestCMD(Drivetrain.backLeft, time);
-		intakeMotor0Test = new NonLimitedTestCMD(Intake.Intake0, time);
-		intakeMotor1Test = new NonLimitedTestCMD(Intake.Intake1, time);
-		climbMotor0Test = new NonLimitedTestCMD(Climb.Climb0, time);
-		climbMotor1Test = new NonLimitedTestCMD(Climb.Climb1, time);
-		elevatorMotor0Test = new ElevatorTestCMD(Elevator.Elevator0, time + 5, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
-		elevatorMotor1Test = new ElevatorTestCMD(Elevator.Elevator1, time + 5, Elevator.elevatorSwitchTop, Elevator.elevatorSwitchBot);
-		armMotor0Test = new PotentiometerActuationTestCMD(Arm.arm, Arm.potentiometer0, time);
+		FRDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.frontRight, time);
+		FLDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.frontLeft, time);
+		BRDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.backRight, time);
+		BLDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.backLeft, time);
+		intakeMotor0Test = new NonLimitedTest(IntakeSS.Intake0, time);
+		intakeMotor1Test = new NonLimitedTest(IntakeSS.Intake1, time);
+		climbMotor0Test = new NonLimitedTest(ClimbSS.Climb0, time);
+		climbMotor1Test = new NonLimitedTest(ClimbSS.Climb1, time);
+		elevatorTest = new ElevatorTest(time + 5);
+		elevatorMotor0Test = new IndividualElevatorTest(ElevatorSS.Elevator0);
+		elevatorMotor1Test = new IndividualElevatorTest(ElevatorSS.Elevator1);
+		
+		armMotor0Test = new PotentiometerActuationTest(ArmSS.arm, ArmSS.potentiometer0, time);
 //		servo0 = new ServoActuationTestCMD(Servo0, time);
 //		servo1 = new ServoActuationTestCMD(Servo1, time);
 		
@@ -112,7 +118,7 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		initializeMotors.start();
 	}
 
 	@Override
@@ -133,7 +139,6 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-		initializeMotors.start();
 		autonomousCommand = (Command) autonChooser.getSelected();
 		autonomousCommand.start();
 	}
@@ -143,17 +148,19 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		
+		Scheduler.getInstance().run();
+		SmartDashboard.putNumber("Right Encoder Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Left Encoder Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 	}
 	
 
 	@Override
 	public void teleopInit() {
+		initializeMotors.start();
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
 		// this line or comment it out.
-		
 	}
 
 	/**
@@ -163,21 +170,18 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
-		SmartDashboard.putNumber("Potentiometer Arm: ", Arm.potentiometer0.getValue());
+		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
+		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 	}
 	
 	
 	@Override
 	public void testInit() {
-		//Motors
-		SmartDashboard.putBoolean("C0", false);
-		SmartDashboard.putBoolean("C1", false);
-		boolean[] components = new boolean[] {false, false, false, false, false, false};	
-		SmartDashboard.putBooleanArray("Components", components);
-		
 		//Encoder
-		SmartDashboard.putNumber("FR Encoder Position", Drivetrain.frontRight.getSelectedSensorPosition(0));
-		
+		SmartDashboard.putNumber("FR Encoder Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+		Scheduler.getInstance().add(new NonLimitedTest(DrivetrainSS.frontRight, time));
 //		//Limit Switches - ALL OF THESE LIMIT SWITCHES HAVE A DEFAULT VALUE OF TRUE
 //		SmartDashboard.putBoolean("Intake 0 Limit Switch", Intake.intakeSwitch0.get()); 
 //		SmartDashboard.putBoolean("Intake 1 Limit Switch", Intake.intakeSwitch1.get());

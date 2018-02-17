@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
-import org.usfirst.frc.team5530.robot.subsystems.Arm;
-import org.usfirst.frc.team5530.robot.subsystems.Elevator;
+import org.usfirst.frc.team5530.robot.subsystems.ArmSS;
+import org.usfirst.frc.team5530.robot.subsystems.ElevatorSS;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
@@ -17,33 +17,42 @@ import com.ctre.phoenix.motorcontrol.*;
 //In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
 //This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
 
-public class ManualArmCMD extends Command{
+public class ManualArm extends Command{
 	
-	public ManualArmCMD() {
+	public ManualArm() {
 		super("ManualArmCMD");
-		requires(Robot.arm);
+		requires(Robot.armSS);
 	}
 	
 	protected void initialize() {
-		Elevator.setFollowing();
+		ElevatorSS.setFollowing();
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		double value = OI.stick1.getY();
-		Arm.arm.set(ControlMode.PercentOutput, -value);
+		if(ArmSS.potentiometer0.getValue() > 500 && ArmSS.potentiometer0.getValue() < 3700)
+			ArmSS.arm.set(ControlMode.PercentOutput, value);
+		else if(ArmSS.potentiometer0.getValue() <= 500){
+			if (value < 0) ArmSS.arm.set(ControlMode.PercentOutput, value);
+			else ArmSS.arm.set(0);
+		}else if(ArmSS.potentiometer0.getValue() >= 3700) {
+			if (value > 0) ArmSS.arm.set(ControlMode.PercentOutput, value);
+			else ArmSS.arm.set(0);
+		}
 		if(!OI.stick1.getTrigger())
-			Arm.arm.stopMotor();
+			ArmSS.arm.stopMotor();
+			
 	}
 	protected boolean isFinished() {
 		if (OI.getButtonValue(0)) return false;
 		return true;
 	}
 	protected void end() {
-		Arm.arm.set(ControlMode.PercentOutput, 0);
+		ArmSS.arm.set(ControlMode.PercentOutput, 0);
 		
 	}
 	protected void interrupted() {
-		Arm.arm.set(ControlMode.PercentOutput, 0);
+		ArmSS.arm.set(ControlMode.PercentOutput, 0);
 		
 	}
 	

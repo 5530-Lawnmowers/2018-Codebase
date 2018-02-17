@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Elevator extends Subsystem {
+public class ElevatorSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
@@ -25,11 +25,15 @@ public class Elevator extends Subsystem {
 	public static DigitalInput elevatorSwitchTop = new DigitalInput(RobotMap.LS2);
 	public static DigitalInput elevatorSwitchBot = new DigitalInput(RobotMap.LS3);
 	
+	
+	
 	//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {
 		Elevator1.set(ControlMode.Follower, (double)RobotMap.E0);
 		Elevator1.setInverted(true);
+		ElevatorSS.Elevator0.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		Elevator0.setSensorPhase(true);
 	}
 	
 	public void initDefaultCommand() {

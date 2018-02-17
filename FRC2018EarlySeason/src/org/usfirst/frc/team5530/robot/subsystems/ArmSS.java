@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Arm extends Subsystem {
+public class ArmSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	

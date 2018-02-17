@@ -14,7 +14,7 @@ import com.ctre.phoenix.motorcontrol.*;
 /**
  *
  */
-public class Drivetrain extends Subsystem {
+public class DrivetrainSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
@@ -27,20 +27,16 @@ public class Drivetrain extends Subsystem {
 	public static void setFollowing() {
 		backRight.set(ControlMode.Follower, (double)RobotMap.FR);
 		backLeft.set(ControlMode.Follower, (double)RobotMap.FL);
-
-		Drivetrain.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		Drivetrain.frontRight.setSensorPhase(true);
-		Drivetrain.frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
-		Drivetrain.frontLeft.setSensorPhase(true);
 		
-		
+		DrivetrainSS.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
+		DrivetrainSS.frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 			
 	}
 		//this method is called if no other command is called by the scheduler to use this subsystem	
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
-		setDefaultCommand(new XboxDriveCMD());
+		setDefaultCommand(new XboxDrive());
 		//By defualt the Drivetrain system will call command xboxdrive by scheduler
 	
 	}

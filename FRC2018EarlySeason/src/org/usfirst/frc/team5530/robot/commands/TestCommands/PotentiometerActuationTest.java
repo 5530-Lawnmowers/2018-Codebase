@@ -1,4 +1,4 @@
-package org.usfirst.frc.team5530.robot.commands;
+package org.usfirst.frc.team5530.robot.commands.TestCommands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -17,22 +17,19 @@ import org.usfirst.frc.team5530.robot.*;
 import com.ctre.phoenix.motorcontrol.*;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-public class PotentiometerActuationTestCMD extends Command{
+public class PotentiometerActuationTest extends Command{
 	
-	WPI_TalonSRX Controller;
 	double time;
 	double counter = 0;
 	boolean finished = false;
 	boolean isGoingUp = true;
-	AnalogInput currentPotentiometer;
-	double top = 450;
-	double bot = 2600;
+	public static final double top = 450;
+	public static final double bot = 2600;
 	
 	
-	public PotentiometerActuationTestCMD(WPI_TalonSRX Controller, AnalogInput currentPotentiometer, double time) {
-		this.currentPotentiometer = currentPotentiometer;
+	public PotentiometerActuationTest(double time) {
 		this.time = time*50;
-		requires(Robot.arm);
+		requires(Robot.armSS);
 	}
 	
 	protected void initialize() {
@@ -40,22 +37,23 @@ public class PotentiometerActuationTestCMD extends Command{
 	}
 
 	protected void execute() {
-		if (currentPotentiometer.getValue() >= top && isGoingUp && counter <= time * .5) Controller.set(-0.75);
-		else if (isGoingUp) {
-			Controller.set(0.75);
+		if (ArmSS.potentiometer0.getValue() >= top && isGoingUp && counter <= time){ 
+			ArmSS.arm.set(-0.75);
+		}else if (isGoingUp) {
+			ArmSS.arm.set(0.75);
 			isGoingUp = false;
-		}
-		else if (currentPotentiometer.getValue() <= bot && counter < time) Controller.set(0.75);
-		else finished = true;
-	}
+		}else if (ArmSS.potentiometer0.getValue() <= bot && counter < time * 2) {
+			ArmSS.arm.set(0.75);
+		}else finished = true;
+	}	
 	protected boolean isFinished() {
 		return finished;
 	}
 	protected void end() {
-		Controller.set(0);
+		ArmSS.arm.set(0);
 	}
 	protected void interrupted() {
-		Controller.set(0);
+		ArmSS.arm.set(0);
 	}
 	
 	

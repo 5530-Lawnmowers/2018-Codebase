@@ -1,0 +1,67 @@
+package org.usfirst.frc.team5530.robot.commands;
+
+import edu.wpi.first.wpilibj.command.Command;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+
+import org.usfirst.frc.team5530.robot.subsystems.DrivetrainSS;
+import org.usfirst.frc.team5530.robot.*;
+
+import com.ctre.phoenix.motorcontrol.*;
+
+public class DriveForward extends Command{
+	double encodeDistance;
+	int startDistanceR;
+	int startDistanceL;
+	public DriveForward() {
+		super("DriveForwardTalonBasedCMD");
+		requires(Robot.drivetrainSS);
+		
+	}
+	protected void initialize() {
+		DrivetrainSS.setFollowing();
+		startDistanceR = DrivetrainSS.frontRight.getSelectedSensorPosition(0);
+		startDistanceL = DrivetrainSS.frontLeft.getSelectedSensorPosition(0);
+		double distance = SmartDashboard.getNumber("Distance", 0);
+		double rotations = distance / (6 * Math.PI);
+		this.encodeDistance = rotations * 1024;
+	}
+	//Whenever this command is called, setspeeds is called
+	protected void execute() {
+		//Switch: .1, 1.0E-6, 15
+		//Scale: .09, 1.0E-8, 15
+		double proportional = SmartDashboard.getNumber("P Value", 0);
+		double integral = SmartDashboard.getNumber("I Value", 0);
+		double derivative = SmartDashboard.getNumber("D Value", 0);
+		
+		DrivetrainSS.frontRight.config_kP(0, proportional, 0);
+		DrivetrainSS.frontLeft.config_kP(0, proportional, 0);
+		DrivetrainSS.frontRight.config_kI(0, integral, 0);
+		DrivetrainSS.frontLeft.config_kI(0, integral, 0);
+		DrivetrainSS.frontRight.config_kD(0, derivative, 0);
+		DrivetrainSS.frontLeft.config_kD(0, derivative, 0);
+		
+		DrivetrainSS.frontRight.set(ControlMode.Position, startDistanceR - Math.rint(encodeDistance));
+		DrivetrainSS.frontLeft.set(ControlMode.Position, startDistanceL + Math.rint(encodeDistance));
+		
+		System.out.println(proportional + " " + integral + " " + derivative);
+		SmartDashboard.putNumber("Target Position", encodeDistance);
+		SmartDashboard.putNumber("Current Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - startDistanceL);
+	}
+	protected boolean isFinished() {
+		if (encodeDistance - (DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - startDistanceL) > 200) return false;
+		return true;
+	}
+	protected void end() {
+		
+	}
+	protected void interrupted() {
+		
+	}
+	
+}
