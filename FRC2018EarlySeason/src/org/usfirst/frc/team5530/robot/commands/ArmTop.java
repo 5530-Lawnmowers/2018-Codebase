@@ -35,11 +35,6 @@ public class ArmTop extends Command{
 	}
 
 	protected void execute() {
-//		distance = Elevator.Elevator0.getSelectedSensorPosition(0);
-//		if (distance > 17000)
-//			Elevator.Elevator0.set(ControlMode.PercentOutput, -.5);
-//		else if (distance < 15000)
-//			Elevator.Elevator0.set(ControlMode.PercentOutput, .5);
 		if (ArmSS.potentiometer0.getValue() >= 500) ArmSS.arm.set(1);
 		else ArmSS.arm.set(0);
 		

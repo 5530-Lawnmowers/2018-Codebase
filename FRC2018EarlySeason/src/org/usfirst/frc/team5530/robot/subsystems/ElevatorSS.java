@@ -26,7 +26,6 @@ public class ElevatorSS extends Subsystem {
 	public static DigitalInput elevatorSwitchBot = new DigitalInput(RobotMap.LS3);
 	
 	
-	
 	//this method is called if no other command is called by the scheduler to use this subsystem
 	
 	public static void setFollowing() {

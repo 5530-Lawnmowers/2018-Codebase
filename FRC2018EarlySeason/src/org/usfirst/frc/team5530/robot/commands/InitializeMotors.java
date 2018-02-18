@@ -46,6 +46,8 @@ public class InitializeMotors extends Command{
 		DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, 0);
 		DrivetrainSS.frontRight.setSelectedSensorPosition(0, 0, 0);
 		DrivetrainSS.frontLeft.setSelectedSensorPosition(0, 0, 0);
+		ClimbSS.servo0.set(.33);
+		ClimbSS.servo1.set(.33);
 	}
 	protected void interrupted() {
 		

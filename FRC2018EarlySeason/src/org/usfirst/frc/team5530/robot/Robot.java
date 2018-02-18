@@ -81,6 +81,7 @@ public class Robot extends TimedRobot {
 		autonChooser = new SendableChooser<Command>();
 		autonChooser.addDefault("Drive Forward and Deliver", new DriveForwardAndDeliver());
 		autonChooser.addObject("Turn", new DriveForwardAndTurn());
+		autonChooser.addObject("CenterLeftSwitch", new CenterLeftSwitch());
 		//autonChooser.addObject("Left", new LeftAuton());
 		//autonChooser.addObject("Right", new RightAuton());
 		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);

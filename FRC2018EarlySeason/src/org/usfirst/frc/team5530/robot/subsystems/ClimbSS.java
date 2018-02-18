@@ -22,8 +22,8 @@ public class ClimbSS extends Subsystem {
 	public static WPI_TalonSRX Climb0  = new WPI_TalonSRX(RobotMap.C0);
 	public static WPI_TalonSRX Climb1  = new WPI_TalonSRX(RobotMap.C1);
 	
-	//public static Servo servo0 = new Servo(RobotMap.S0);
-	//public static Servo servo1 = new Servo(RobotMap.S1);
+	public static Servo servo0 = new Servo(RobotMap.S0);
+	public static Servo servo1 = new Servo(RobotMap.S1);
 			
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	public static void setFollowing() {
