@@ -21,6 +21,8 @@ public class IndividualElevatorTest extends Command{
 	
 	WPI_TalonSRX Controller;
 	double counter;
+	boolean isGoingUp;
+	boolean isFinished;
 	
 	public IndividualElevatorTest(WPI_TalonSRX Controller) {
 		this.Controller = Controller;
@@ -30,26 +32,30 @@ public class IndividualElevatorTest extends Command{
 	
 	protected void initialize() {
 		counter = 0;
+		isGoingUp = false;
+		isFinished = false;
+		System.out.println("Running Elevator Motor" + Controller.getDeviceID());
 	}
 
 	protected void execute() {
-		if (counter < 50) {
-			if (Controller.equals(ElevatorSS.Elevator0)) Controller.set(-.1);
-			else Controller.set(.1);
-		} else if (counter >= 50 && counter <= 100) {
-			if (Controller.equals(ElevatorSS.Elevator0)) Controller.set(.1);
-			else Controller.set(-.1);
-		}
-		counter++;
+		if (ElevatorSS.elevatorSwitchTop.get() && isGoingUp && counter <= 7){ 
+			Controller.set(.35);
+		}else if (isGoingUp) {
+			Controller.set(-.08);
+			isGoingUp = false;
+		}else if (ElevatorSS.elevatorSwitchBot.get() && counter < 14) {
+			ArmSS.arm.set(-.08);
+		}else isFinished = true;
+		counter ++;
 	}
 	protected boolean isFinished() {
-		if (counter > 100) return true;
-		return false;
+		return isFinished;
 	}
 	protected void end() {
 		Controller.set(0);
 		if (Controller.equals(ElevatorSS.Elevator0)) Robot.elevatorMotor1Test.start();
 		else Robot.elevatorTest.start();
+		System.out.println("End");
 	}
 	protected void interrupted() {
 		Controller.set(0);

@@ -21,8 +21,8 @@ public class ElevatorTest extends Command{
 	
 	double time;
 	double counter = 0;
-	boolean finished = false;
-	boolean limitHit = false;
+	boolean finished;
+	boolean limitHit;
 	
 	
 	public ElevatorTest(double time) {
@@ -33,6 +33,9 @@ public class ElevatorTest extends Command{
 	
 	protected void initialize() {
 		ElevatorSS.setFollowing();
+		finished = false;
+		limitHit = false;
+		System.out.println("Running Elevatory Full");
 	}
 
 	protected void execute() {
@@ -54,6 +57,8 @@ public class ElevatorTest extends Command{
 	}
 	protected void end() {
 		ElevatorSS.Elevator0.set(0);
+		Robot.armMotorTest.start();
+		System.out.println("End");
 	}
 	protected void interrupted() {
 		ElevatorSS.Elevator0.set(0);

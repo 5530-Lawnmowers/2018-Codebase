@@ -35,6 +35,7 @@ public class NonLimitedTest extends Command{
 		IntakeSS.setFollowing();
 		ClimbSS.setFollowing();
 		System.out.println("Running: " + Controller.getDeviceID());
+		flag = false;
 	}
 
 	protected void execute() {

@@ -28,13 +28,14 @@ public class Turn extends Command implements PIDOutput{
 	double initialAngle;
 	
 	public double error = 4;
-	static final double kP = 0.03;
-	static final double kI = 0.00;
-	static final double kD = 0.08;
-	static final double kF = 0.00;
+	static double kP;
+	static double kI;
+	static double kD;
+	static double kF;
 	
-	public Turn() {
+	public Turn(double angle) {
 		super("TurnCMD");
+		targetAngle = angle;
 		requires(Robot.drivetrainSS);
 		//Drivetrain.FREncoder.setPIDSourceType(PIDSourceType.kDisplacement);
 		//Drivetrain.FREncoder.reset();
@@ -45,24 +46,27 @@ public class Turn extends Command implements PIDOutput{
 		} catch (RuntimeException ex){
 			DriverStation.reportError("Error instantiating navX-MXP: " + ex.getMessage(), true);
 		}
-		
-		controller = new PIDController(kP, kI, kD, kF, ahrs, this);
-		controller.setInputRange(-180f, 180f);
-		controller.setOutputRange(-1.0, 1.0);
-		controller.setAbsoluteTolerance(error);
-		controller.setContinuous();
-		
 	}
 	
 	
 	//A method to limit an input double to the range -1.0 to 1.0
 	
 	protected void initialize() {
+		ahrs.reset();
 		DrivetrainSS.setFollowing();
-		targetAngle = 90; //SmartDashboard.getNumber("Turn Angle", 0);
-		controller.setSetpoint(ahrs.getAngle() + targetAngle);
-		controller.enable();
 		initialAngle = ahrs.getAngle();
+		System.out.println(initialAngle);
+		kP = SmartDashboard.getNumber("Turn P Value", 0);
+		kI = SmartDashboard.getNumber("Turn I Value", 0);
+		kD = SmartDashboard.getNumber("Turn D Value", 0);
+		controller = new PIDController(kP, kI, kD, kF, ahrs, this);
+		controller.reset();
+		controller.setInputRange(-180f, 180f);
+		controller.setOutputRange(-1.0, 1.0);
+		controller.setAbsoluteTolerance(error);
+		controller.setContinuous();
+		controller.setSetpoint(initialAngle + targetAngle);
+		controller.enable();
 	}
 	
 	protected void execute() {
@@ -72,18 +76,22 @@ public class Turn extends Command implements PIDOutput{
 	}
 	
 	protected boolean isFinished() {
-		if (Math.abs(ahrs.getAngle() - (initialAngle + targetAngle)) < error) return true;
+		if(controller.onTarget()) return true;
 		return false;
 	}
 	
 	protected void end() {
+		System.out.println(ahrs.getAngle());
+		System.out.println("End");
 		DrivetrainSS.frontRight.stopMotor();
 		DrivetrainSS.frontLeft.stopMotor();
+		controller.reset();
 	}
 	
 	protected void interrupted() {
 		DrivetrainSS.frontLeft.stopMotor();
 		DrivetrainSS.frontRight.stopMotor();
+		controller.reset();
 	}
 	
 	@Override

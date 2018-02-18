@@ -38,19 +38,21 @@ public class PotentiometerActuationTest extends Command{
 
 	protected void execute() {
 		if (ArmSS.potentiometer0.getValue() >= top && isGoingUp && counter <= time){ 
-			ArmSS.arm.set(-0.75);
+			ArmSS.arm.set(1);
 		}else if (isGoingUp) {
-			ArmSS.arm.set(0.75);
+			ArmSS.arm.set(-1);
 			isGoingUp = false;
 		}else if (ArmSS.potentiometer0.getValue() <= bot && counter < time * 2) {
-			ArmSS.arm.set(0.75);
+			ArmSS.arm.set(1);
 		}else finished = true;
+		counter ++;
 	}	
 	protected boolean isFinished() {
 		return finished;
 	}
 	protected void end() {
 		ArmSS.arm.set(0);
+		System.out.println("End");
 	}
 	protected void interrupted() {
 		ArmSS.arm.set(0);

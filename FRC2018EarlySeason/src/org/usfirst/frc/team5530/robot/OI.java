@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import org.usfirst.frc.team5530.robot.commands.*;
 import org.usfirst.frc.team5530.robot.subsystems.DrivetrainSS;
+import org.usfirst.frc.team5530.robot.commands.TestCommands.*;
 
 
 /**
@@ -53,7 +54,7 @@ public class OI {
 		xboxButtonLB.whenPressed(new Deliver());
 		xboxButtonRB.toggleWhenPressed(new Intake()); 
 		
-		//buttons[5].whenPressed(new NonLimitedTestCMD(Drivetrain.frontRight, 1)); //Button 6
+		buttons[5].whenPressed(new NonLimitedTest(DrivetrainSS.frontRight, 1)); //Button 6
 		
 //		Button[][] stickbutton = new Button[2][12]
 //		

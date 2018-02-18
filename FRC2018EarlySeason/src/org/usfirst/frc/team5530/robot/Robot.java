@@ -56,7 +56,7 @@ public class Robot extends TimedRobot {
 	public static Command elevatorTest;
 	public static Command elevatorMotor0Test;
 	public static Command elevatorMotor1Test;	
-	public static Command armMotor0Test;
+	public static Command armMotorTest;
 //	Command servo0;
 //	Command servo1;
 	
@@ -84,11 +84,12 @@ public class Robot extends TimedRobot {
 		//autonChooser.addObject("Left", new LeftAuton());
 		//autonChooser.addObject("Right", new RightAuton());
 		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
-		SmartDashboard.putNumber("P Value", 0.1);
-		SmartDashboard.putNumber("I Value", 0.000001);
-		SmartDashboard.putNumber("D Value", 15);
-		SmartDashboard.putNumber("Distance", 100);
-		SmartDashboard.putNumber("Turn Angle", 0);
+		SmartDashboard.putNumber("Forward P Value", 0.1);
+		SmartDashboard.putNumber("Forward I Value", 0.000001);
+		SmartDashboard.putNumber("Forward D Value", 15);
+		SmartDashboard.putNumber("Turn P Value", 0.05);
+		SmartDashboard.putNumber("Turn I Value", 0);
+		SmartDashboard.putNumber("Turn D Value", 0);
 		
 		//Test Stuff
 		time = 1;
@@ -100,11 +101,11 @@ public class Robot extends TimedRobot {
 		intakeMotor1Test = new NonLimitedTest(IntakeSS.Intake1, time);
 		climbMotor0Test = new NonLimitedTest(ClimbSS.Climb0, time);
 		climbMotor1Test = new NonLimitedTest(ClimbSS.Climb1, time);
-		elevatorTest = new ElevatorTest(time + 5);
+		elevatorTest = new ElevatorTest(time + 6);
 		elevatorMotor0Test = new IndividualElevatorTest(ElevatorSS.Elevator0);
 		elevatorMotor1Test = new IndividualElevatorTest(ElevatorSS.Elevator1);
 		
-		armMotor0Test = new PotentiometerActuationTest(ArmSS.arm, ArmSS.potentiometer0, time);
+		armMotorTest = new PotentiometerActuationTest(time);
 //		servo0 = new ServoActuationTestCMD(Servo0, time);
 //		servo1 = new ServoActuationTestCMD(Servo1, time);
 		

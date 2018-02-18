@@ -18,26 +18,25 @@ public class DriveForward extends Command{
 	double encodeDistance;
 	int startDistanceR;
 	int startDistanceL;
-	public DriveForward() {
+	double distance;
+	public DriveForward(double distance) {
 		super("DriveForwardTalonBasedCMD");
 		requires(Robot.drivetrainSS);
-		
+		double rotations = distance / (6 * Math.PI);
+		this.encodeDistance = rotations * 1024;
 	}
 	protected void initialize() {
 		DrivetrainSS.setFollowing();
 		startDistanceR = DrivetrainSS.frontRight.getSelectedSensorPosition(0);
 		startDistanceL = DrivetrainSS.frontLeft.getSelectedSensorPosition(0);
-		double distance = SmartDashboard.getNumber("Distance", 0);
-		double rotations = distance / (6 * Math.PI);
-		this.encodeDistance = rotations * 1024;
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		//Switch: .1, 1.0E-6, 15
 		//Scale: .09, 1.0E-8, 15
-		double proportional = SmartDashboard.getNumber("P Value", 0);
-		double integral = SmartDashboard.getNumber("I Value", 0);
-		double derivative = SmartDashboard.getNumber("D Value", 0);
+		double proportional = SmartDashboard.getNumber("Forward P Value", 0);
+		double integral = SmartDashboard.getNumber("Forward I Value", 0);
+		double derivative = SmartDashboard.getNumber("Forward D Value", 0);
 		
 		DrivetrainSS.frontRight.config_kP(0, proportional, 0);
 		DrivetrainSS.frontLeft.config_kP(0, proportional, 0);
