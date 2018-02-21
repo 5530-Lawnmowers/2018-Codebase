@@ -32,7 +32,8 @@ public class ArcTurn extends Command{
 	double outsideI = .000025;
 	double leftP;
 	double rightP;
-	int error = 1;
+	double counter;
+	int error = 7;
 	public ArcTurn(double radius, double arcLength, double speed, double accelerationTime, String direction) { // speed is in radians per s.True is left, false is right
 		super("DriveForwardTalonBasedCMD");
 		requires(Robot.drivetrainSS);
@@ -52,9 +53,7 @@ public class ArcTurn extends Command{
 			leftRadius = outerRadius;
 			leftP = outsideP;
 			rightP = insideP;
-		}else DriverStation.reportError("Ya fucked up mate", true);
-		
-		
+		}else DriverStation.reportError("Ya fucked up mate", true);		
 	}
 	protected void initialize() {
 		DrivetrainSS.setFollowing();
@@ -66,6 +65,8 @@ public class ArcTurn extends Command{
 		
 		DrivetrainSS.frontLeft.configMotionCruiseVelocity((int) convertToTicks(leftRadius * angularVelocity), 0);
 		DrivetrainSS.frontLeft.configMotionAcceleration((int)convertToTicks(leftRadius * angularVelocity / accelerationTime), 0);
+		
+		counter = 0;
 	}
 	
 	double convertToTicks(double inches) {
@@ -96,20 +97,23 @@ public class ArcTurn extends Command{
 		DrivetrainSS.frontRight.set(ControlMode.MotionMagic, startDistanceR - convertToTicks(arcLength * rightRadius));
 		
 		DrivetrainSS.frontLeft.set(ControlMode.MotionMagic, startDistanceL + convertToTicks(arcLength * leftRadius));
-
 		
 		SmartDashboard.putNumber("Target Position R", convertToTicks(arcLength * rightRadius));
 		SmartDashboard.putNumber("Target Position L", convertToTicks(arcLength * leftRadius));
 		SmartDashboard.putNumber("Current Position R", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
 		SmartDashboard.putNumber("Current Position L", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 		
-		System.out.println("Right Error: " + Math.abs(DrivetrainSS.frontRight.getSelectedSensorPosition(0) - (startDistanceR - convertToTicks(arcLength * rightRadius))));
-		System.out.println("Left Error: " + Math.abs(DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - (startDistanceL + convertToTicks(arcLength * leftRadius))));
 	}
 	protected boolean isFinished() {
 //		if (Math.abs(DrivetrainSS.frontRight.getSelectedSensorPosition(0) - (startDistanceR + convertToTicks(arcLength * rightRadius))) < convertToTicks(error) &&
 //				Math.abs(DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - (startDistanceR + convertToTicks(arcLength * leftRadius))) < convertToTicks(error)) return true;
 		
+		if (DrivetrainSS.frontRight.getSelectedSensorVelocity(0) <= 0 && DrivetrainSS.frontLeft.getSelectedSensorVelocity(0) <= 0) {
+			if (counter > 25) return true;
+			counter++;
+		} else {
+			counter = 0;
+		}
 		return false;
 	}
 	protected void end() {
