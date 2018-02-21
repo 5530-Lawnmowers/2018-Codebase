@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 import org.usfirst.frc.team5530.robot.subsystems.*;
@@ -46,8 +47,9 @@ public class InitializeMotors extends Command{
 		DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, 0);
 		DrivetrainSS.frontRight.setSelectedSensorPosition(0, 0, 0);
 		DrivetrainSS.frontLeft.setSelectedSensorPosition(0, 0, 0);
-		ClimbSS.servo0.set(.33);
-		ClimbSS.servo1.set(.33);
+		ClimbSS.servo0.set(.66);
+		ClimbSS.servo1.set(.66);
+		Timer.delay(.1);
 	}
 	protected void interrupted() {
 		

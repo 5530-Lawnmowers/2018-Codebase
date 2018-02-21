@@ -34,9 +34,9 @@ public class DriveForward extends Command{
 	protected void execute() {
 		//Switch: .1, 1.0E-6, 15
 		//Scale: .09, 1.0E-8, 15
-		double proportional = SmartDashboard.getNumber("Forward P Value", 0);
-		double integral = SmartDashboard.getNumber("Forward I Value", 0);
-		double derivative = SmartDashboard.getNumber("Forward D Value", 0);
+		double proportional = SmartDashboard.getNumber("Forward P Value", 0.15);
+		double integral = SmartDashboard.getNumber("Forward I Value", 0.000001);
+		double derivative = SmartDashboard.getNumber("Forward D Value", 0.10);
 		
 		DrivetrainSS.frontRight.config_kP(0, proportional, 0);
 		DrivetrainSS.frontLeft.config_kP(0, proportional, 0);
@@ -45,16 +45,15 @@ public class DriveForward extends Command{
 		DrivetrainSS.frontRight.config_kD(0, derivative, 0);
 		DrivetrainSS.frontLeft.config_kD(0, derivative, 0);
 		
-		DrivetrainSS.frontRight.set(ControlMode.Position, startDistanceR - Math.rint(encodeDistance));
-		DrivetrainSS.frontLeft.set(ControlMode.Position, startDistanceL + Math.rint(encodeDistance));
+		DrivetrainSS.frontRight.set(ControlMode.Position,- Math.rint(encodeDistance));
+		DrivetrainSS.frontLeft.set(ControlMode.Position, Math.rint(encodeDistance));
 		
-		System.out.println(proportional + " " + integral + " " + derivative);
 		SmartDashboard.putNumber("Target Position", encodeDistance);
-		SmartDashboard.putNumber("Current Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - startDistanceL);
+		SmartDashboard.putNumber("Current Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 	}
 	protected boolean isFinished() {
-		if (encodeDistance - (DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - startDistanceL) > 200) return false;
-		return true;
+		if ((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200) return true;
+		return false;
 	}
 	protected void end() {
 		

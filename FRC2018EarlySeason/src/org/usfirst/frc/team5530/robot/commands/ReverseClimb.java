@@ -1,49 +1,44 @@
 package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.Timer;
 
-import org.usfirst.frc.team5530.robot.subsystems.ArmSS;
-import org.usfirst.frc.team5530.robot.subsystems.ElevatorSS;
+import org.usfirst.frc.team5530.robot.subsystems.ClimbSS;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
-//This command turns the motors to move the arm to the top of the elevator
+//This command turns the motors to lift the robot
 
-public class ArmTop extends Command{
-	
-	
-	public ArmTop() {
-		requires(Robot.armSS);
-		
+public class ReverseClimb extends Command{
+	public ReverseClimb() {
+		requires(Robot.climbSS);
 	}
 	
+	
 	protected void initialize() {
-		ElevatorSS.setFollowing();
+		ClimbSS.setFollowing();
+		
 	}
 
 	protected void execute() {
-		if (ArmSS.potentiometer0.getValue() >= 500) ArmSS.arm.set(1);
-		else ArmSS.arm.set(0);
-		
+		ClimbSS.Climb0.set(ControlMode.PercentOutput, SmartDashboard.getNumber("ClimbSpeed", 0.3));
 	}
 	protected boolean isFinished() {
-		return false;
+		if (OI.getButtonValue(3)) return false;
+		return true; 
 	}
 	protected void end() {
-		ArmSS.arm.set(0);
+		ClimbSS.Climb0.set(0);
 	}
 	protected void interrupted() {
-		ArmSS.arm.set(0);
+		ClimbSS.Climb0.set(0);
 	}
-	
-	
-	
 }
-
+	
+	
+	

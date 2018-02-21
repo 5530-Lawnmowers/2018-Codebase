@@ -57,8 +57,8 @@ public class Robot extends TimedRobot {
 	public static Command elevatorMotor0Test;
 	public static Command elevatorMotor1Test;	
 	public static Command armMotorTest;
-//	Command servo0;
-//	Command servo1;
+	public static Command servo0;
+	public static Command servo1;
 	
 
 	/**
@@ -75,23 +75,31 @@ public class Robot extends TimedRobot {
 		climbSS = new ClimbSS();
 		
 		oi = new OI();
-		initializeMotors = new InitializeMotors();
-//		Servo0 = new Servo(0);
-//		Servo1 = new Servo(1); 
+		
 		autonChooser = new SendableChooser<Command>();
 		autonChooser.addDefault("Drive Forward and Deliver", new DriveForwardAndDeliver());
-		autonChooser.addObject("Turn", new DriveForwardAndTurn());
-		autonChooser.addObject("CenterLeftSwitch", new CenterLeftSwitch());
-		//autonChooser.addObject("Left", new LeftAuton());
-		//autonChooser.addObject("Right", new RightAuton());
-		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
-		SmartDashboard.putNumber("Forward P Value", 0.1);
-		SmartDashboard.putNumber("Forward I Value", 0.000001);
-		SmartDashboard.putNumber("Forward D Value", 15);
-		SmartDashboard.putNumber("Turn P Value", 0.05);
-		SmartDashboard.putNumber("Turn I Value", 0);
-		SmartDashboard.putNumber("Turn D Value", 0);
+		autonChooser.addObject("Turn", new TurnAuton());
+		autonChooser.addObject("Center Switch Auton", new CenterSwitch());
+		autonChooser.addObject("Left", new CenterLeftSwitch());
+		autonChooser.addObject("Right", new CenterRightSwitch());
 		
+		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
+		SmartDashboard.putNumber("Forward P Value", 0.15);
+		SmartDashboard.putNumber("Forward I Value", 0.000001);
+		SmartDashboard.putNumber("Forward D Value", 10);
+		
+//		SmartDashboard.putNumber("ClimbSpeed", 0.3);
+//		SmartDashboard.putNumber("ServoPos", .33);
+		SmartDashboard.putNumber("Inside Turn P Value", 0.072);
+		SmartDashboard.putNumber("Inside Turn I Value", 0);
+		SmartDashboard.putNumber("Inside Turn D Value", 0);
+		
+		SmartDashboard.putNumber("Outside Turn P Value", 0.228);
+		SmartDashboard.putNumber("Outside Turn I Value", 0);
+		SmartDashboard.putNumber("Outside Turn D Value", 0);
+		
+		
+		initializeMotors = new InitializeMotors();
 		//Test Stuff
 		time = 1;
 		FRDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.frontRight, time);
@@ -107,8 +115,8 @@ public class Robot extends TimedRobot {
 		elevatorMotor1Test = new IndividualElevatorTest(ElevatorSS.Elevator1);
 		
 		armMotorTest = new PotentiometerActuationTest(time);
-//		servo0 = new ServoActuationTestCMD(Servo0, time);
-//		servo1 = new ServoActuationTestCMD(Servo1, time);
+		servo0 = new ServoActuationTest(ClimbSS.servo0, time);
+		servo1 = new ServoActuationTest(ClimbSS.servo1, time);
 		
 		
 	}
@@ -141,6 +149,9 @@ public class Robot extends TimedRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
 		autonomousCommand = (Command) autonChooser.getSelected();
 		autonomousCommand.start();
 	}
@@ -162,7 +173,10 @@ public class Robot extends TimedRobot {
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove
-		// this line or comment it out.
+		// this line or comment it out.	
+		if (autonomousCommand != null) {
+			autonomousCommand.cancel();
+		}
 	}
 
 	/**

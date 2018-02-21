@@ -54,8 +54,8 @@ public class IndividualElevatorTest extends Command{
 	protected void end() {
 		Controller.set(0);
 		if (Controller.equals(ElevatorSS.Elevator0)) Robot.elevatorMotor1Test.start();
-		else Robot.elevatorTest.start();
-		System.out.println("End");
+		else Robot.servo0.start();
+		System.out.println("EndTest");
 	}
 	protected void interrupted() {
 		Controller.set(0);

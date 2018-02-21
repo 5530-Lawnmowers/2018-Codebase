@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -26,7 +26,7 @@ public class Climb extends Command{
 	}
 
 	protected void execute() {
-		ClimbSS.Climb0.set(ControlMode.PercentOutput, 1);//This sets both of them 
+		ClimbSS.Climb0.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("ClimbSpeed", .3));//This sets both of them 
 	
 	}
 	protected boolean isFinished() {

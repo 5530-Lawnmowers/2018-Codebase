@@ -16,10 +16,11 @@ import org.usfirst.frc.team5530.robot.*;
 import com.ctre.phoenix.motorcontrol.*;
 //This command turns the motors to move the arm to the top of the elevator
 
-public class ArmTop extends Command{
+public class ArmBot extends Command{
 	
+
 	
-	public ArmTop() {
+	public ArmBot() {
 		requires(Robot.armSS);
 		
 	}
@@ -29,11 +30,12 @@ public class ArmTop extends Command{
 	}
 
 	protected void execute() {
-		if (ArmSS.potentiometer0.getValue() >= 500) ArmSS.arm.set(1);
+		if (ArmSS.potentiometer0.getValue() <= 2550) ArmSS.arm.set(1);
 		else ArmSS.arm.set(0);
 		
 	}
 	protected boolean isFinished() {
+//		distance = Elevator.Elevator0.getSelectedSensorPosition(0);
 		return false;
 	}
 	protected void end() {

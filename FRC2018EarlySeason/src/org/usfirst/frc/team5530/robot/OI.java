@@ -45,12 +45,17 @@ public class OI {
 				xboxButtonLB = new JoystickButton(XBController, 5),
 				xboxButtonRB = new JoystickButton(XBController, 6);
 
-		buttons[0].whileHeld(new ManualArm()); //Button 1
+		buttons[0].whileHeld(new ManualArm()); //Button 1	
+		buttons[1].whileHeld(new ManualElevator()); //Button2
+		buttons[1].whenReleased(new ManualElevator());
 		buttons[3].whileHeld(new Climb()); //Button 4
-		buttons[6].toggleWhenPressed(new LiftBot()); //Button 7
-		buttons[7].toggleWhenPressed(new LiftTop()); //Button 8
+		buttons[3].whenReleased(new Climb());
+		buttons[4].whileHeld(new ReverseClimb()); //Button 5
+		buttons[4].whenReleased(new ReverseClimb());
+		buttons[6].toggleWhenPressed(new ElevatorBot()); //Button 7
+		buttons[7].toggleWhenPressed(new ElevatorTop()); //Button 8
 		buttons[9].toggleWhenPressed(new ArmTop()); //Button 10
-		
+		buttons[10].whenPressed(new ReleasePlatform()); //Button 11
 		xboxButtonLB.whenPressed(new Deliver());
 		xboxButtonRB.toggleWhenPressed(new Intake()); 
 		

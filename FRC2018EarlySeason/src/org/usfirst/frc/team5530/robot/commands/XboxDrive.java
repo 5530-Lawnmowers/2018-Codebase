@@ -37,19 +37,23 @@ public class XboxDrive extends Command{
 			
 			return -1.0;
 		}else if(prelimNumber < 1.0 && prelimNumber >-1.0){
-			
 			return prelimNumber;
 		}else{
-			
 			return 0;
 		}
-		
 	}
 	double GetPositionFiltered(double currentInput, double currentSpeed){
 		if ((currentSpeed > 0 && currentInput > 0) || (currentSpeed < 0 && currentInput < 0)) return currentInput;
+		else if(currentInput == 0) return 0;
 		else {
-			if (Math.abs(currentSpeed - currentInput) > .3 ) return .3;
-			else return currentInput;
+			if (Math.abs(currentSpeed - currentInput) > .035 && Math.abs(currentSpeed) < 0.2) {
+				if (currentSpeed < currentInput) return currentSpeed + .035;
+				else return currentSpeed - .035;
+			}
+			else {
+				if (currentSpeed < currentInput) return currentSpeed + .15;
+				else return currentSpeed - .15;
+			}
 		}
 	}
 	
@@ -82,14 +86,16 @@ public class XboxDrive extends Command{
 		public double XBControllerR(double lStick, double rTrigger, double lTrigger) {
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down - lateral input from left Joystick
-			return -rTrigger + lTrigger + lStick;
+			if (-rTrigger + lTrigger + lStick < 0) return -Math.pow((-rTrigger + lTrigger + lStick), 2);
+			return Math.pow(-rTrigger + lTrigger + lStick, 2);
 		}
 		
 		//Calculates left speed based on Controller output
 		public double XBControllerL(double lStick, double rTrigger, double lTrigger){
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down + lateral input from left Joystick
-			return rTrigger - lTrigger + lStick;
+			if (rTrigger - lTrigger + lStick < 0) return -Math.pow((rTrigger - lTrigger + lStick), 2);
+			return Math.pow(rTrigger - lTrigger + lStick, 2);
 		
 		}
 		//Sets the speed for both sides using XBController methods
@@ -99,34 +105,19 @@ public class XboxDrive extends Command{
 			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));
 			currentSpeedL = GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL);
 			currentSpeedR = GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR);
-			
-//			if (Math.abs(OutputOldR - XBControllerR(lStick, rTrigger, lTrigger)) > .2) 
-//				Drivetrain.frontRight.set(ControlMode.PercentOutput, GetPositionFilteredR((double)XBControllerR(lStick, rTrigger, lTrigger)));
-//			else
-//				Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
-//			if (Math.abs(OutputOldL - XBControllerL(lStick, rTrigger, lTrigger)) > .2) {
-//				Drivetrain.frontLeft.set(ControlMode.PercentOutput, GetPositionFilteredL((double)XBControllerL(lStick, rTrigger, lTrigger)));
-//			}
-//			else {
-//				Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
-//			}		
-			
-//			
-//			Drivetrain.frontRight.set(ControlMode.PercentOutput, (double)XBControllerR(lStick, rTrigger, lTrigger));
-//			Drivetrain.frontLeft.set(ControlMode.PercentOutput, (double)XBControllerL(lStick, rTrigger, lTrigger));
 		}
 	
 	protected void initialize() {
 		DrivetrainSS.setFollowing();
 	}
-	//Whenever this command is called, setspeeds is called
+	
 	protected void execute() {
 		setSpeeds(getStickHorizontal('l'), getTriggerValue('r'), getTriggerValue('l'));
 		
 	}
 	protected boolean isFinished() {
 		
-		return true; // maybe true?
+		return true;
 	}
 	protected void end() {
 		

@@ -1,5 +1,4 @@
 package org.usfirst.frc.team5530.robot.commands.TestCommands;
-package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -38,8 +37,8 @@ public class ServoActuationTest extends Command{
 	}
 
 	protected void execute() {
-		if (counter <= time) currentServo.set(1);
-		else if (time < counter && counter <= time*2) currentServo.set(0);
+		if (counter <= time) currentServo.set(.33);
+		else if (time < counter && counter <= time*2) currentServo.set(.66);
 		else {
 			currentServo.set(0);
 			flag = true;

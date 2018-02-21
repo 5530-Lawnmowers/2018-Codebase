@@ -5,10 +5,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CenterRightSwitch extends CommandGroup {
 	
 	public CenterRightSwitch() {
+		addSequential(new InitializeMotors());
 		addSequential(new DriveForward(52));
-		addSequential(new Turn(90));
+//		addSequential(new Turn(90));
 		addSequential(new DriveForward(57));
-		addSequential(new Turn(-90));
+//		addSequential(new Turn(-90));
 		addSequential(new ArmMid());
 		addParallel(new ArmTop());
 		addSequential(new DriveForward(48));

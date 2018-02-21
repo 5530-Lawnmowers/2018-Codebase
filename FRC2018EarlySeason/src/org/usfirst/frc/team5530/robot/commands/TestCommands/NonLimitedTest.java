@@ -57,9 +57,11 @@ public class NonLimitedTest extends Command{
 		if (Controller.equals(DrivetrainSS.frontRight)) Robot.FLDriveTrainMotorTest.start();
 		else if (Controller.equals(DrivetrainSS.frontLeft)) Robot.BLDriveTrainMotorTest.start();
 		else if (Controller.equals(DrivetrainSS.backLeft)) Robot.BRDriveTrainMotorTest.start(); 
+//		else if (Controller.equals(DrivetrainSS.backRight)) Robot.climbMotor0Test.start();
+//		else if (Controller.equals(DrivetrainSS.backRight)) Robot.climbMotor1Test.start();
 		else if (Controller.equals(DrivetrainSS.backRight)) Robot.elevatorMotor0Test.start(); 
 		else Robot.elevatorMotor0Test.start(); 
-		System.out.println("End");
+		System.out.println("EndTest");
 	}
 	protected void interrupted() {
 		Controller.set(0);
