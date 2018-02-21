@@ -9,7 +9,9 @@ public class TurnAuton extends CommandGroup {
 		addSequential(new InitializeMotors());
 		addSequential(new ArcTurn(52, Math.PI/2, Math.PI/5, .05, "left"));
 		addSequential(new TurnOL());
-		addSequential(new DriveForward(38));
+		addSequential(new InitializeMotors());
+		addSequential(new DriveForward(49));
 	}
 
 }
+ 

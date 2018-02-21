@@ -27,7 +27,7 @@ public class ArcTurn extends Command{
 	double accelerationTime;
 	double arcLength;
 	double insideP = 0.04; // OG: 0.072
-	double insideI = .000004;
+	double insideI = .000004; //We don't use this, yet
 	double outsideP = 0.25; // OG: 0.228
 	double outsideI = .000025;
 	double leftP;
@@ -109,7 +109,7 @@ public class ArcTurn extends Command{
 //				Math.abs(DrivetrainSS.frontLeft.getSelectedSensorPosition(0) - (startDistanceR + convertToTicks(arcLength * leftRadius))) < convertToTicks(error)) return true;
 		
 		if (DrivetrainSS.frontRight.getSelectedSensorVelocity(0) <= 0 && DrivetrainSS.frontLeft.getSelectedSensorVelocity(0) <= 0) {
-			if (counter > 25) return true;
+			if (counter > 50) return true;
 			counter++;
 		} else {
 			counter = 0;
