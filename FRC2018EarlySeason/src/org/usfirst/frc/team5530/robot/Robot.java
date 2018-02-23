@@ -77,11 +77,11 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		
 		autonChooser = new SendableChooser<Command>();
-		autonChooser.addDefault("Drive Forward and Deliver", new DriveForwardAndDeliver());
-		autonChooser.addObject("Turn", new TurnAuton());
-		autonChooser.addObject("Center Switch Auton", new CenterSwitch());
-		autonChooser.addObject("Left", new CenterLeftSwitch());
-		autonChooser.addObject("Right", new CenterRightSwitch());
+		autonChooser.addDefault("Drive Forward and Deliver", new G_DriveForwardAndDeliver());
+		autonChooser.addObject("Turn", new G_TurnAuton());
+		autonChooser.addObject("Center Switch Auton", new G_CenterSwitch());
+		autonChooser.addObject("Left", new G_CenterLeftSwitch());
+		autonChooser.addObject("Right", new G_CenterRightSwitch());
 		
 		SmartDashboard.putData("Autonomous Mode Chooser", autonChooser);
 		SmartDashboard.putNumber("Forward P Value", 0.15);

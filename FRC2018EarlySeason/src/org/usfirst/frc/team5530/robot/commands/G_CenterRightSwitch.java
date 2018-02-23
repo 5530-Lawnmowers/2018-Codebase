@@ -2,9 +2,9 @@ package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CenterRightSwitch extends CommandGroup {
+public class G_CenterRightSwitch extends CommandGroup {
 	
-	public CenterRightSwitch() {
+	public G_CenterRightSwitch() {
 		addSequential(new InitializeMotors());
 		addSequential(new DriveForward(52));
 //		addSequential(new Turn(90));
