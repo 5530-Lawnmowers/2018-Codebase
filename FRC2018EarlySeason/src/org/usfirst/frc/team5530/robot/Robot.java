@@ -78,7 +78,8 @@ public class Robot extends TimedRobot {
 		
 		autonChooser = new SendableChooser<Command>();
 		autonChooser.addDefault("Drive Forward and Deliver", new DriveForwardAndDeliver());
-		autonChooser.addObject("Turn", new TurnAuton());
+		autonChooser.addObject("Turn Left", new LeftTurnAuton());
+		autonChooser.addObject("Turn Right", new RightTurnAuton());
 		autonChooser.addObject("Center Switch Auton", new CenterSwitch());
 		autonChooser.addObject("Left", new CenterLeftSwitch());
 		autonChooser.addObject("Right", new CenterRightSwitch());

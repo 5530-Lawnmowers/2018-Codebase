@@ -20,10 +20,11 @@ import com.ctre.phoenix.motorcontrol.*;
 public class TurnOL extends Command{
 	
 	double counter;
+	String direction;
 	
-	public TurnOL() {
+	public TurnOL(String direction) {
 		requires(Robot.drivetrainSS);
-		
+		this.direction = direction;
 	}
 	
 	protected void initialize() {
@@ -32,8 +33,13 @@ public class TurnOL extends Command{
 	}
 
 	protected void execute() {
-		DrivetrainSS.frontLeft.set(0.75);
-		DrivetrainSS.frontRight.set(0.75);
+		if (direction.equals("right")) {
+			DrivetrainSS.frontLeft.set(0.75);
+			DrivetrainSS.frontRight.set(0.75);
+		} else if (direction.equals("left")){
+			DrivetrainSS.frontLeft.set(-0.75);
+			DrivetrainSS.frontRight.set(-0.75);
+		}
 		counter++;
 	}
 	protected boolean isFinished() {

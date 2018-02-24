@@ -26,9 +26,9 @@ public class ArcTurn extends Command{
 	double angularVelocity;
 	double accelerationTime;
 	double arcLength;
-	double insideP = 0.04; // OG: 0.072
+	double insideP = 0.02; // OG: 0.072 OG#2: 0.04
 	double insideI = .000004; //We don't use this, yet
-	double outsideP = 0.25; // OG: 0.228
+	double outsideP = 0.5; // OG: 0.228 OG#2: 0.25
 	double outsideI = .000025;
 	double leftP;
 	double rightP;
@@ -76,12 +76,12 @@ public class ArcTurn extends Command{
 	protected void execute() {
 		//Switch: .1, 1.0E-6, 15
 		//Scale: .09, 1.0E-8, 15		
-		double proportionalL = insideP;
-		double integralL = 0;
+		double proportionalL = leftP;
+		double integralL = outsideI;
 		double derivativeL = 0;
 		
-		double proportionalR = outsideP;
-		double integralR = 0;
+		double proportionalR = rightP;
+		double integralR = insideI;
 		double derivativeR = 0;
 		
 		DrivetrainSS.frontRight.config_kP(0, proportionalR, 0);
