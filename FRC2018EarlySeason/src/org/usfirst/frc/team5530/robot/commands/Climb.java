@@ -15,8 +15,12 @@ import com.ctre.phoenix.motorcontrol.*;
 //This command turns the motors to lift the robot
 
 public class Climb extends Command{
-	public Climb() {
+	
+	double speed;
+	
+	public Climb(double speed) {
 		requires(Robot.climbSS);
+		this.speed = speed;
 	}
 	
 	
@@ -26,11 +30,9 @@ public class Climb extends Command{
 	}
 
 	protected void execute() {
-		ClimbSS.Climb0.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("ClimbSpeed", .3));//This sets both of them 
-	
+		ClimbSS.Climb0.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("ClimbSpeed", speed));
 	}
 	protected boolean isFinished() {
-		if (OI.getButtonValue(3)) return false;
 		return true; 
 	}
 	protected void end() {

@@ -48,14 +48,14 @@ public class OI {
 		buttons[0].whileHeld(new ManualArm()); //Button 1	
 		buttons[1].whileHeld(new ManualElevator()); //Button2
 		buttons[1].whenReleased(new ManualElevator());
-		buttons[3].whileHeld(new Climb()); //Button 4
-		buttons[3].whenReleased(new Climb());
-		buttons[4].whileHeld(new ReverseClimb()); //Button 5
-		buttons[4].whenReleased(new ReverseClimb());
+		buttons[3].whileHeld(new Climb(.3)); //Button 4
 		buttons[6].toggleWhenPressed(new ElevatorBot()); //Button 7
 		buttons[7].toggleWhenPressed(new ElevatorTop()); //Button 8
 		buttons[9].toggleWhenPressed(new ArmTop()); //Button 10
 		buttons[10].whenPressed(new ReleasePlatform()); //Button 11
+		buttons[11].whenPressed(new StartingPosition()); //Button 12
+		buttons[2].whenPressed(new ArmTest());
+		
 		xboxButtonLB.whenPressed(new Deliver());
 		xboxButtonRB.toggleWhenPressed(new Intake()); 
 		
@@ -66,7 +66,7 @@ public class OI {
 //		for(int stick=0; stick<=1; stick++){
 //			for(int button=1; button<=12; button++) {
 //				stickbutton[stick][button-1]= new JoystickButton(sticks[stick],button);
-//			}
+//			}s
 //		}
 //		
 //		stickbutton[0][0].whenPressed(new DriveDistance());

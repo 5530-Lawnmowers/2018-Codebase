@@ -14,7 +14,7 @@ import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
 
-public class ArcTurn extends Command{
+public class TurnArc extends Command{
 	double encodeDistance;
 	int startDistanceR;
 	int startDistanceL;
@@ -34,7 +34,7 @@ public class ArcTurn extends Command{
 	double rightP;
 	double counter;
 	int error = 7;
-	public ArcTurn(double radius, double arcLength, double speed, double accelerationTime, String direction) { // speed is in radians per s.True is left, false is right
+	public TurnArc(double radius, double arcLength, double speed, double accelerationTime, String direction) { // speed is in radians per s.
 		super("DriveForwardTalonBasedCMD");
 		requires(Robot.drivetrainSS);
 		this.radius = radius;

@@ -7,7 +7,7 @@ public class LeftTurnAuton extends CommandGroup {
 	
 	public LeftTurnAuton() {
 		addSequential(new InitializeMotors());
-		addSequential(new ArcTurn(52, Math.PI/2, Math.PI/5, .05, "left"));
+		addSequential(new TurnArc(52, Math.PI/2, Math.PI/5, .05, "left"));
 		addSequential(new TurnOL("right"));
 		addSequential(new InitializeMotors());
 		addSequential(new DriveForward(49));
