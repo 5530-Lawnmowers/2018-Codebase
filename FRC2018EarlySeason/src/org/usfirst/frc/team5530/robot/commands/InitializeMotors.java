@@ -39,6 +39,7 @@ public class InitializeMotors extends Command{
 		return true;
 	}
 	protected void end() {
+		DrivetrainSS.frontRight.setSensorPhase(true);
 		IntakeSS.Intake0.set(ControlMode.PercentOutput, 0); 
 		ClimbSS.Climb0.set(ControlMode.PercentOutput, 0);
 		ElevatorSS.Elevator0.set(ControlMode.PercentOutput, 0);
@@ -50,6 +51,7 @@ public class InitializeMotors extends Command{
 		ClimbSS.servo0.set(.66);
 		ClimbSS.servo1.set(.66);
 		Timer.delay(.1);
+		System.out.println("Initialized");
 	}
 	protected void interrupted() {
 		

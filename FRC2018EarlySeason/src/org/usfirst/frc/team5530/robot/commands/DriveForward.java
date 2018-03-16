@@ -45,15 +45,15 @@ public class DriveForward extends Command{
 		DrivetrainSS.frontRight.config_kD(0, derivative, 0);
 		DrivetrainSS.frontLeft.config_kD(0, derivative, 0);
 		
-		DrivetrainSS.frontRight.set(ControlMode.Position,- Math.rint(encodeDistance));
+		DrivetrainSS.frontRight.setSensorPhase(true);
+		DrivetrainSS.frontRight.set(ControlMode.Position, -Math.rint(encodeDistance));
 		DrivetrainSS.frontLeft.set(ControlMode.Position, Math.rint(encodeDistance));
 		
 		SmartDashboard.putNumber("Target Position", encodeDistance);
 		System.out.println(encodeDistance);
-		SmartDashboard.putNumber("Current Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 	}
 	protected boolean isFinished() {
-//		if ((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200) return true;
+//		if (((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200)) return true;
 		return false;
 	}
 	protected void end() {

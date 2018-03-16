@@ -20,7 +20,6 @@ public class ElevatorBot extends Command{
 	
 	public ElevatorBot() {
 		requires(Robot.elevatorSS);
-		requires(Robot.armSS);
 	}
 	
 	protected void initialize() {

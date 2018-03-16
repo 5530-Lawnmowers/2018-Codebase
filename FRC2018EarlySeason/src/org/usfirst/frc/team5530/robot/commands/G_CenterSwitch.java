@@ -3,9 +3,12 @@ package org.usfirst.frc.team5530.robot.commands;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class CenterLeftSwitch extends CommandGroup {
+public class G_CenterSwitch extends CommandGroup {
 	
-	public CenterLeftSwitch() {
+	public G_CenterSwitch() {
+		String gameData = DriverStation.getInstance().getGameSpecificMessage();
+		
+		if(gameData.charAt(0) == 'l') {
 			addSequential(new InitializeMotors());
 			addSequential(new DriveForward(52));
 			addSequential(new InitializeMotors());
@@ -18,5 +21,16 @@ public class CenterLeftSwitch extends CommandGroup {
 			addParallel(new ElevatorMid());
 			addSequential(new DriveForward(48));
 			addSequential(new Deliver());
+		}else if(gameData.charAt(0) ==  'r'){
+			addSequential(new InitializeMotors());
+			addSequential(new DriveForward(52));
+//			addSequential(new Turn(90));
+			addSequential(new DriveForward(57));
+//			addSequential(new Turn(-90));
+			addSequential(new ArmMid());
+			addParallel(new ArmTop());
+			addSequential(new DriveForward(48));
+			addSequential(new Deliver());
+		}
 	}
 }

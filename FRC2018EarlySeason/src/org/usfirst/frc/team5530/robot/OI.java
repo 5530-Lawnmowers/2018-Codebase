@@ -48,13 +48,13 @@ public class OI {
 		buttons[0].whileHeld(new ManualArm()); //Button 1	
 		buttons[1].whileHeld(new ManualElevator()); //Button2
 		buttons[1].whenReleased(new ManualElevator());
-		buttons[3].whileHeld(new Climb(.3)); //Button 4
-		buttons[6].toggleWhenPressed(new ElevatorBot()); //Button 7
-		buttons[7].toggleWhenPressed(new ElevatorTop()); //Button 8
-		buttons[9].toggleWhenPressed(new ArmTop()); //Button 10
-		buttons[10].whenPressed(new ReleasePlatform()); //Button 11
-		buttons[11].whenPressed(new StartingPosition()); //Button 12
-		buttons[2].whenPressed(new ArmTest());
+		buttons[3].toggleWhenPressed(new Climb(.3)); //Button 4
+		buttons[6].toggleWhenPressed(new G_LiftBot()); //Button 7
+		buttons[7].toggleWhenPressed(new G_LiftTop()); //Button 8
+		buttons[9].toggleWhenPressed(new ArmModular("Top")); //Button 10
+		buttons[10].whenPressed(new ReleaseClimbingArm()); //Button 11
+		buttons[11].whenPressed(new G_StartingPosition()); //Button 12
+		buttons[2].whenPressed(new G_ArmTest());
 		
 		xboxButtonLB.whenPressed(new Deliver());
 		xboxButtonRB.toggleWhenPressed(new Intake()); 

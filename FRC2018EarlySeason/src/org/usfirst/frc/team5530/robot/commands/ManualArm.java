@@ -32,7 +32,7 @@ public class ManualArm extends Command{
 		double value = OI.stick1.getY();
 //		ArmSS.arm.set(ControlMode.PercentOutput, value);
 		if (value < 0) ArmSS.arm.set(ControlMode.PercentOutput, value);
-		else ArmSS.arm.set(ControlMode.PercentOutput, (.00336*ArmSS.potentiometer0.getValue() - 1.856)*value); //Using y=mx+b when m = .00336, b = -1.856
+		else ArmSS.arm.set(ControlMode.PercentOutput, (.0057*(ArmSS.potentiometer0.getValue() - ArmSS.maxArmHeight) + .16)*value); //Using y=mx+b when m = .00336, b = -1.856
 //		if(ArmSS.potentiometer0.getValue() > 500 && ArmSS.potentiometer0.getValue() < 3700) //If the arm is between the top and the bottom
 //			ArmSS.arm.set(ControlMode.PercentOutput, value);									//Accept any movement value
 //		else if(ArmSS.potentiometer0.getValue() <= 500){									//If the arm is at the bottom

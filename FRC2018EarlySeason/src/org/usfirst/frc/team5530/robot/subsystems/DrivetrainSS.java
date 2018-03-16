@@ -28,6 +28,8 @@ public class DrivetrainSS extends Subsystem {
 		backRight.set(ControlMode.Follower, (double)RobotMap.FR);
 		backLeft.set(ControlMode.Follower, (double)RobotMap.FL);
 		
+		DrivetrainSS.frontRight.setSensorPhase(true);
+		
 		DrivetrainSS.frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 		DrivetrainSS.frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder, 0, 0);
 			

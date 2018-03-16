@@ -28,7 +28,7 @@ public class ClimbSS extends Subsystem {
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	public static void setFollowing() {
 		Climb1.set(ControlMode.Follower, (double)RobotMap.C0);
-			
+		
 	}
 	
 	public void initDefaultCommand() {

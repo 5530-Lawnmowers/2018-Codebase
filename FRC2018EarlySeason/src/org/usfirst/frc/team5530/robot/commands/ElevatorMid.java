@@ -27,7 +27,6 @@ public class ElevatorMid extends Command{
 	
 	public ElevatorMid() {
 		requires(Robot.elevatorSS);
-		
 	}
 	
 	protected void initialize() {

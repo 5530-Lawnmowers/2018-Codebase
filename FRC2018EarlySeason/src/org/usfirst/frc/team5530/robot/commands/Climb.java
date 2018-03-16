@@ -30,10 +30,10 @@ public class Climb extends Command{
 	}
 
 	protected void execute() {
-		ClimbSS.Climb0.set(ControlMode.PercentOutput, -SmartDashboard.getNumber("ClimbSpeed", speed));
+		ClimbSS.Climb0.set(ControlMode.PercentOutput, -speed);
 	}
 	protected boolean isFinished() {
-		return true; 
+		return false; 
 	}
 	protected void end() {
 		ClimbSS.Climb0.set(0);

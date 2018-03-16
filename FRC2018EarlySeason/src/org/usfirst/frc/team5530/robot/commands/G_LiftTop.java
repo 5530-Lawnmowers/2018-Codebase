@@ -2,10 +2,10 @@ package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class LiftTop extends CommandGroup {
+public class G_LiftTop extends CommandGroup {
 	
-	public LiftTop() {
+	public G_LiftTop() {
 		addParallel(new ElevatorTop());
-		addSequential(new ArmTop());
+		addParallel(new ArmModular("Top"));
 	}
 }

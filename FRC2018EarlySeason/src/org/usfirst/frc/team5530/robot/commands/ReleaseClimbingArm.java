@@ -17,10 +17,10 @@ import org.usfirst.frc.team5530.robot.commands.*;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
 
-public class ReleasePlatform extends Command {
+public class ReleaseClimbingArm extends Command {
 
 	
-	public ReleasePlatform() {
+	public ReleaseClimbingArm() {
 		requires(Robot.climbSS);
 	}
 	
@@ -30,7 +30,6 @@ public class ReleasePlatform extends Command {
 
 	protected void execute() {
 		ClimbSS.servo0.set(SmartDashboard.getNumber("ServoPos", .33)); //Set servos to open position
-		ClimbSS.servo1.set(SmartDashboard.getNumber("ServoPos", .33));
 	}
 	protected boolean isFinished() {
 		return true;

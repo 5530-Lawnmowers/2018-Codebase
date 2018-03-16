@@ -43,17 +43,16 @@ public class XboxDrive extends Command{
 		}
 	}
 	double GetPositionFiltered(double currentInput, double currentSpeed){
-		if ((currentSpeed > 0 && currentInput > 0) || (currentSpeed < 0 && currentInput < 0)) return currentInput;
-		else if(currentInput == 0) return 0;
+		if (Math.abs(currentSpeed - currentInput) > .025 && Math.abs(currentSpeed) < 0.3) {
+			System.out.println("Rate Applied");
+			if (currentSpeed < currentInput) return currentSpeed + .025;
+			else return currentSpeed - .025;
+		}
 		else {
-			if (Math.abs(currentSpeed - currentInput) > .035 && Math.abs(currentSpeed) < 0.2) {
-				if (currentSpeed < currentInput) return currentSpeed + .035;
-				else return currentSpeed - .035;
-			}
-			else {
-				if (currentSpeed < currentInput) return currentSpeed + .15;
-				else return currentSpeed - .15;
-			}
+			System.out.println("Not Applied");
+//				if (currentSpeed < currentInput) return currentSpeed + .15;
+//				else return currentSpeed - .15;
+			return currentInput;
 		}
 	}
 	
@@ -100,6 +99,9 @@ public class XboxDrive extends Command{
 		}
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
+			
+//			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, XBControllerR(lStick, rTrigger, lTrigger));
+//			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, XBControllerL(lStick, rTrigger, lTrigger));
 			
 			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR));
 			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));
