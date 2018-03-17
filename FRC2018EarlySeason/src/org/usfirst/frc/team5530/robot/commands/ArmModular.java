@@ -37,7 +37,7 @@ public class ArmModular extends Command{
 	protected void execute() {
 		if (position.equalsIgnoreCase("Top")) {
 			ArmSS.arm.set(ControlMode.PercentOutput, .0057*(ArmSS.potentiometer0.getValue() - ArmSS.maxArmHeight) + .16); 
-			if(counter < 500) counter ++;
+			if(counter < 250) counter ++;
 			else flag = true;
 		}else if (position.equalsIgnoreCase("Bot")) {
 			if (ArmSS.potentiometer0.getValue() <= 2500) {
@@ -63,7 +63,6 @@ public class ArmModular extends Command{
 		return flag;
 	}
 	protected void end() {
-		 
 		ArmSS.arm.set(0);
 	}
 	protected void interrupted() {

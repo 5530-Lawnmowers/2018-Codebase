@@ -28,7 +28,6 @@ public class ElevatorTop extends Command{
 	protected void initialize() {
 		ElevatorSS.setFollowing();
 		ElevatorSS.Elevator0.stopMotor();
-		Timer.delay(0.1); //There is a small pause after button press
 	}
 
 	protected void execute() {

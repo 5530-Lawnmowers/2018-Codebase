@@ -52,9 +52,8 @@ public class OI {
 		buttons[6].toggleWhenPressed(new G_LiftBot()); //Button 7
 		buttons[7].toggleWhenPressed(new G_LiftTop()); //Button 8
 		buttons[9].toggleWhenPressed(new ArmModular("Top")); //Button 10
-		buttons[10].whenPressed(new ReleaseClimbingArm()); //Button 11
+		buttons[10].whenPressed(new ReleaseClimbingArm(.33)); //Button 11
 		buttons[11].whenPressed(new G_StartingPosition()); //Button 12
-		buttons[2].whenPressed(new G_ArmTest());
 		
 		xboxButtonLB.whenPressed(new Deliver());
 		xboxButtonRB.toggleWhenPressed(new Intake()); 

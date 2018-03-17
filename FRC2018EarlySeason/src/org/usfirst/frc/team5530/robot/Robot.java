@@ -38,15 +38,14 @@ public class Robot extends TimedRobot {
 //	Servo Servo0;
 //	Servo Servo1;
 
-	SendableChooser<Command> autonChooser;
-	
 	Command autonomousCommand;
 	Command initializeMotors;
 	
 	public boolean flag = true;
 	
-	public G_CenterLeftSwitch leftSwitch;
-	public G_CenterRightSwitch rightSwitch;
+	public G_LeftTurnAuton leftSwitch;
+	public G_RightTurnAuton rightSwitch;
+	public G_DriveForwardAndDeliver driveForwardAndDeliver;
 	public G_DriveForward driveForward;
 	
 	
@@ -84,25 +83,25 @@ public class Robot extends TimedRobot {
 		oi = new OI();
 		
 //		autonChooser = new SendableChooser<Command>();\
-		SmartDashboard.putString("autonChooser", "Switch");
+		SmartDashboard.putString("autonChooser", "DF");
 //		autonChooser.addDefault("Drive Forward and Deliver", new G_DriveForwardAndDeliver());
 //		autonChooser.addObject("Forward", new G_DriveForward());
 //		autonChooser.addObject("CenterSwitch", object);
 //		autonChooser.addObject("Scale", object);
-				
-		SmartDashboard.putNumber("Forward P Value", 0.15);
-		SmartDashboard.putNumber("Forward I Value", 0.000001);
-		SmartDashboard.putNumber("Forward D Value", 10);
-		
+//				
+//		SmartDashboard.putNumber("Forward P Value", 0.15);
+//		SmartDashboard.putNumber("Forward I Value", 0.000001);
+//		SmartDashboard.putNumber("Forward D Value", 10);
+//		
 //		SmartDashboard.putNumber("ClimbSpeed", 0.3);
 //		SmartDashboard.putNumber("ServoPos", .33);
-		SmartDashboard.putNumber("Inside Turn P Value", 0.072);
-		SmartDashboard.putNumber("Inside Turn I Value", 0);
-		SmartDashboard.putNumber("Inside Turn D Value", 0);
-		
-		SmartDashboard.putNumber("Outside Turn P Value", 0.228);
-		SmartDashboard.putNumber("Outside Turn I Value", 0);
-		SmartDashboard.putNumber("Outside Turn D Value", 0);
+//		SmartDashboard.putNumber("Inside Turn P Value", 0.072);
+//		SmartDashboard.putNumber("Inside Turn I Value", 0);
+//		SmartDashboard.putNumber("Inside Turn D Value", 0);
+//		
+//		SmartDashboard.putNumber("Outside Turn P Value", 0.228);
+//		SmartDashboard.putNumber("Outside Turn I Value", 0);
+//		SmartDashboard.putNumber("Outside Turn D Value", 0);
 		
 		
 		initializeMotors = new InitializeMotors();
@@ -125,8 +124,9 @@ public class Robot extends TimedRobot {
 		servo1 = new ServoActuationTest(ClimbSS.servo1, time);
 		
 		driveForward = new G_DriveForward();
-		leftSwitch = new G_CenterLeftSwitch();
-		rightSwitch = new G_CenterRightSwitch();
+		driveForwardAndDeliver = new G_DriveForwardAndDeliver();
+		leftSwitch = new G_LeftTurnAuton();
+		rightSwitch = new G_RightTurnAuton();
 		
 	}
 
@@ -143,7 +143,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledPeriodic() {
-		Scheduler.getInstance().run();
 	}
 
 	/**
@@ -164,6 +163,8 @@ public class Robot extends TimedRobot {
 		}
 //		autonomousCommand = (Command) autonChooser.getSelected();
 //		autonomousCommand.start();
+		
+		flag = true;
 	}
 
 	/**
@@ -173,25 +174,25 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		
 		Scheduler.getInstance().run();
-		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
-		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
-		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
-		SmartDashboard.clearPersistent("Right Sensor Position");
-		SmartDashboard.clearPersistent("Left Sensor Position");
-		SmartDashboard.clearPersistent("Right Sensor Velocity");
-		SmartDashboard.clearPersistent("Left Sensor Velocity");
-		SmartDashboard.clearPersistent("Output Percent R");
-		SmartDashboard.clearPersistent("Output Percent L");
+//		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
+//		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
+//		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
+//		SmartDashboard.clearPersistent("Right Sensor Position");
+//		SmartDashboard.clearPersistent("Left Sensor Position");
+//		SmartDashboard.clearPersistent("Right Sensor Velocity");
+//		SmartDashboard.clearPersistent("Left Sensor Velocity");
+//		SmartDashboard.clearPersistent("Output Percent R");
+//		SmartDashboard.clearPersistent("Output Percent L");
 		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		if (gameData.length() > 0 && flag) {
-			if (SmartDashboard.getString("autonChooser", "Switch").equalsIgnoreCase("CenterSwitch")) {
+			if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("CenterSwitch")) {
 				if (gameData.charAt(0) == 'L') {
 					leftSwitch.start();
 					flag = false;
@@ -201,8 +202,27 @@ public class Robot extends TimedRobot {
 					flag = false;
 				}
 			}
-			
-			else if (SmartDashboard.getString("autonChooser", "Switch").equalsIgnoreCase("DriveForward")) {
+			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDL")) {
+				if (gameData.charAt(0) == 'L') {
+					driveForwardAndDeliver.start();
+					flag = false;
+				}
+				else if (gameData.charAt(0) == 'R') {
+					driveForward.start();
+					flag = false;
+				}
+			}
+			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDR")) {
+				if (gameData.charAt(0) == 'L') {
+					driveForward.start();
+					flag = false;
+				}
+				else if (gameData.charAt(0) == 'R') {
+					driveForwardAndDeliver.start();
+					flag = false;
+				}
+			}
+			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DF")) {
 				driveForward.start();
 				flag = false;
 			}
@@ -231,20 +251,20 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
-		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
-		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
-		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
-		SmartDashboard.clearPersistent("Right Sensor Position");
-		SmartDashboard.clearPersistent("Left Sensor Position");
-		SmartDashboard.clearPersistent("Right Sensor Velocity");
-		SmartDashboard.clearPersistent("Left Sensor Velocity");
-		SmartDashboard.clearPersistent("Output Percent R");
-		SmartDashboard.clearPersistent("Output Percent L");
+//		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
+//		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
+//		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
+//		SmartDashboard.clearPersistent("Right Sensor Position");
+//		SmartDashboard.clearPersistent("Left Sensor Position");
+//		SmartDashboard.clearPersistent("Right Sensor Velocity");
+//		SmartDashboard.clearPersistent("Left Sensor Velocity");
+//		SmartDashboard.clearPersistent("Output Percent R");
+//		SmartDashboard.clearPersistent("Output Percent L");
 	}
 	
 	

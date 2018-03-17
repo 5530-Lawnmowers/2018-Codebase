@@ -6,7 +6,7 @@ public class G_DriveForward extends CommandGroup {
 	
 	public G_DriveForward() {
 		addSequential(new InitializeMotors());
-		addSequential(new DriveForward(120));	
+		addSequential(new DriveForward(100));	
 	}
 
 }

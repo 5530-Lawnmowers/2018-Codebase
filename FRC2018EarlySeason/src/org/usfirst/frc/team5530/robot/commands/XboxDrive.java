@@ -81,32 +81,36 @@ public class XboxDrive extends Command{
 			
 		}
 	}
+	
+	public double getModifiedStick(double rTrigger, double lTrigger, double stick) {
+		if (rTrigger - lTrigger <= 0) return -stick;
+		return stick;
+	}
+	
 	//Calculates right speed based on controller output
 		public double XBControllerR(double lStick, double rTrigger, double lTrigger) {
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down - lateral input from left Joystick
-			if (-rTrigger + lTrigger + lStick < 0) return -Math.pow((-rTrigger + lTrigger + lStick), 2);
-			return Math.pow(-rTrigger + lTrigger + lStick, 2);
+			return -(rTrigger - lTrigger + getModifiedStick(rTrigger, lTrigger, lStick));
 		}
 		
 		//Calculates left speed based on Controller output
 		public double XBControllerL(double lStick, double rTrigger, double lTrigger){
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down + lateral input from left Joystick
-			if (rTrigger - lTrigger + lStick < 0) return -Math.pow((rTrigger - lTrigger + lStick), 2);
-			return Math.pow(rTrigger - lTrigger + lStick, 2);
+			return rTrigger - lTrigger + getModifiedStick(rTrigger, lTrigger, lStick);
 		
 		}
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
 			
-//			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, XBControllerR(lStick, rTrigger, lTrigger));
-//			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, XBControllerL(lStick, rTrigger, lTrigger));
-			
-			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR));
-			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));
-			currentSpeedL = GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL);
-			currentSpeedR = GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR);
+			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, XBControllerR(lStick, rTrigger, lTrigger));
+			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, XBControllerL(lStick, rTrigger, lTrigger));
+//			
+//			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR));
+//			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));
+//			currentSpeedL = GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL);
+//			currentSpeedR = GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR);
 		}
 	
 	protected void initialize() {
@@ -118,7 +122,6 @@ public class XboxDrive extends Command{
 		
 	}
 	protected boolean isFinished() {
-		
 		return true;
 	}
 	protected void end() {

@@ -53,7 +53,7 @@ public class DriveForward extends Command{
 		System.out.println(encodeDistance);
 	}
 	protected boolean isFinished() {
-//		if (((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200)) return true;
+		if (((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200)) return true;
 		return false;
 	}
 	protected void end() {

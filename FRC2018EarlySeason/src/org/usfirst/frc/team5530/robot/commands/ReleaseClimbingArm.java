@@ -19,9 +19,10 @@ import com.ctre.phoenix.motorcontrol.*;
 
 public class ReleaseClimbingArm extends Command {
 
-	
-	public ReleaseClimbingArm() {
+	double position;
+	public ReleaseClimbingArm(double position){
 		requires(Robot.climbSS);
+		this.position = position;
 	}
 	
 	protected void initialize() {
@@ -29,7 +30,7 @@ public class ReleaseClimbingArm extends Command {
 	}
 
 	protected void execute() {
-		ClimbSS.servo0.set(SmartDashboard.getNumber("ServoPos", .33)); //Set servos to open position
+		ClimbSS.servo0.set(SmartDashboard.getNumber("ServoPos", position)); //Set servos to open position
 	}
 	protected boolean isFinished() {
 		return true;

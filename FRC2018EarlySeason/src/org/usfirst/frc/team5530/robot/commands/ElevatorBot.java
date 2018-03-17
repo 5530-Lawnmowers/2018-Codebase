@@ -25,11 +25,10 @@ public class ElevatorBot extends Command{
 	protected void initialize() {
 		ElevatorSS.setFollowing();
 		ElevatorSS.Elevator0.set(ControlMode.PercentOutput, 0);
-		Timer.delay(0.1); //There is a small pause after button press
 	}
 
 	protected void execute() {
-		ElevatorSS.Elevator0.set(ControlMode.PercentOutput, -.15); 
+		ElevatorSS.Elevator0.set(ControlMode.PercentOutput, -.25); 
 	}
 	protected boolean isFinished() {
 		if(!ElevatorSS.elevatorSwitchBot.get())return true;						//If the Elevator is at the bottom Stop the command
