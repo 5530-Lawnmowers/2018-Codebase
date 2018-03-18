@@ -44,12 +44,10 @@ public class XboxDrive extends Command{
 	}
 	double GetPositionFiltered(double currentInput, double currentSpeed){
 		if (Math.abs(currentSpeed - currentInput) > .025 && Math.abs(currentSpeed) < 0.3) {
-			System.out.println("Rate Applied");
 			if (currentSpeed < currentInput) return currentSpeed + .025;
 			else return currentSpeed - .025;
 		}
 		else {
-			System.out.println("Not Applied");
 //				if (currentSpeed < currentInput) return currentSpeed + .15;
 //				else return currentSpeed - .15;
 			return currentInput;
@@ -83,26 +81,42 @@ public class XboxDrive extends Command{
 	}
 	
 	public double getModifiedStick(double rTrigger, double lTrigger, double stick) {
-		if (rTrigger - lTrigger <= 0) return -stick;
-		return stick;
+		if (rTrigger - lTrigger >= 0) return stick;
+		return -stick;
 	}
 	
 	//Calculates right speed based on controller output
 		public double XBControllerR(double lStick, double rTrigger, double lTrigger) {
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down - lateral input from left Joystick
-			return -(rTrigger - lTrigger + getModifiedStick(rTrigger, lTrigger, lStick));
+			
+			return -(rTrigger - lTrigger - getModifiedStick(rTrigger, lTrigger, lStick));
 		}
 		
 		//Calculates left speed based on Controller output
 		public double XBControllerL(double lStick, double rTrigger, double lTrigger){
 			//speed of left side = amount Accelerator is pushed down minus
 			//amount Deccelerator is pushed down + lateral input from left Joystick
+			
 			return rTrigger - lTrigger + getModifiedStick(rTrigger, lTrigger, lStick);
 		
 		}
 		//Sets the speed for both sides using XBController methods
 		public void setSpeeds(double lStick, double rTrigger, double lTrigger){
+			
+//			double right = -XBControllerR(lStick, rTrigger, lTrigger);
+//			double left = XBControllerL(lStick, rTrigger, lTrigger);
+			
+//			if ((left > 0 && right < 0) || (left < 0 && right > 0)) {
+//				if (right + left >= 0) {
+//					if (getModifiedStick(right, left, lStick) < 0) left = 0;
+//					else if (getModifiedStick(right, left, lStick) > 0) right = 0;
+//				}
+//				else if (right + left < 0) {
+//					if (getModifiedStick(right, left, lStick) < 0) right = 0;
+//					else if (getModifiedStick(right, left, lStick) > 0) left = 0;
+//				}
+//			}
 			
 			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, XBControllerR(lStick, rTrigger, lTrigger));
 			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, XBControllerL(lStick, rTrigger, lTrigger));

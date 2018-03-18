@@ -41,7 +41,8 @@ public class Robot extends TimedRobot {
 	Command autonomousCommand;
 	Command initializeMotors;
 	
-	public boolean flag = true;
+	public boolean intakeOn = false;
+	public boolean autonFlag = true;
 	
 	public G_LeftTurnAuton leftSwitch;
 	public G_RightTurnAuton rightSwitch;
@@ -105,6 +106,9 @@ public class Robot extends TimedRobot {
 		
 		
 		initializeMotors = new InitializeMotors();
+		
+		
+		
 		//Test Stuff
 		time = 1;
 		FRDriveTrainMotorTest = new NonLimitedTest(DrivetrainSS.frontRight, time);
@@ -164,7 +168,7 @@ public class Robot extends TimedRobot {
 //		autonomousCommand = (Command) autonChooser.getSelected();
 //		autonomousCommand.start();
 		
-		flag = true;
+		autonFlag = true;
 	}
 
 	/**
@@ -191,40 +195,40 @@ public class Robot extends TimedRobot {
 		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
-		if (gameData.length() > 0 && flag) {
+		if (gameData.length() > 0 && autonFlag) {
 			if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("CenterSwitch")) {
 				if (gameData.charAt(0) == 'L') {
 					leftSwitch.start();
-					flag = false;
+					autonFlag = false;
 				}
 				else if (gameData.charAt(0) == 'R') {
 					rightSwitch.start();
-					flag = false;
+					autonFlag = false;
 				}
 			}
 			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDL")) {
 				if (gameData.charAt(0) == 'L') {
 					driveForwardAndDeliver.start();
-					flag = false;
+					autonFlag = false;
 				}
 				else if (gameData.charAt(0) == 'R') {
 					driveForward.start();
-					flag = false;
+					autonFlag = false;
 				}
 			}
 			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDR")) {
 				if (gameData.charAt(0) == 'L') {
 					driveForward.start();
-					flag = false;
+					autonFlag = false;
 				}
 				else if (gameData.charAt(0) == 'R') {
 					driveForwardAndDeliver.start();
-					flag = false;
+					autonFlag = false;
 				}
 			}
 			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DF")) {
 				driveForward.start();
-				flag = false;
+				autonFlag = false;
 			}
 		}
 		
@@ -250,6 +254,10 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		if (IntakeSS.Intake0.get() != 0 || IntakeSS.Intake1.get() != 0) intakeOn = true;
+		else intakeOn = false;
+		SmartDashboard.putBoolean("Intake On", intakeOn);
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 //		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
 //		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
