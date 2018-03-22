@@ -7,8 +7,8 @@ public class G_DriveForwardAndDeliver extends CommandGroup {
 	public G_DriveForwardAndDeliver() {
 		addSequential(new InitializeMotors());
 		addSequential(new ArmModular("Mid"));
-		addParallel(new DriveForward(100));
-		addSequential(new ArmModular("Top"));
+		addParallel(new ArmModular("Top"));
+		addSequential(new DriveForward(100));
 		addSequential(new Deliver());		
 	}
 

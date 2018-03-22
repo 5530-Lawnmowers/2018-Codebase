@@ -26,11 +26,11 @@ public class TurnArc extends Command{
 	double angularVelocity;
 	double accelerationTime;
 	double arcLength;
-	double insideP = 0.02; // OG: 0.072 OG#2: 0.04
-	double insideI = .000004; //We don't use this, yet
-	double outsideP = 0.5; // OG: 0.228 OG#2: 0.25
-	double outsideI = .000025;
-	double trackDistance = 30;
+	double insideP = 0.02; // OG: 0.072 OG#2: 0.04 || 0.02
+	double insideI = 0; //We don't use this, yet || 0.000004
+	double outsideP = 0.02; // OG: 0.228 OG#2: 0.25 || 0.5
+	double outsideI = 0; // || .000025
+	double trackDistance = 22.75;
 	double leftP;
 	double rightP;
 	double counter;
@@ -62,7 +62,7 @@ public class TurnArc extends Command{
 		startDistanceL = DrivetrainSS.frontLeft.getSelectedSensorPosition(0);
 		
 		DrivetrainSS.frontRight.configMotionCruiseVelocity((int) -convertToTicks(rightRadius * angularVelocity), 0);
-		DrivetrainSS.frontRight.configMotionAcceleration((int)-convertToTicks(rightRadius * angularVelocity / accelerationTime), 0);
+		DrivetrainSS.frontRight.configMotionAcceleration((int) -convertToTicks(rightRadius * angularVelocity / accelerationTime), 0);
 		
 		DrivetrainSS.frontLeft.configMotionCruiseVelocity((int) convertToTicks(leftRadius * angularVelocity), 0);
 		DrivetrainSS.frontLeft.configMotionAcceleration((int)convertToTicks(leftRadius * angularVelocity / accelerationTime), 0);
@@ -99,10 +99,10 @@ public class TurnArc extends Command{
 		
 		DrivetrainSS.frontLeft.set(ControlMode.MotionMagic, startDistanceL + convertToTicks(arcLength * leftRadius));
 		
-		SmartDashboard.putNumber("Target Position R", startDistanceR - convertToTicks(arcLength * rightRadius));
-		SmartDashboard.putNumber("Target Position L", startDistanceL + convertToTicks(arcLength * leftRadius));
-		SmartDashboard.putNumber("Current Position R", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Current Position L", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Target Position R", startDistanceR - convertToTicks(arcLength * rightRadius));
+//		SmartDashboard.putNumber("Target Position L", startDistanceL + convertToTicks(arcLength * leftRadius));
+//		SmartDashboard.putNumber("Current Position R", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Current Position L", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 		
 	}
 	protected boolean isFinished() {

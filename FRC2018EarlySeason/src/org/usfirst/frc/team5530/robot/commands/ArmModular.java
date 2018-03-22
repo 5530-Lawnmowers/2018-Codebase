@@ -22,6 +22,7 @@ public class ArmModular extends Command{
 	String position;
 	boolean flag = false;
 	double counter;
+	double maxTime = 175;
 	
 	public ArmModular(String name) {
 		requires(Robot.armSS);
@@ -37,7 +38,7 @@ public class ArmModular extends Command{
 	protected void execute() {
 		if (position.equalsIgnoreCase("Top")) {
 			ArmSS.arm.set(ControlMode.PercentOutput, .0057*(ArmSS.potentiometer0.getValue() - ArmSS.maxArmHeight) + .16); 
-			if(counter < 250) counter ++;
+			if(counter < maxTime) counter ++;
 			else flag = true;
 		}else if (position.equalsIgnoreCase("Bot")) {
 			if (ArmSS.potentiometer0.getValue() <= 2500) {
@@ -55,7 +56,9 @@ public class ArmModular extends Command{
 			}
 		}else if(position.equalsIgnoreCase("Mid")) {
 			ArmSS.arm.set(1);
-			if (ArmSS.potentiometer0.getValue() >= 1500) flag = true;
+			if (ArmSS.potentiometer0.getValue() >= 1300) counter++;
+			if(counter < maxTime) counter++;
+			else flag = true;
 		}
 		else System.out.println("Incorrect Parameter");
 	}
