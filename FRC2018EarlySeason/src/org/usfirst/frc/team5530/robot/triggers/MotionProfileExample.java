@@ -171,6 +171,8 @@ public class MotionProfileExample {
 			 * we are not in MP mode. We are probably driving the robot around
 			 * using gamepads or some other mode.
 			 */
+			
+			System.out.println("NNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPPPPPPPPPPPPPAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSS");
 			_state = 0;
 			_loopTimeout = -1;
 		} else {
@@ -191,6 +193,7 @@ public class MotionProfileExample {
 						 */
 						_state = 1;
 						_loopTimeout = kNumLoopsTimeout;
+						System.out.println("STATE 0");
 					}
 					break;
 				case 1: /*
@@ -272,7 +275,7 @@ public class MotionProfileExample {
 			point.velocity = convertToTicks(profile[1][i]);
 			_talon.configMotionProfileTrajectoryPeriod((int) profile[2][i], 0);
 			point.profileSlotSelect0 = 0; /* which set of gains would you like to use? */
-//			point.ve = false; 
+//			point.headingDeg = 1; idk
 			point.zeroPos = false;
 			if (i == 0)
 				point.zeroPos = true; /* set this to true on the first point */
@@ -281,7 +284,7 @@ public class MotionProfileExample {
 			if ((i + 1) == totalCnt)
 				point.isLastPoint = true; /* set this to true on the last point  */
 
-			_talon.pushMotionProfileTrajectory(null);
+			_talon.pushMotionProfileTrajectory(point);
 		}
 	}
 
@@ -289,7 +292,7 @@ public class MotionProfileExample {
 	 * Called by application to signal Talon to start the buffered MP (when it's
 	 * able to).
 	 */
-	void startMotionProfile() {
+	public void startMotionProfile() {
 		_bStart = true;
 	}
 

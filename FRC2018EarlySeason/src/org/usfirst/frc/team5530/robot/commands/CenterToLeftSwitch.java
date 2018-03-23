@@ -32,6 +32,14 @@ public class CenterToLeftSwitch extends Command{
 		DrivetrainSS.setFollowing();
 		DrivetrainSS.frontRight.set(ControlMode.MotionProfile, 0);
 		DrivetrainSS.frontLeft.set(ControlMode.MotionProfile, 0);
+		MPR.startMotionProfile();
+		MPL.startMotionProfile();
+		DrivetrainSS.frontRight.config_kP(0, .01, 0);
+		DrivetrainSS.frontRight.config_kI(0, 0, 0);
+		DrivetrainSS.frontRight.config_kD(0, 0, 0);
+		DrivetrainSS.frontLeft.config_kP(0, .01, 0);
+		DrivetrainSS.frontLeft.config_kI(0, 0, 0);
+		DrivetrainSS.frontLeft.config_kD(0, 0, 0);
 		
 	}
 

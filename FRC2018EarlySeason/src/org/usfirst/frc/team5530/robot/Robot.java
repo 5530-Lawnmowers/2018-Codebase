@@ -49,6 +49,8 @@ public class Robot extends TimedRobot {
 	public G_DriveForwardAndDeliver driveForwardAndDeliver;
 	public G_DriveForward driveForward;
 	public CenterToLeftSwitch CTLS;
+	public G_DriveForward straightScaleAuton;
+	public G_DriveForward drive170;
 	
 	
 	//Test Stuff
@@ -128,11 +130,13 @@ public class Robot extends TimedRobot {
 		servo0 = new ServoActuationTest(ClimbSS.servo0, time);
 		servo1 = new ServoActuationTest(ClimbSS.servo1, time);
 		
-		driveForward = new G_DriveForward();
+		driveForward = new G_DriveForward(100);
 		driveForwardAndDeliver = new G_DriveForwardAndDeliver();
 		leftSwitch = new G_LeftTurnAuton();
 		rightSwitch = new G_RightTurnAuton();
 		CTLS = new CenterToLeftSwitch();
+		straightScaleAuton = new G_DriveForward(210);
+		drive170 = new G_DriveForward(170);
 		
 		
 	}
@@ -210,8 +214,7 @@ public class Robot extends TimedRobot {
 					rightSwitch.start();
 					autonFlag = false;	
 				}
-			}
-			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDL")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDL")) {
 				if (gameData.charAt(0) == 'L') {
 					driveForwardAndDeliver.start();
 					autonFlag = false;
@@ -220,8 +223,7 @@ public class Robot extends TimedRobot {
 					driveForward.start();
 					autonFlag = false;
 				}
-			}
-			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDR")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DFDR")) {
 				if (gameData.charAt(0) == 'L') {
 					driveForward.start();
 					autonFlag = false;
@@ -230,19 +232,35 @@ public class Robot extends TimedRobot {
 					driveForwardAndDeliver.start();
 					autonFlag = false;
 				}
-			}
-			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DF")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DF")) {
 				driveForward.start();
 				autonFlag = false;
-			}
-			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MM")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MM")) {
 				leftSwitch.start();
 				autonFlag = false;
-			}
-			else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
 				CTLS.start();
 				autonFlag = false;
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSAR")) {
+				if (gameData.charAt(1) == 'R') {
+					straightScaleAuton.start();
+					autonFlag = false;
+				}
+				else if (gameData.charAt(1) == 'L') {
+					drive170.start();
+					autonFlag = false;
+				}
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSAL")) {
+				if (gameData.charAt(1) == 'L') {
+					straightScaleAuton.start();
+					autonFlag = false;
+				}
+				else if (gameData.charAt(1) == 'R') {
+					drive170.start();
+					autonFlag = false;
+				}
 			}
+			
 		}
 		
 		

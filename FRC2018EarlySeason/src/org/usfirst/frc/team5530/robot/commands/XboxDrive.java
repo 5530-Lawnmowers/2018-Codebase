@@ -118,8 +118,8 @@ public class XboxDrive extends Command{
 //				}
 //			}
 			
-			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, XBControllerR(lStick, rTrigger, lTrigger));
-			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, XBControllerL(lStick, rTrigger, lTrigger));
+			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, Math.sqrt(XBControllerR(lStick, rTrigger, lTrigger)) * .75);
+			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, Math.sqrt(XBControllerL(lStick, rTrigger, lTrigger)) * .75);
 //			
 //			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR));
 //			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));

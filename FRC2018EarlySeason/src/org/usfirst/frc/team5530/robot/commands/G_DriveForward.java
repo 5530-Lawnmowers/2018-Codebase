@@ -4,9 +4,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class G_DriveForward extends CommandGroup {
 	
-	public G_DriveForward() {
+	public G_DriveForward(double length) {
 		addSequential(new InitializeMotors());
-		addSequential(new DriveForward(100));	
+		addSequential(new DriveForward(length));	
 	}
 
 }
