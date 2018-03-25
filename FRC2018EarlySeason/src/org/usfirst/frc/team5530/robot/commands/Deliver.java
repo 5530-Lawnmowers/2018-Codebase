@@ -28,7 +28,7 @@ public class Deliver extends Command{
 	}
 
 	protected void execute() {
-		IntakeSS.Intake0.set(ControlMode.PercentOutput, -0.75);
+		IntakeSS.Intake0.set(ControlMode.PercentOutput, -0.6);
 		counter++;
 	}
 	protected boolean isFinished() {

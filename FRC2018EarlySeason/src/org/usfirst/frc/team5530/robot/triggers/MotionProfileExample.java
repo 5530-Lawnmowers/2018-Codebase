@@ -27,6 +27,7 @@ package org.usfirst.frc.team5530.robot.triggers;
 import edu.wpi.first.wpilibj.Notifier;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motion.*;
+import com.ctre.phoenix.motion.TrajectoryPoint.TrajectoryDuration;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 public class MotionProfileExample {
@@ -172,7 +173,7 @@ public class MotionProfileExample {
 			 * using gamepads or some other mode.
 			 */
 			
-			System.out.println("NNNNNNNNNNNNNNNNNOOOOOOOOOOOOOOOOOOOOOOOPPPPPPPPPPPPPPPPPPPPPPPPPPPPAAAAAAAAAAAAAAAAAAAASSSSSSSSSSSSSS");
+			System.out.println("NO PASS");
 			_state = 0;
 			_loopTimeout = -1;
 		} else {
@@ -207,6 +208,7 @@ public class MotionProfileExample {
 						/* MP will start once the control frame gets scheduled */
 						_state = 2;
 						_loopTimeout = kNumLoopsTimeout;
+						System.out.println("STATE 1");
 					}
 					break;
 				case 2: /* check the status of the MP */
@@ -273,10 +275,12 @@ public class MotionProfileExample {
 			/* for each point, fill our structure and pass it to API */
 			point.position = convertToTicks(profile[0][i]);
 			point.velocity = convertToTicks(profile[1][i]);
-			_talon.configMotionProfileTrajectoryPeriod((int) profile[2][i], 0);
-			point.profileSlotSelect0 = 0; /* which set of gains would you like to use? */
-//			point.headingDeg = 1; idk
+			_talon.configMotionProfileTrajectoryPeriod(0, 0); //(int) profile[2][i]
+			point.profileSlotSelect0 = 2; /* which set of gains would you like to use? */
+			point.headingDeg = 0;
 			point.zeroPos = false;
+			point.profileSlotSelect1 = 0;
+			point.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
 			if (i == 0)
 				point.zeroPos = true; /* set this to true on the first point */
 

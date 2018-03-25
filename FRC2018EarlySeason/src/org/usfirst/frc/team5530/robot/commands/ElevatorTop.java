@@ -40,7 +40,6 @@ public class ElevatorTop extends Command{
 	}
 	protected void end() {
 		ElevatorSS.Elevator0.set(.18);
-		
 	}
 	protected void interrupted() {
 		ElevatorSS.Elevator0.set(0);

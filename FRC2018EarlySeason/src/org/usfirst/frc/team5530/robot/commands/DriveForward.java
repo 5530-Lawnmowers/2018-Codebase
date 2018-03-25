@@ -19,9 +19,11 @@ public class DriveForward extends Command{
 	int startDistanceR;
 	int startDistanceL;
 	double distance;
+	
 	public DriveForward(double distance) {
 		super("DriveForwardTalonBasedCMD");
 		requires(Robot.drivetrainSS);
+		this.distance = distance;
 		double rotations = distance / (6 * Math.PI);
 		this.encodeDistance = rotations * 1024;
 	}
@@ -29,28 +31,29 @@ public class DriveForward extends Command{
 		DrivetrainSS.setFollowing();
 		startDistanceR = DrivetrainSS.frontRight.getSelectedSensorPosition(0);
 		startDistanceL = DrivetrainSS.frontLeft.getSelectedSensorPosition(0);
+		if (Math.abs(distance) <= 50) {
+			DrivetrainSS.frontLeft.selectProfileSlot(3, 0);
+			DrivetrainSS.frontRight.selectProfileSlot(3, 0);
+		} else {
+			DrivetrainSS.frontLeft.selectProfileSlot(0, 0);
+			DrivetrainSS.frontRight.selectProfileSlot(0, 0);
+		}
 	}
 	//Whenever this command is called, setspeeds is called
 	protected void execute() {
 		//Switch: .1, 1.0E-6, 15
 		//Scale: .09, 1.0E-8, 15
-		double proportional = SmartDashboard.getNumber("Forward P Value", 0.15);
-		double integral = SmartDashboard.getNumber("Forward I Value", 0.000001);
-		double derivative = SmartDashboard.getNumber("Forward D Value", 0.10);
-		
-		DrivetrainSS.frontRight.config_kP(0, proportional, 0);
-		DrivetrainSS.frontLeft.config_kP(0, proportional, 0);
-		DrivetrainSS.frontRight.config_kI(0, integral, 0);
-		DrivetrainSS.frontLeft.config_kI(0, integral, 0);
-		DrivetrainSS.frontRight.config_kD(0, derivative, 0);
-		DrivetrainSS.frontLeft.config_kD(0, derivative, 0);
-		
+//		double proportional = SmartDashboard.getNumber("Forward P Value", 0.15);
+//		double integral = SmartDashboard.getNumber("Forward I Value", 0.000001);
+//		double derivative = SmartDashboard.getNumber("Forward D Value", 0.10);
+//		
 		DrivetrainSS.frontRight.setSensorPhase(true);
-		DrivetrainSS.frontRight.set(ControlMode.Position, -Math.rint(encodeDistance));
-		DrivetrainSS.frontLeft.set(ControlMode.Position, Math.rint(encodeDistance));
+		DrivetrainSS.frontRight.set(ControlMode.Position, startDistanceR - Math.rint(encodeDistance));
+		DrivetrainSS.frontLeft.set(ControlMode.Position, startDistanceL + Math.rint(encodeDistance));
 		
-		SmartDashboard.putNumber("Target Position", encodeDistance);
-		System.out.println(encodeDistance);
+		DrivetrainSS.frontLeft.selectProfileSlot(0, 0); 
+		DrivetrainSS.frontRight.selectProfileSlot(0, 0);
+		
 	}
 	protected boolean isFinished() {
 		if (((encodeDistance - DrivetrainSS.frontLeft.getSelectedSensorPosition(0)) < 200)) return true;

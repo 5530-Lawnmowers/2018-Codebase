@@ -49,8 +49,10 @@ public class Robot extends TimedRobot {
 	public G_DriveForwardAndDeliver driveForwardAndDeliver;
 	public G_DriveForward driveForward;
 	public CenterToLeftSwitch CTLS;
-	public G_DriveForward straightScaleAuton;
+	public G_StraightScaleAuton straightScaleAuton;
 	public G_DriveForward drive170;
+	public G_TestTurn testTurn;
+	public G_SideSwitch sideSwitch;
 	
 	
 	//Test Stuff
@@ -106,7 +108,9 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putNumber("Outside Turn P Value", 0.228);
 //		SmartDashboard.putNumber("Outside Turn I Value", 0);
 //		SmartDashboard.putNumber("Outside Turn D Value", 0);
-		
+		SmartDashboard.putNumber("angle", 0);
+		SmartDashboard.putString("direction", "l");
+		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
 		
 		initializeMotors = new InitializeMotors();
 		
@@ -135,10 +139,8 @@ public class Robot extends TimedRobot {
 		leftSwitch = new G_LeftTurnAuton();
 		rightSwitch = new G_RightTurnAuton();
 		CTLS = new CenterToLeftSwitch();
-		straightScaleAuton = new G_DriveForward(210);
 		drive170 = new G_DriveForward(170);
-		
-		
+		testTurn = new G_TestTurn();
 	}
 
 	/**
@@ -176,8 +178,26 @@ public class Robot extends TimedRobot {
 //		autonomousCommand.start();
 		
 		autonFlag = true;
-		CTLS.MPR.reset();
-		CTLS.MPL.reset();
+//		CTLS.MPR.reset();
+//		CTLS.MPL.reset();
+		
+		DrivetrainSS.frontLeft.selectProfileSlot(0, 0); 
+		DrivetrainSS.frontRight.selectProfileSlot(0, 0);
+		DrivetrainSS.frontRight.config_kP(3, .25, 0);
+		DrivetrainSS.frontLeft.config_kP(3, .25, 0);
+		DrivetrainSS.frontRight.config_kI(3, 0, 0);
+		DrivetrainSS.frontLeft.config_kI(3, 0, 0);
+		DrivetrainSS.frontRight.config_kD(3, 0, 0);
+		DrivetrainSS.frontLeft.config_kD(3, 0, 0);
+		
+		DrivetrainSS.frontLeft.selectProfileSlot(1, 0); 
+		DrivetrainSS.frontRight.selectProfileSlot(1, 0);
+		DrivetrainSS.frontLeft.config_kP(1, .45, 0);
+		DrivetrainSS.frontLeft.config_kI(1, 0, 0);
+		DrivetrainSS.frontLeft.config_kD(1, 0, 0);
+		DrivetrainSS.frontRight.config_kP(1, .45, 0);
+		DrivetrainSS.frontRight.config_kI(1, 0, 0);
+		DrivetrainSS.frontRight.config_kD(1, 0, 0);
 	}
 
 	/**
@@ -189,10 +209,10 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 //		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
 //		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
-//		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
 //		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
 //		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
 //		SmartDashboard.clearPersistent("Right Sensor Position");
@@ -241,28 +261,43 @@ public class Robot extends TimedRobot {
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
 				CTLS.start();
 				autonFlag = false;
-			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSAR")) {
-				if (gameData.charAt(1) == 'R') {
-					straightScaleAuton.start();
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSR")) {
+				if (gameData.charAt(0) == 'R') {
+					sideSwitch = new G_SideSwitch("L");
+					sideSwitch.start();
+					autonFlag = false;
+				} else if (gameData.charAt(1) == 'R') {
+//					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+//					straightScaleAuton.start();
+					drive170.start();	
+					autonFlag = false;
+				} else {
+					drive170.start();	
 					autonFlag = false;
 				}
-				else if (gameData.charAt(1) == 'L') {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSL")) {
+				if (gameData.charAt(0) == 'L') {
+					sideSwitch = new G_SideSwitch("R");
+					sideSwitch.start();
+					autonFlag = false;
+				} else if (gameData.charAt(1) == 'L') {
+//					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+//					straightScaleAuton.start();
+					drive170.start();
+					autonFlag = false;
+				} else {
 					drive170.start();
 					autonFlag = false;
 				}
-			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSAL")) {
-				if (gameData.charAt(1) == 'L') {
-					straightScaleAuton.start();
-					autonFlag = false;
-				}
-				else if (gameData.charAt(1) == 'R') {
-					drive170.start();
-					autonFlag = false;
-				}
-			}
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DTS")) {
+				drive170.start();
+				autonFlag = false;
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("TT")) {
+				testTurn.start();
+				autonFlag = false;
+			} 
 			
 		}
-		
 		
 	}
 	
@@ -292,8 +327,8 @@ public class Robot extends TimedRobot {
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 //		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
 //		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 //		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
 //		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
 //		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
@@ -304,6 +339,8 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.clearPersistent("Left Sensor Velocity");
 //		SmartDashboard.clearPersistent("Output Percent R");
 //		SmartDashboard.clearPersistent("Output Percent L");
+//		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+		
 	}
 	
 	

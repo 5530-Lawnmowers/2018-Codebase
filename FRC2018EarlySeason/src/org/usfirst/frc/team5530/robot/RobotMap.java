@@ -47,6 +47,12 @@ public class RobotMap {
 	//Potentiometer - Analog Input
 	public static int P0 = 0;
 	
+	//PID Slots
+	public static int largeDistance = 0;
+	public static int normalTurn = 1;
+	public static int motionProfile = 2;
+	public static int shortDistance = 3;
+	
 	// If you are using multiple modules, make sure to define both the port
 	// number and the module. For example you with a rangefinder:
 	// public static int rangefinderPort = 1;

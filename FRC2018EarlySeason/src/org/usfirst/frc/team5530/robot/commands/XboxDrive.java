@@ -117,9 +117,10 @@ public class XboxDrive extends Command{
 //					else if (getModifiedStick(right, left, lStick) > 0) left = 0;
 //				}
 //			}
-			
-			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, Math.sqrt(XBControllerR(lStick, rTrigger, lTrigger)) * .75);
-			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, Math.sqrt(XBControllerL(lStick, rTrigger, lTrigger)) * .75);
+			if (XBControllerR(lStick, rTrigger, lTrigger) > 0) DrivetrainSS.frontRight.set(ControlMode.PercentOutput, Math.pow(XBControllerR(lStick, rTrigger, lTrigger), 2) * .75);
+			else DrivetrainSS.frontRight.set(ControlMode.PercentOutput, -Math.pow(XBControllerR(lStick, rTrigger, lTrigger), 2) * .75);
+			if (XBControllerL(lStick, rTrigger, lTrigger) > 0) DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, Math.pow(XBControllerL(lStick, rTrigger, lTrigger), 2) * .75);
+			else DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, -Math.pow(XBControllerL(lStick, rTrigger, lTrigger), 2) * .75);
 //			
 //			DrivetrainSS.frontRight.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerR(lStick, rTrigger, lTrigger), currentSpeedR));
 //			DrivetrainSS.frontLeft.set(ControlMode.PercentOutput, GetPositionFiltered((double)XBControllerL(lStick, rTrigger, lTrigger), currentSpeedL));

@@ -56,7 +56,7 @@ public class OI {
 		buttons[11].whenPressed(new G_StartingPosition()); //Button 12
 		
 		xboxButtonLB.whenPressed(new Deliver());
-		xboxButtonRB.toggleWhenPressed(new Intake()); 
+		xboxButtonA.toggleWhenPressed(new Intake()); 
 		
 		buttons[5].whenPressed(new NonLimitedTest(DrivetrainSS.frontRight, 1)); //Button 6
 		

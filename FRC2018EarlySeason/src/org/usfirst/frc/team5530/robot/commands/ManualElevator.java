@@ -58,8 +58,8 @@ public class ManualElevator extends Command{
 			else ElevatorSS.Elevator0.set(.18);
 		}
 		if(!OI.getButtonValue(1)) ElevatorSS.Elevator0.stopMotor();									//If the trigger was released set the motors to 0
-		System.out.println("Elevator Encoder: " +  ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-		System.out.println(value * 0.5);
+//		System.out.println("Elevator Encoder: " +  ElevatorSS.Elevator0.getSelectedSensorPosition(0));
+//		System.out.println(value * 0.5);
 	}
 	protected boolean isFinished() {
 		if (OI.getButtonValue(1)) return false;	
