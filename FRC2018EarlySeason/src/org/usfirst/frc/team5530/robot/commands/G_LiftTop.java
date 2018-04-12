@@ -6,6 +6,6 @@ public class G_LiftTop extends CommandGroup {
 	
 	public G_LiftTop() {
 		addParallel(new ElevatorTop());
-		addParallel(new ArmModular("Top"));
+		addSequential(new ArmModular("Top"));
 	}
 }

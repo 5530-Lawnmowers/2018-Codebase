@@ -20,12 +20,14 @@ public class ElevatorTop extends Command{
 	
 	boolean isArmFinished;
 	boolean isElevatorFinished;
+	double counter;
 	
 	public ElevatorTop() {
 		requires(Robot.elevatorSS);
 	}
 	
 	protected void initialize() {
+		counter = 0;
 		ElevatorSS.setFollowing();
 		ElevatorSS.Elevator0.stopMotor();
 	}
@@ -33,9 +35,10 @@ public class ElevatorTop extends Command{
 	protected void execute() {
 		if (ElevatorSS.Elevator0.getSelectedSensorPosition(0) < 26000) ElevatorSS.Elevator0.set(ControlMode.PercentOutput, 1); //If the elevator is not near the top set it to go up
 		else ElevatorSS.Elevator0.set(0.4);																							//If it's near the top set it go up slower
+		counter++;
 	}
 	protected boolean isFinished() {
-		if(!ElevatorSS.elevatorSwitchTop.get()) return true;
+		if(!ElevatorSS.elevatorSwitchTop.get() || counter >= 100) return true;
 		return false; 
 	}
 	protected void end() {

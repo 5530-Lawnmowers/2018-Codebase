@@ -17,22 +17,26 @@ import com.ctre.phoenix.motorcontrol.*;
 public class Intake extends Command{
 	public Intake() {
 		super("IntakeCMD");
-		requires(Robot.intakeSS);	
+		requires(Robot.intakeSS);
 	}
 	protected void initialize() {
 		IntakeSS.setFollowing();
 	}
 	protected void execute() {
 		IntakeSS.Intake0.set(ControlMode.PercentOutput, 1);
+		IntakeSS.intakeOn = true;
+		
 	}
 	protected boolean isFinished() {
 		return false;
 	}
 	protected void end() {
 		IntakeSS.Intake0.set(0);
+		IntakeSS.intakeOn = false;
 	}
 	protected void interrupted() {
 		IntakeSS.Intake0.set(0);
+		IntakeSS.intakeOn = false;
 	}
 	
 	

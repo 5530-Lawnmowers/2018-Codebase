@@ -1,46 +1,47 @@
 package org.usfirst.frc.team5530.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.Timer;
 
 import org.usfirst.frc.team5530.robot.subsystems.ArmSS;
 import org.usfirst.frc.team5530.robot.subsystems.ElevatorSS;
 import org.usfirst.frc.team5530.robot.*;
 
 import com.ctre.phoenix.motorcontrol.*;
-//This command turns the motors to move the arm to the top of the elevator
+//Disclaimer - do not read both comments, unless you are confused
+//In this command, when the joystick trigger is held, the joystick will move the arm on top of the lift (Robert's lame version)
+//This command allows the driver to hold the joystick trigger while controlling the joystick to move the arm on top of the lift (Lawrence's version)
 
-public class ArmTop extends Command{
+public class Pause extends Command{
 	
+	double time;
+	double count;
 	
-	public ArmTop() {
-		requires(Robot.armSS);
-		
+	public Pause(double time) {
+		this.time = 50 * time; //Enter time as Seconds
 	}
 	
 	protected void initialize() {
-		ElevatorSS.setFollowing();
+		count = 0;
 	}
-
+	//Whenever this command is called, setspeeds is called
 	protected void execute() {
-		if (ArmSS.potentiometer0.getValue() >= 500) ArmSS.arm.set(1);
-		else ArmSS.arm.set(0);
-		
+		count++;
 	}
 	protected boolean isFinished() {
-		return false;
+		if (count < time) return false;
+		return true;
 	}
 	protected void end() {
-		ArmSS.arm.set(0);
+		
 	}
 	protected void interrupted() {
-		ArmSS.arm.set(0);
+		
 	}
 	
 	

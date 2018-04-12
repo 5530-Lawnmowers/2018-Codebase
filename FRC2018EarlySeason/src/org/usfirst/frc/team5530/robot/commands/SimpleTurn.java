@@ -22,12 +22,16 @@ public class SimpleTurn extends Command{
 	double ticks;
 	double startDistanceR;
 	double startDistanceL;
-	double counter;
-	double maxTime = 10;
+	double errorCounter;
+	double minErrorTime = 10;
+	double turnCounter;
+	double maxTurnTime;
+	
 //	double maxError; //Original was 200
 	
-	public SimpleTurn(String side, double radians) {
+	public SimpleTurn(String side, double radians, double time) {
 		requires(Robot.drivetrainSS);
+		maxTurnTime = time * 50;
 		this.side = side;
 //		maxError = error;
 		if(side.equalsIgnoreCase("l")) {
@@ -44,22 +48,27 @@ public class SimpleTurn extends Command{
 		DrivetrainSS.frontRight.selectProfileSlot(1, 0);
 		startDistanceR = DrivetrainSS.frontRight.getSelectedSensorPosition(0);
 		startDistanceL = DrivetrainSS.frontLeft.getSelectedSensorPosition(0);
-		counter = 0;
+		errorCounter = 0;
+		turnCounter = 0;
 	}
 
 	protected void execute() {
 		DrivetrainSS.frontRight.set(ControlMode.Position, startDistanceR + ticks);
 		DrivetrainSS.frontLeft.set(ControlMode.Position, startDistanceL + ticks);
+		turnCounter++;
+		System.out.println("Left TARGET: " + startDistanceL + ticks);
+		System.out.println("Right TARGET: " + startDistanceR + ticks);
 	}
 	protected boolean isFinished() {
 		if ((Math.abs(((startDistanceR + ticks) - DrivetrainSS.frontRight.getSelectedSensorPosition(0))) < 200) && (Math.abs(((startDistanceL + ticks) - DrivetrainSS.frontLeft.getSelectedSensorPosition(0))) < 200)) {
-			if (counter >= 10) return true;
+			if (errorCounter >= 10) return true;
 			else {
-				counter++;
+				errorCounter++;
 				return false;
-			}
-		}else {
-			counter = 0;
+			}	
+		} else if (turnCounter >= maxTurnTime) return true;
+		else {
+			errorCounter = 0;
 			return false;
 		}
 	}

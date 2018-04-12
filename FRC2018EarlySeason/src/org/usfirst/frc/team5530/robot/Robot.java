@@ -41,7 +41,6 @@ public class Robot extends TimedRobot {
 	Command autonomousCommand;
 	Command initializeMotors;
 	
-	public boolean intakeOn = false;
 	public boolean autonFlag = true;
 	
 	public G_LeftTurnAuton leftSwitch;
@@ -108,9 +107,38 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.putNumber("Outside Turn P Value", 0.228);
 //		SmartDashboard.putNumber("Outside Turn I Value", 0);
 //		SmartDashboard.putNumber("Outside Turn D Value", 0);
-		SmartDashboard.putNumber("angle", 0);
-		SmartDashboard.putString("direction", "l");
-		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+		SmartDashboard.putNumber("Input 1", 0);
+		SmartDashboard.putNumber("Input 2", 0);
+		SmartDashboard.putNumber("Input 3", 0);
+		SmartDashboard.putNumber("Input 4", 0);
+		SmartDashboard.putNumber("Input 5", 0);
+		SmartDashboard.putString("Str Input 1", "");
+		SmartDashboard.putString("Str Input 2", "");
+		SmartDashboard.putString("Str Input 3", "");
+		SmartDashboard.putBoolean("Manual Auton Control?", false);
+		
+//		SmartDashboard.putNumber("angle", 0);
+//		SmartDashboard.putString("direction", "l");
+//		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+		
+//		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
+//		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
+//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
+		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
+//		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
+//		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
+//		SmartDashboard.clearPersistent("Right Sensor Position");
+//		SmartDashboard.clearPersistent("Left Sensor Position");
+//		SmartDashboard.clearPersistent("Right Sensor Velocity");
+//		SmartDashboard.clearPersistent("Left Sensor Velocity");
+//		SmartDashboard.clearPersistent("Output Percent R");
+//		SmartDashboard.clearPersistent("Output Percent L");
+//		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+		
+		
+
 		
 		initializeMotors = new InitializeMotors();
 		
@@ -198,6 +226,7 @@ public class Robot extends TimedRobot {
 		DrivetrainSS.frontRight.config_kP(1, .45, 0);
 		DrivetrainSS.frontRight.config_kI(1, 0, 0);
 		DrivetrainSS.frontRight.config_kD(1, 0, 0);
+		
 	}
 
 	/**
@@ -207,20 +236,10 @@ public class Robot extends TimedRobot {
 	public void autonomousPeriodic() {
 		
 		Scheduler.getInstance().run();
-//		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
-//		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
-		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
-//		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
-//		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
-//		SmartDashboard.clearPersistent("Right Sensor Position");
-//		SmartDashboard.clearPersistent("Left Sensor Position");
-//		SmartDashboard.clearPersistent("Right Sensor Velocity");
-//		SmartDashboard.clearPersistent("Left Sensor Velocity");
-//		SmartDashboard.clearPersistent("Output Percent R");
-//		SmartDashboard.clearPersistent("Output Percent L");
+		SmartDashboard.updateValues();
+		
+		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
 		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -267,9 +286,9 @@ public class Robot extends TimedRobot {
 					sideSwitch.start();
 					autonFlag = false;
 				} else if (gameData.charAt(1) == 'R') {
-//					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
-//					straightScaleAuton.start();
-					drive170.start();	
+					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+					straightScaleAuton.start();
+//					drive170.start();	
 					autonFlag = false;
 				} else {
 					drive170.start();	
@@ -281,9 +300,9 @@ public class Robot extends TimedRobot {
 					sideSwitch.start();
 					autonFlag = false;
 				} else if (gameData.charAt(1) == 'L') {
-//					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
-//					straightScaleAuton.start();
-					drive170.start();
+					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+					straightScaleAuton.start();
+//					drive170.start();
 					autonFlag = false;
 				} else {
 					drive170.start();
@@ -294,7 +313,7 @@ public class Robot extends TimedRobot {
 				autonFlag = false;
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("TT")) {
 				testTurn.start();
-				autonFlag = false;
+				autonFlag = false;	
 			} 
 			
 		}
@@ -320,26 +339,14 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+		SmartDashboard.putBoolean("Intake On", IntakeSS.intakeOn);	
 		
-		if (IntakeSS.Intake0.get() != 0 || IntakeSS.Intake1.get() != 0) intakeOn = true;
-		else intakeOn = false;
-		SmartDashboard.putBoolean("Intake On", intakeOn);
+		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
+		
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
-//		SmartDashboard.putNumber("Potentiometer Arm: ", ArmSS.potentiometer0.getValue());
-//		SmartDashboard.putNumber("Elevator Encoder Value: ", ElevatorSS.Elevator0.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Right Sensor Position", DrivetrainSS.frontRight.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Left Sensor Position", DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-//		SmartDashboard.putNumber("Right Sensor Velocity", DrivetrainSS.frontRight.getSelectedSensorVelocity(0));
-//		SmartDashboard.putNumber("Left Sensor Velocity", DrivetrainSS.frontLeft.getSelectedSensorVelocity(0));
-//		SmartDashboard.putNumber("Output Percent R", DrivetrainSS.frontRight.getMotorOutputPercent());
-//		SmartDashboard.putNumber("Output Percent L", DrivetrainSS.frontLeft.getMotorOutputPercent());
-//		SmartDashboard.clearPersistent("Right Sensor Position");
-//		SmartDashboard.clearPersistent("Left Sensor Position");
-//		SmartDashboard.clearPersistent("Right Sensor Velocity");
-//		SmartDashboard.clearPersistent("Left Sensor Velocity");
-//		SmartDashboard.clearPersistent("Output Percent R");
-//		SmartDashboard.clearPersistent("Output Percent L");
-//		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
+
 		
 	}
 	

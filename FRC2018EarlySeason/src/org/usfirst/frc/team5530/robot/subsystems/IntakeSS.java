@@ -27,6 +27,8 @@ public class IntakeSS extends Subsystem {
 	public static DigitalInput intakeSwitch0 = new DigitalInput(RobotMap.LS0);
 	public static DigitalInput intakeSwitch1 = new DigitalInput(RobotMap.LS1);
 	
+	public static boolean intakeOn = false;
+	
 	
 		//this method is called if no other command is called by the scheduler to use this subsystem
 	public static void setFollowing() {

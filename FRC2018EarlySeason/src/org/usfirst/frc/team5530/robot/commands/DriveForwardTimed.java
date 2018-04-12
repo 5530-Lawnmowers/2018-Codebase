@@ -83,7 +83,7 @@ public class DriveForwardTimed extends Command{
 		return false;
 	}
 	protected void end() {
-		
+		//DrivetrainSS.frontRight.set(ControlMode.Position, 325); 
 	}
 	protected void interrupted() {
 		
