@@ -16,5 +16,20 @@ public class G_StraightScaleAuton extends CommandGroup {
 		addSequential(new DriveForwardTimed(-20, 1.5));
 		addSequential(new InitializeMotors());
 		addSequential(new G_LiftBot());
+//		if (side.equalsIgnoreCase("R")) {
+//			addSequential(new SimpleTurn("L", -Math.PI/3, 2));
+//			addSequential(new DriveForward(30));
+//			addSequential(new SimpleTurn("L", -Math.PI/2, 2));
+//			addSequential(new Intake());
+//			addSequential(new DriveForwardTimed(20, 2));
+//			addSequential(new IntakeOff());
+//		} else if (side.equalsIgnoreCase("L")) {
+//			addSequential(new SimpleTurn("R", -Math.PI/3, 2));
+//			addSequential(new DriveForward(30));
+//			addSequential(new SimpleTurn("R", -Math.PI/2, 2));
+//			addSequential(new Intake());
+//			addSequential(new DriveForwardTimed(20, 2));
+//			addSequential(new IntakeOff());
+//		} 
 	}
 }

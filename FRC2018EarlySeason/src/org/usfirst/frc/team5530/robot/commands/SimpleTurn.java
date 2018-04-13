@@ -28,6 +28,8 @@ public class SimpleTurn extends Command{
 	double maxTurnTime;
 	
 //	double maxError; //Original was 200
+//	3PI/5 = 1164.8
+//	PI/2 = 970.7
 	
 	public SimpleTurn(String side, double radians, double time) {
 		requires(Robot.drivetrainSS);

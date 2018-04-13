@@ -22,11 +22,10 @@ public class ElevatorMid extends Command{
 	double armPosition;
 	double top = 450;
 	double bot = 2600;
-	public static final double ceiling = 32800;
-	public static final double floor = 0;
 	
 	public ElevatorMid() {
 		requires(Robot.elevatorSS);
+		requires(Robot.armSS);
 	}
 	
 	protected void initialize() {
@@ -34,18 +33,20 @@ public class ElevatorMid extends Command{
 	}
 
 	protected void execute() {
-		if (ElevatorSS.Elevator0.getSelectedSensorPosition(0) < 19000) ElevatorSS.Elevator0.set(.3);
-		else ElevatorSS.Elevator0.set(.18);
+		ArmSS.arm.set(ControlMode.PercentOutput, .0057*(ArmSS.potentiometer0.getValue() - ArmSS.restingHeight) + .16); 
+		if (ElevatorSS.Elevator0.getSelectedSensorPosition(0) < 19000) ElevatorSS.Elevator0.set(.75);
+		else ElevatorSS.Elevator0.set(.15);
 	}
 	protected boolean isFinished() {
-//		distance = Elevator.Elevator0.getSelectedSensorPosition(0);
 		return false;
 	}
 	protected void end() {
 		ArmSS.arm.set(0);
+		ElevatorSS.Elevator0.set(0);
 	}
 	protected void interrupted() {
 		ArmSS.arm.set(0);
+		ElevatorSS.Elevator0.set(0);
 	}
 	
 	

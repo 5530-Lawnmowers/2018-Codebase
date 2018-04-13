@@ -51,7 +51,7 @@ public class OI {
 		buttons[3].toggleWhenPressed(new Climb(.3)); //Button 4
 		buttons[6].toggleWhenPressed(new G_LiftBot()); //Button 7
 		buttons[7].toggleWhenPressed(new G_LiftTop()); //Button 8
-		buttons[9].toggleWhenPressed(new ArmModular("Top")); //Button 10
+		buttons[9].toggleWhenPressed(new ElevatorMid()); //Button 10
 		buttons[10].whenPressed(new ReleaseClimbingArm(.33)); //Button 11
 		buttons[11].whenPressed(new G_StartingPosition()); //Button 12
 		

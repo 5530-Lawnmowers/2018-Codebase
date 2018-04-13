@@ -18,6 +18,12 @@ public class ElevatorSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
+
+	public static final double ceiling = 32800;
+	public static final double floor = 0;
+
+	public static double slowHeight = 28000;
+	
 	public static WPI_TalonSRX Elevator0  = new WPI_TalonSRX(RobotMap.E0);
 	public static WPI_TalonSRX Elevator1  = new WPI_TalonSRX(RobotMap.E1);
 	

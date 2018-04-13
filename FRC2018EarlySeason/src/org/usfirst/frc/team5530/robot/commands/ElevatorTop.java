@@ -33,7 +33,7 @@ public class ElevatorTop extends Command{
 	}
 
 	protected void execute() {
-		if (ElevatorSS.Elevator0.getSelectedSensorPosition(0) < 26000) ElevatorSS.Elevator0.set(ControlMode.PercentOutput, 1); //If the elevator is not near the top set it to go up
+		if (ElevatorSS.Elevator0.getSelectedSensorPosition(0) < ElevatorSS.slowHeight) ElevatorSS.Elevator0.set(ControlMode.PercentOutput, 1); //If the elevator is not near the top set it to go up
 		else ElevatorSS.Elevator0.set(0.4);																							//If it's near the top set it go up slower
 		counter++;
 	}
