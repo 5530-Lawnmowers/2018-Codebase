@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class G_StraightScaleAuton extends CommandGroup {
 
 	public G_StraightScaleAuton(String side) { 
-		addSequential(new DriveForward(235));
+		addSequential(new DriveForward(250));
 //		addSequential(new Pause(1));
-		addSequential(new SimpleTurn(side, -Math.PI/2, 2));
+		addSequential(new SimpleTurn(side, -2*Math.PI/5, 2));
 		addSequential(new InitializeMotors());
 		addSequential(new G_LiftTop());
-		addSequential(new DriveForward(30));
+		addSequential(new DriveForwardTimed(20, 1.5));
 		addSequential(new Deliver());
-		addSequential(new DriveForward(-30));
+		addSequential(new DriveForwardTimed(-20, 1.5));
 		addSequential(new InitializeMotors());
 		addSequential(new G_LiftBot());
 	}

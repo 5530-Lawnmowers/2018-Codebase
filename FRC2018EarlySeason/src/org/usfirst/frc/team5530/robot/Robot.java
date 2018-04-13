@@ -281,28 +281,28 @@ public class Robot extends TimedRobot {
 				CTLS.start();
 				autonFlag = false;
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSR")) {
-				if (gameData.charAt(0) == 'R') {
-					sideSwitch = new G_SideSwitch("L");
-					sideSwitch.start();
-					autonFlag = false;
-				} else if (gameData.charAt(1) == 'R') {
+				if (gameData.charAt(1) == 'R') {
 					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
 					straightScaleAuton.start();
 //					drive170.start();	
 					autonFlag = false;
+				} else if (gameData.charAt(0) == 'R') {
+					sideSwitch = new G_SideSwitch("L");
+					sideSwitch.start();
+					autonFlag = false;
 				} else {
 					drive170.start();	
 					autonFlag = false;
-				}
+				} 
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSL")) {
-				if (gameData.charAt(0) == 'L') {
-					sideSwitch = new G_SideSwitch("R");
-					sideSwitch.start();
-					autonFlag = false;
-				} else if (gameData.charAt(1) == 'L') {
+				if (gameData.charAt(1) == 'L') {
 					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
 					straightScaleAuton.start();
 //					drive170.start();
+					autonFlag = false;
+				} else if (gameData.charAt(0) == 'L') {
+					sideSwitch = new G_SideSwitch("R");
+					sideSwitch.start();
 					autonFlag = false;
 				} else {
 					drive170.start();
@@ -344,6 +344,7 @@ public class Robot extends TimedRobot {
 		
 		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
+		System.out.println("Arm Potentiometer: " + ArmSS.potentiometer0.getValue() );
 		
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 

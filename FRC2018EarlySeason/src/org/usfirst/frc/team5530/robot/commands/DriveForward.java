@@ -43,10 +43,7 @@ public class DriveForward extends Command{
 	protected void execute() {
 		//Switch: .1, 1.0E-6, 15
 		//Scale: .09, 1.0E-8, 15
-//		double proportional = SmartDashboard.getNumber("Forward P Value", 0.15);
-//		double integral = SmartDashboard.getNumber("Forward I Value", 0.000001);
-//		double derivative = SmartDashboard.getNumber("Forward D Value", 0.10);
-//		
+		
 		DrivetrainSS.frontRight.setSensorPhase(true);
 		DrivetrainSS.frontRight.set(ControlMode.Position, startDistanceR - Math.rint(encodeDistance));
 		DrivetrainSS.frontLeft.set(ControlMode.Position, startDistanceL + Math.rint(encodeDistance));

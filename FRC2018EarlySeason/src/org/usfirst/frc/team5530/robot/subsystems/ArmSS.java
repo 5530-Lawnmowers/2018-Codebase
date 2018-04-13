@@ -18,7 +18,7 @@ public class ArmSS extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 	
-	public static double maxArmHeight = 500;
+	public static double maxArmHeight = 460;
 	
 	public static WPI_TalonSRX arm = new WPI_TalonSRX(RobotMap.A0);
 	

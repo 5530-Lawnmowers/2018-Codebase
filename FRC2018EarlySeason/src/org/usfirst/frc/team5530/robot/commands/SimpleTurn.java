@@ -31,7 +31,7 @@ public class SimpleTurn extends Command{
 	
 	public SimpleTurn(String side, double radians, double time) {
 		requires(Robot.drivetrainSS);
-		maxTurnTime = time * 50;
+		maxTurnTime = time * 50;	
 		this.side = side;
 //		maxError = error;
 		if(side.equalsIgnoreCase("l")) {
