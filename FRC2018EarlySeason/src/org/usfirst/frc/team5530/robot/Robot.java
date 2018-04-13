@@ -89,6 +89,7 @@ public class Robot extends TimedRobot {
 		
 //		autonChooser = new SendableChooser<Command>();\
 		SmartDashboard.putString("autonChooser", "DF");
+		SmartDashboard.putBoolean("Prioritize Switch", false);
 //		autonChooser.addDefault("Drive Forward and Deliver", new G_DriveForwardAndDeliver());
 //		autonChooser.addObject("Forward", new G_DriveForward());
 //		autonChooser.addObject("CenterSwitch", object);
@@ -280,20 +281,36 @@ public class Robot extends TimedRobot {
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
 				CTLS.start();
 				autonFlag = false;
-			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSR")) {
-				if (gameData.charAt(1) == 'R') {
-					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
-					straightScaleAuton.start();
-//					drive170.start();	
-					autonFlag = false;
-				} else if (gameData.charAt(0) == 'R') {
-					sideSwitch = new G_SideSwitch("L");
-					sideSwitch.start();
-					autonFlag = false;
-				} else {
-					drive170.start();	
-					autonFlag = false;
-				} 
+			} else if (SmartDashboard.getBoolean("Prioritize Switch", true)) {
+				if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSR")) {
+					if (gameData.charAt(0) == 'R') {
+						sideSwitch = new G_SideSwitch("L");
+						sideSwitch.start();
+						autonFlag = false;
+					} else if (gameData.charAt(1) == 'R') {
+						straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+						straightScaleAuton.start();
+//						drive170.start();	
+						autonFlag = false;
+					} else {
+						drive170.start();	
+						autonFlag = false;
+					}
+				}
+				else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSL")) {
+					if (gameData.charAt(0) == 'L') {
+						sideSwitch = new G_SideSwitch("R");
+						sideSwitch.start();
+						autonFlag = false;
+					} else if (gameData.charAt(1) == 'L') {
+						straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+						straightScaleAuton.start();
+//						drive170.start();
+						autonFlag = false;
+					} else {
+						drive170.start();
+						autonFlag = false;
+					}
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSL")) {
 				if (gameData.charAt(1) == 'L') {
 					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
@@ -308,6 +325,29 @@ public class Robot extends TimedRobot {
 					drive170.start();
 					autonFlag = false;
 				}
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("SSR")) {
+				if (gameData.charAt(1) == 'R') {
+					straightScaleAuton = new G_StraightScaleAuton(Character.toString(gameData.charAt(1)));
+					straightScaleAuton.start();
+//					drive170.start();	
+					autonFlag = false;
+				} else if (gameData.charAt(0) == 'R') {
+					sideSwitch = new G_SideSwitch("L");
+					sideSwitch.start();
+					autonFlag = false;
+				} else {
+					drive170.start();	
+					autonFlag = false;
+				}
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("LS")) {
+				sideSwitch = new G_SideSwitch("R");
+				sideSwitch.start();
+				autonFlag = false;
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("RS")) {
+				sideSwitch = new G_SideSwitch("L");
+				sideSwitch.start();
+				autonFlag = false;
+			}
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DTS")) {
 				drive170.start();
 				autonFlag = false;
@@ -344,7 +384,8 @@ public class Robot extends TimedRobot {
 		
 		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
 		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
-		System.out.println("Arm Potentiometer: " + ArmSS.potentiometer0.getValue() );
+		System.out.println("Arm Potentiometer: " + ArmSS.potentiometer0.getValue());
+		SmartDashboard.putBoolean("Elevator BOT Limit Switch", ElevatorSS.elevatorSwitchBot.get());
 		
 		//xboxdrive.setSpeeds(xboxdrive.getStickHorizontal('l'), xboxdrive.getTriggerValue('r'), xboxdrive.getTriggerValue('l'));
 
