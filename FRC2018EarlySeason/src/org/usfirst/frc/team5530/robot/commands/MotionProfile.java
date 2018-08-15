@@ -132,8 +132,8 @@ public class MotionProfile extends Command {
 		DrivetrainSS.frontRight.clearMotionProfileTrajectories();
 		
 		for (int i = 0; i < totalCnt; ++i) {
-			rightPoint.position = convertToTicks(profile[0][0][i]);
-			rightPoint.velocity = convertToTicks(profile[0][1][i]);
+			rightPoint.position = -convertToTicks(profile[0][0][i]);
+			rightPoint.velocity = -convertToTicks(profile[0][1][i]);
 			leftPoint.position = convertToTicks(profile[1][0][i]);
 			leftPoint.velocity = convertToTicks(profile[1][1][i]);
 			DrivetrainSS.frontRight.configMotionProfileTrajectoryPeriod(0, 0);
@@ -179,13 +179,14 @@ public class MotionProfile extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    		DrivetrainSS.frontRight.set(ControlMode.MotionProfile, 0);
-    		DrivetrainSS.frontLeft.set(ControlMode.MotionProfile, 0);
+    		reset();
     		startMotionProfile();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+		DrivetrainSS.frontRight.set(ControlMode.MotionProfile, getSetValue().value);
+		DrivetrainSS.frontLeft.set(ControlMode.MotionProfile, getSetValue().value);
     		control();
     }
 

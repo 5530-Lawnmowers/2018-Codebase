@@ -371,19 +371,18 @@ public class Robot extends TimedRobot {
 					sideSwitch.start();
 					autonFlag = false;
 				} else driveForward.start();
-			}
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("DTS")) {
 				drive170.start();
 				autonFlag = false;
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("TT")) {
 				testTurn.start();
 				autonFlag = false;	
-			} else if (SmartDashboard.getString("sutonChooser", "DF").equalsIgnoreCase("MP")) {
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
 				motionProfile.start();
 				autonFlag = false;
 			}
-			
 		}
+	}
 	
 
 	@Override
