@@ -134,6 +134,8 @@ public class MotionProfile extends Command {
 		for (int i = 0; i < totalCnt; ++i) {
 			rightPoint.position = convertToTicks(profile[0][0][i]);
 			rightPoint.velocity = convertToTicks(profile[0][1][i]);
+			leftPoint.position = convertToTicks(profile[1][0][i]);
+			leftPoint.velocity = convertToTicks(profile[1][1][i]);
 			DrivetrainSS.frontRight.configMotionProfileTrajectoryPeriod(0, 0);
 			DrivetrainSS.frontLeft.configMotionProfileTrajectoryPeriod(0, 0);
 			//TODO: Check this profile Slot Select
@@ -142,14 +144,28 @@ public class MotionProfile extends Command {
 			rightPoint.zeroPos = false;
 			rightPoint.profileSlotSelect1 = 0;
 			rightPoint.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
-			if (i == 0)
+			leftPoint.profileSlotSelect0 = 2;
+			leftPoint.headingDeg = 0;
+			leftPoint.zeroPos = false;
+			leftPoint.profileSlotSelect1 = 0;
+			leftPoint.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
+			if (i == 0) {
 				rightPoint.zeroPos = true;
+				leftPoint.zeroPos = true;
+			}
+				
+			
 			
 			rightPoint.isLastPoint = false;
-			if ((i + 1) == totalCnt)
+			leftPoint.isLastPoint = false;
+			if ((i + 1) == totalCnt) {
 				rightPoint.isLastPoint = true;
+				leftPoint.isLastPoint = true;
+			}
+				
 			
 			DrivetrainSS.frontRight.pushMotionProfileTrajectory(rightPoint);
+			DrivetrainSS.frontLeft.pushMotionProfileTrajectory(leftPoint);
 		}
     }
     
