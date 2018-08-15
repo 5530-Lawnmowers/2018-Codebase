@@ -55,7 +55,7 @@ public class Robot extends TimedRobot {
 	public G_CenterRightSwitch centerRightSwitch;
 	public G_CenterLeftSwitchToScale centerLeftSwitchToScale;
 	public G_CenterRightSwitchToScale centerRightSwitchToScale;
-	
+	public MotionProfile motionProfile;
 	
 	//Test Stuff
 	double time;
@@ -141,7 +141,6 @@ public class Robot extends TimedRobot {
 //		SmartDashboard.clearPersistent("Output Percent L");
 //		SmartDashboard.putBoolean("Elevator Limit Switch", ElevatorSS.elevatorSwitchTop.get());
 		
-		
 
 		
 		initializeMotors = new InitializeMotors();
@@ -176,6 +175,7 @@ public class Robot extends TimedRobot {
 		centerRightSwitch = new G_CenterRightSwitch();
 		centerLeftSwitchToScale = new G_CenterLeftSwitchToScale();
 		centerRightSwitchToScale = new G_CenterRightSwitchToScale();
+		motionProfile = new MotionProfile();
 	}
 
 	/**
@@ -378,7 +378,10 @@ public class Robot extends TimedRobot {
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("TT")) {
 				testTurn.start();
 				autonFlag = false;	
-			} 
+			} else if (SmartDashboard.getString("sutonChooser", "DF").equalsIgnoreCase("MP")) {
+				motionProfile.start();
+				autonFlag = false;
+			}
 			
 		}
 	
