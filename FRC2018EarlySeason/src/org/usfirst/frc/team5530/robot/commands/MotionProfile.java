@@ -4,7 +4,8 @@ import org.usfirst.frc.team5530.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team5530.robot.subsystems.*;
-//import org.usfirst.frc.team5530.robot.triggers.MotionProfileExample.PeriodicRunnable;
+
+import org.usfirst.frc.team5530.robot.triggers.Profile;
 
 import edu.wpi.first.wpilibj.Notifier;
 
@@ -19,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class MotionProfile extends Command {
 	
 	private MotionProfileStatus _status = new MotionProfileStatus();
-	private double [][] _profile;
+	private double [][][] _profile = Profile.profile;
 	private int _state = 0;
 	private int _loopTimeout = -1;
 	private boolean _bStart = false;
@@ -118,7 +119,7 @@ public class MotionProfile extends Command {
     private double convertToTicks(double inches ) {
     		return 1024 * (inches / 6 * Math.PI);
     }
-    private void startFilling (double[][] profile, int totalCnt) {
+    private void startFilling (double[][][] profile, int totalCnt) {
     		TrajectoryPoint rightPoint = new TrajectoryPoint();
     		TrajectoryPoint leftPoint = new TrajectoryPoint();
     		if (_status.hasUnderrun) {
@@ -131,8 +132,8 @@ public class MotionProfile extends Command {
 		DrivetrainSS.frontRight.clearMotionProfileTrajectories();
 		
 		for (int i = 0; i < totalCnt; ++i) {
-			rightPoint.position = convertToTicks(profile[0][i]);
-			rightPoint.velocity = convertToTicks(profile[1][i]);
+			rightPoint.position = convertToTicks(profile[0][0][i]);
+			rightPoint.velocity = convertToTicks(profile[0][1][i]);
 			DrivetrainSS.frontRight.configMotionProfileTrajectoryPeriod(0, 0);
 			DrivetrainSS.frontLeft.configMotionProfileTrajectoryPeriod(0, 0);
 			//TODO: Check this profile Slot Select
