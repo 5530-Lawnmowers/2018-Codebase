@@ -19,6 +19,7 @@ import edu.wpi.first.networktables.*;
 import org.usfirst.frc.team5530.robot.subsystems.*;
 import org.usfirst.frc.team5530.robot.commands.*;
 import org.usfirst.frc.team5530.robot.commands.TestCommands.*;
+import org.usfirst.frc.team5530.robot.triggers.Profile;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -55,7 +56,8 @@ public class Robot extends TimedRobot {
 	public G_CenterRightSwitch centerRightSwitch;
 	public G_CenterLeftSwitchToScale centerLeftSwitchToScale;
 	public G_CenterRightSwitchToScale centerRightSwitchToScale;
-	public MotionProfile motionProfile;
+	public MotionProfile motionProfileRightSwitch;
+	public MotionProfile motionProfileLeftSwitch;
 	
 	//Test Stuff
 	double time;
@@ -175,7 +177,8 @@ public class Robot extends TimedRobot {
 		centerRightSwitch = new G_CenterRightSwitch();
 		centerLeftSwitchToScale = new G_CenterLeftSwitchToScale();
 		centerRightSwitchToScale = new G_CenterRightSwitchToScale();
-		motionProfile = new MotionProfile();
+		motionProfileLeftSwitch = new MotionProfile(Profile.leftSwitchProfile5);
+		motionProfileRightSwitch = new MotionProfile(Profile.rightSwitchProfile2_5);
 	}
 
 	/**
@@ -377,8 +380,11 @@ public class Robot extends TimedRobot {
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("TT")) {
 				testTurn.start();
 				autonFlag = false;	
-			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MP")) {
-				motionProfile.start();
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MPRS")) {
+				motionProfileRightSwitch.start();
+				autonFlag = false;
+			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MPLS")){
+				motionProfileLeftSwitch.start();
 				autonFlag = false;
 			}
 		}

@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class MotionProfile extends Command {
 	
 	private MotionProfileStatus _status = new MotionProfileStatus();
-	private double [][][] _profile = Profile.profile;
+	private double [][][] _profile = Profile.leftSwitchProfile5;
 	private int _state = 0;
 	private int _loopTimeout = -1;
 	private boolean _bStart = false;
@@ -36,11 +36,12 @@ public class MotionProfile extends Command {
 	}
 	Notifier _notifier = new Notifier(new PeriodicRunnable());
 	
-    public MotionProfile() {
+    public MotionProfile(double [][][] profile) {
     		requires(Robot.drivetrainSS);
     		DrivetrainSS.frontRight.changeMotionControlFramePeriod(5);
     		DrivetrainSS.frontLeft.changeMotionControlFramePeriod(5);
     		_notifier.startPeriodic(0.005);
+    		_profile = profile;
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     }
@@ -139,12 +140,12 @@ public class MotionProfile extends Command {
 			DrivetrainSS.frontRight.configMotionProfileTrajectoryPeriod(0, 0);
 			DrivetrainSS.frontLeft.configMotionProfileTrajectoryPeriod(0, 0);
 			//TODO: Check this profile Slot Select
-			rightPoint.profileSlotSelect0 = 2;
+			rightPoint.profileSlotSelect0 = 3;
 			rightPoint.headingDeg = 0;
 			rightPoint.zeroPos = false;
 			rightPoint.profileSlotSelect1 = 0;
 			rightPoint.timeDur = TrajectoryDuration.Trajectory_Duration_10ms;
-			leftPoint.profileSlotSelect0 = 2;
+			leftPoint.profileSlotSelect0 = 3;
 			leftPoint.headingDeg = 0;
 			leftPoint.zeroPos = false;
 			leftPoint.profileSlotSelect1 = 0;
