@@ -107,6 +107,7 @@ public class MotionProfile extends Command {
     					_setValue = SetValueMotionProfile.Hold;
     					_state = 0;
     					_loopTimeout = -1;
+    					
     				}
     				break;
     			}
@@ -197,7 +198,7 @@ public class MotionProfile extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return _status.activePointValid && _status.isLast;
     }
 
     // Called once after isFinished returns true
