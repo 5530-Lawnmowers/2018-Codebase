@@ -20,7 +20,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 public class MotionProfile extends Command {
 	
 	private MotionProfileStatus _status = new MotionProfileStatus();
-	private double [][][] _profile = Profile.leftSwitchProfile5;
+	private double [][][] _profile = Profile.rightSwitchProfile5;
 	private int _state = 0;
 	private int _loopTimeout = -1;
 	private boolean _bStart = false;
@@ -47,7 +47,7 @@ public class MotionProfile extends Command {
     }
     
     public void reset() {
-    		DrivetrainSS.frontRight.clearMotionProfileTrajectories();
+    	DrivetrainSS.frontRight.clearMotionProfileTrajectories();
 		DrivetrainSS.frontLeft.clearMotionProfileTrajectories();
 		_setValue = SetValueMotionProfile.Disable;
 		_loopTimeout = -1;
@@ -114,11 +114,15 @@ public class MotionProfile extends Command {
     }
     
     private void startFilling() {
-    		startFilling(_profile, _profile[0].length);
+    		startFilling(_profile, _profile[0][0].length);
     }
     
     private double convertToTicks(double inches ) {
-    		return 1024 * (inches / 6 * Math.PI);
+    		return 1024 * (inches / (6 * Math.PI));
+    }
+    
+    private double convertVelocity(double inchesPerSecond){
+    	return 1024 * (inchesPerSecond / (60 * Math.PI));
     }
     private void startFilling (double[][][] profile, int totalCnt) {
     		TrajectoryPoint rightPoint = new TrajectoryPoint();
@@ -134,9 +138,9 @@ public class MotionProfile extends Command {
 		
 		for (int i = 0; i < totalCnt; ++i) {
 			rightPoint.position = -convertToTicks(profile[0][0][i]);
-			rightPoint.velocity = -convertToTicks(profile[0][1][i]);
+			rightPoint.velocity = -convertVelocity(profile[0][1][i]);
 			leftPoint.position = convertToTicks(profile[1][0][i]);
-			leftPoint.velocity = convertToTicks(profile[1][1][i]);
+			leftPoint.velocity = convertVelocity(profile[1][1][i]);
 			DrivetrainSS.frontRight.configMotionProfileTrajectoryPeriod(0, 0);
 			DrivetrainSS.frontLeft.configMotionProfileTrajectoryPeriod(0, 0);
 			//TODO: Check this profile Slot Select
@@ -163,7 +167,7 @@ public class MotionProfile extends Command {
 				rightPoint.isLastPoint = true;
 				leftPoint.isLastPoint = true;
 			}
-				
+			System.out.println("Pusing point: " + rightPoint.velocity + ", " + leftPoint.position);
 			
 			DrivetrainSS.frontRight.pushMotionProfileTrajectory(rightPoint);
 			DrivetrainSS.frontLeft.pushMotionProfileTrajectory(leftPoint);

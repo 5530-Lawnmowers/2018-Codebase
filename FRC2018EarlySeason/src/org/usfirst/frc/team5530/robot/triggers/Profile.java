@@ -2,7 +2,7 @@ package org.usfirst.frc.team5530.robot.triggers;
 
 public class Profile {
 	
-	private static double [] leftSwitchLP5 = {0, 
+	private static double [] rightSwitchLP5 = {0, 
 			0.328067509, 
 			0.6556022, 
 			0.982608491, 
@@ -503,7 +503,7 @@ public class Profile {
 			124.7063585, 
 			124.8770533, 
 			125.0483893};
-	private static double [] leftSwitchRP5 = {0, 
+	private static double [] rightSwitchRP5 = {0, 
 			0.17133595, 
 			0.342030767, 
 			0.51210598, 
@@ -1004,7 +1004,7 @@ public class Profile {
 			124.3927871, 
 			124.7203218, 
 			125.0483893};
-	private static double [] leftSwitchLV5 = {0, 
+	private static double [] rightSwitchLV5 = {0, 
 			32.80675092, 
 			32.75346904, 
 			32.70062915, 
@@ -1505,7 +1505,7 @@ public class Profile {
 			17.00752125, 
 			17.06948167, 
 			17.13359503};
-	private static double [] leftSwitchRV5 = {0, 
+	private static double [] rightSwitchRV5 = {0, 
 			17.13359503, 
 			17.06948167, 
 			17.00752125, 
@@ -2007,9 +2007,9 @@ public class Profile {
 			32.75346904, 
 			32.80675092};
 	
-	public static double[][][] leftSwitchProfile5 = {{leftSwitchRP5 , leftSwitchRV5}, {leftSwitchLP5, leftSwitchLV5}};
+	public static double[][][] rightSwitchProfile5 = {{rightSwitchRP5 , rightSwitchRV5}, {rightSwitchLP5, rightSwitchLV5}};
 	
-	private static double [] rightSwitchLP2_5 = {0, 
+	private static double [] leftSwitchLP2_5 = {0, 
 			0.164248542, 
 			0.144637469, 
 			0.124772477, 
@@ -2260,7 +2260,7 @@ public class Profile {
 			0.644431826, 
 			0.656048567, 
 			0.667915962};
-	private static double [] rightSwitchRP2_5 = {0, 
+	private static double [] leftSwitchRP2_5 = {0, 
 			0.667915962, 
 			0.656048567, 
 			0.644431826, 
@@ -2511,7 +2511,7 @@ public class Profile {
 			0.124772477, 
 			0.144637469, 
 			0.164248542};
-	private static double [] rightSwitchLV2_5 = {0, 
+	private static double [] leftSwitchLV2_5 = {0, 
 			16.42485418, 
 			14.46374689, 
 			12.47724767, 
@@ -2762,7 +2762,7 @@ public class Profile {
 			64.44318257, 
 			65.60485671, 
 			66.79159623};
-	private static double [] rightSwitchRV2_5 = {0, 
+	private static double [] leftSwitchRV2_5 = {0, 
 			66.79159623, 
 			65.60485671, 
 			64.44318257, 
@@ -3014,5 +3014,5 @@ public class Profile {
 			14.46374689, 
 			16.42485418};
 
-	public static double[][][] rightSwitchProfile2_5 = {{rightSwitchRP2_5 , rightSwitchRV2_5}, {rightSwitchLP2_5, rightSwitchLV2_5}};
+	public static double[][][] leftSwitchProfile2_5 = {{leftSwitchRP2_5 , leftSwitchRV2_5}, {leftSwitchLP2_5, leftSwitchLV2_5}};
 }

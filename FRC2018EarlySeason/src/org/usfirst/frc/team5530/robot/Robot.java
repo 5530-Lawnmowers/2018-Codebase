@@ -177,8 +177,8 @@ public class Robot extends TimedRobot {
 		centerRightSwitch = new G_CenterRightSwitch();
 		centerLeftSwitchToScale = new G_CenterLeftSwitchToScale();
 		centerRightSwitchToScale = new G_CenterRightSwitchToScale();
-		motionProfileLeftSwitch = new MotionProfile(Profile.leftSwitchProfile5);
-		motionProfileRightSwitch = new MotionProfile(Profile.rightSwitchProfile2_5);
+		motionProfileLeftSwitch = new MotionProfile(Profile.leftSwitchProfile2_5);
+		motionProfileRightSwitch = new MotionProfile(Profile.rightSwitchProfile5);
 	}
 
 	/**
@@ -221,8 +221,8 @@ public class Robot extends TimedRobot {
 		
 		DrivetrainSS.frontLeft.selectProfileSlot(0, 0); 
 		DrivetrainSS.frontRight.selectProfileSlot(0, 0);
-		DrivetrainSS.frontRight.config_kP(3, .25, 0);
-		DrivetrainSS.frontLeft.config_kP(3, .25, 0);
+		DrivetrainSS.frontRight.config_kP(3, 1, 0);
+		DrivetrainSS.frontLeft.config_kP(3, 1, 0);
 		DrivetrainSS.frontRight.config_kI(3, 0, 0);
 		DrivetrainSS.frontLeft.config_kI(3, 0, 0);
 		DrivetrainSS.frontRight.config_kD(3, 0, 0);
@@ -248,8 +248,8 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		SmartDashboard.updateValues();
 		
-		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
-		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
+//		System.out.println("Left Encoder Value: " + DrivetrainSS.frontLeft.getSelectedSensorPosition(0));
+//		System.out.println("Right Encoder Value: " + DrivetrainSS.frontRight.getSelectedSensorPosition(0) + "\n");
 		
 		String gameData;
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
@@ -381,6 +381,7 @@ public class Robot extends TimedRobot {
 				testTurn.start();
 				autonFlag = false;	
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MPRS")) {
+				System.out.println("starting right mp");
 				motionProfileRightSwitch.start();
 				autonFlag = false;
 			} else if (SmartDashboard.getString("autonChooser", "DF").equalsIgnoreCase("MPLS")){
