@@ -178,7 +178,7 @@ public class Robot extends TimedRobot {
 		centerLeftSwitchToScale = new G_CenterLeftSwitchToScale();
 		centerRightSwitchToScale = new G_CenterRightSwitchToScale();
 		motionProfileLeftSwitch = new MotionProfile(Profile.leftSwitchProfile2_5);
-		motionProfileRightSwitch = new MotionProfile(Profile.rightSwitchProfile5);
+		motionProfileRightSwitch = new MotionProfile(Profile.rightSwitchProfile2_5);
 	}
 
 	/**
