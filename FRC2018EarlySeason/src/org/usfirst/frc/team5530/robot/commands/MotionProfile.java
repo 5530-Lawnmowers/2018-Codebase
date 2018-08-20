@@ -34,6 +34,7 @@ public class MotionProfile extends Command {
 	    		DrivetrainSS.frontLeft.processMotionProfileBuffer();
 	    }
 	}
+	
 	Notifier _notifier = new Notifier(new PeriodicRunnable());
 	
     public MotionProfile(double [][][] profile) {
@@ -125,6 +126,7 @@ public class MotionProfile extends Command {
     private double convertVelocity(double inchesPerSecond){
     	return 1024 * (inchesPerSecond / (60 * Math.PI));
     }
+    
     private void startFilling (double[][][] profile, int totalCnt) {
     		TrajectoryPoint rightPoint = new TrajectoryPoint();
     		TrajectoryPoint leftPoint = new TrajectoryPoint();
@@ -187,6 +189,9 @@ public class MotionProfile extends Command {
     protected void initialize() {
     		reset();
     		startMotionProfile();
+    		DrivetrainSS.frontRight.set(ControlMode.MotionProfile, getSetValue().value);
+    		DrivetrainSS.frontLeft.set(ControlMode.MotionProfile, getSetValue().value);
+        	control();
     }
 
     // Called repeatedly when this Command is scheduled to run
